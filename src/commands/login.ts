@@ -1,8 +1,8 @@
 /**
  * Log a user in to the WordPress dashboard.
  *
- * @param {string} username Username of the user
- * @param {string} password Password of the user
+ * @param username - Username of the user
+ * @param password - Password of the user
  *
  * @example
  * Use the command without any argument, the admin will be used:
