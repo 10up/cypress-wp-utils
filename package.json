@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "docs": "typedoc --out docs src/**/*.ts",
     "clean": "rm -rf ./lib/",
     "coverage": "codecov",
     "lint": "eslint ./src/ --fix",
@@ -55,6 +56,7 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "ts-node": "^10.2.1",
+    "typedoc": "^0.22.12",
     "typescript": "^4.2.4"
   },
   "lint-staged": {

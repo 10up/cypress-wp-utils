@@ -117,3 +117,9 @@ dist
 
 # Compiled code
 lib/
+
+# Documentation
+docs/
+
+# OS files
+.DS_Store
