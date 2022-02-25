@@ -9,11 +9,9 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./lib/",
-    "cm": "cz",
     "coverage": "codecov",
     "lint": "eslint ./src/ --fix",
     "prepare": "husky install",
-    "semantic-release": "semantic-release",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
@@ -45,8 +43,6 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "codecov": "^3.8.1",
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-node": "^11.1.0",
@@ -54,21 +50,10 @@
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
-    "semantic-release": "^19.0.2",
     "ts-node": "^10.2.1",
     "typescript": "^4.2.4"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "lint-staged": {
     "*.ts": "eslint --cache --cache-location .eslintcache --fix"
-  },
-  "release": {
-    "branches": [
-      "trunk"
-    ]
   }
 }
