@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
+// Import commands.
 import { login } from './commands/login';
 
 declare global {
@@ -11,4 +12,5 @@ declare global {
   }
 }
 
+// Register commands
 Cypress.Commands.add('login', login);
