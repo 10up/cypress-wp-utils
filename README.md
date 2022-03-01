@@ -1,1 +1,1 @@
-# wypress
+# cypress-wp-utils
