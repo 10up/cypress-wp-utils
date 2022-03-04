@@ -1,3 +1,6 @@
+tests/cypress/videos
+tests/cypress/screenshots
+
 # Logs
 logs
 *.log
