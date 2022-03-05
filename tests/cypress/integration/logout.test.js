@@ -1,5 +1,5 @@
 describe('Command: logout', () => {
-  it('Logout logged int', () => {
+  it('Logout logged in', () => {
     cy.login();
     cy.logout();
     cy.get('#login .message').should('contain', 'You are now logged out.');
