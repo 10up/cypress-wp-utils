@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
+import './utils';
+
 // Import commands.
 import { logout } from './commands/logout';
 import { login } from './commands/login';

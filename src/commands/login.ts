@@ -1,3 +1,5 @@
+import { getCurrentUrl } from '../utils';
+
 /**
  * Log a user in to the WordPress dashboard.
  *
@@ -17,7 +19,9 @@
  * ```
  */
 export const login = (username = 'admin', password = 'password'): void => {
-  cy.visit('wp-login.php');
+  if (!getCurrentUrl().includes('wp-login.php')) {
+    cy.visit('wp-login.php');
+  }
   cy.get('input#user_login').type(username);
   cy.get('input#user_pass').type(`${password}{enter}`);
 };
