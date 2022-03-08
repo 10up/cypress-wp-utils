@@ -3,7 +3,7 @@ describe('Command: createTerm', () => {
     cy.logout();
     cy.login();
     cy.deleteAllTerms();
-	cy.deleteAllTerms('post_tag');	
+    cy.deleteAllTerms('post_tag');
   });
 
   it('Should be able to Create a category', () => {
