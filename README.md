@@ -21,6 +21,8 @@ Just import the libary in `support/index.js` file then you're ready:
 import '@10up/cypress-wp-utils';
 ```
 
+Documentation for commands can be found at https://10up.github.io/cypress-wp-utils/.
+
 ### IntelliSense and code completion for Cypress commands
 
 Add a `tsconfig.json` file into the cypress folder to enable code completion for both Cypress built-in commands and commands from this library:
