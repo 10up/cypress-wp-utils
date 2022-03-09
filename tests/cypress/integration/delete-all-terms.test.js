@@ -61,10 +61,13 @@ describe('Command: deleteAllTerms', () => {
     cy.get('input.screen-per-page').click().clear().type(2);
     cy.get('#screen-options-apply').click();
 
-    cy.deleteAllTerms();
-    cy.get('#the-list a.row-title').should('have.length', 1);
-    cy.get('#the-list a.row-title')
-      .first()
-      .should('have.text', 'Uncategorized');
+    cy.deleteAllTerms('post_tag');
+    cy.get('#the-list a.row-title').should('have.length', 0);
+  });
+
+  it('Should not fail if trying to delete empty tags list', () => {
+    cy.deleteAllTerms('post_tag');
+
+    cy.deleteAllTerms('post_tag');
   });
 });
