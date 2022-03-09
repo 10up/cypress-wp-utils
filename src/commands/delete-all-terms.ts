@@ -24,6 +24,14 @@ export const deleteAllTerms = (taxonomy = 'category'): void => {
       cy.get('#bulk-action-selector-top').select('delete');
       cy.get('#doaction').click();
 
+      /**
+       * Check if the result page contain any terms
+       * available to delete by searching for individual
+       * checkboxes and perform recursive call.
+       *
+       * The 'Uncategorized' item could not be deleted
+       * and does not have the checkbox.
+       */
       cy.get('body').then($updatedBody => {
         if (
           $updatedBody.find(
