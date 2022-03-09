@@ -1,6 +1,5 @@
 describe('Command: deleteAllTerms', () => {
   beforeEach(() => {
-    cy.logout();
     cy.login();
   });
 
