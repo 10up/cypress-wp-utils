@@ -1,6 +1,5 @@
 describe('Command: createTerm', () => {
   beforeEach(() => {
-    cy.logout();
     cy.login();
     cy.deleteAllTerms();
     cy.deleteAllTerms('post_tag');
