@@ -23,6 +23,16 @@ export const deleteAllTerms = (taxonomy = 'category'): void => {
     if ($body.find('#bulk-action-selector-top').length !== 0) {
       cy.get('#bulk-action-selector-top').select('delete');
       cy.get('#doaction').click();
+
+      cy.get('body').then($updatedBody => {
+        if (
+          $updatedBody.find(
+            '#the-list input[type="checkbox"][name="delete_tags[]"]'
+          ).length !== 0
+        ) {
+          deleteAllTerms(taxonomy);
+        }
+      });
     }
   });
 };
