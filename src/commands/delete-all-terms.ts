@@ -17,9 +17,12 @@
  */
 export const deleteAllTerms = (taxonomy = 'category'): void => {
   cy.visit(`/wp-admin/edit-tags.php?taxonomy=${taxonomy}`);
-  cy.get('#cb-select-all-1').click();
 
   cy.get('body').then($body => {
+    if ($body.find('#cb-select-all-1').length !== 0) {
+      cy.get('#cb-select-all-1').click();
+    }
+
     if ($body.find('#bulk-action-selector-top').length !== 0) {
       cy.get('#bulk-action-selector-top').select('delete');
       cy.get('#doaction').click();
