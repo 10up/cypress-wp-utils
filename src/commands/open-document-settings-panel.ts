@@ -17,11 +17,16 @@
  * ```
  */
 export const openDocumentSettingsPanel = (name: string, tab = 'Post'): void => {
+  // Open Settings tab
   cy.openDocumentSettingsSidebar(tab);
+
   cy.get('.components-panel__body .components-panel__body-title button')
     .contains(name)
     .then($button => {
+      // Find the panel container
       const $panel = $button.parents('.components-panel__body');
+
+      // Only click the button if the panel is collapsed
       if (!$panel.hasClass('is-opened')) {
         cy.wrap($button).click();
         cy.wrap($button)

@@ -16,6 +16,7 @@
  * ```
  */
 export const openDocumentSettingsSidebar = (tab = 'Post'): void => {
+  // Open the sidebar if it is collapsed
   const button =
     '.edit-post-header__settings button[aria-label="Settings"][aria-expanded="false"]';
   cy.get('body').then($body => {
@@ -23,5 +24,7 @@ export const openDocumentSettingsSidebar = (tab = 'Post'): void => {
       cy.get(button).click();
     }
   });
+
+  // Click the tab
   cy.get('.edit-post-sidebar__panel-tab').contains(tab).click();
 };
