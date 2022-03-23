@@ -7,6 +7,7 @@ import { activateAllPlugins } from './commands/activate-all-plugins';
 import { deactivateAllPlugins } from './commands/deactivate-all-plugins';
 import { activatePlugin } from './commands/activate-plugin';
 import { getCurrentPlugin } from './helpers/get-current-plugin';
+import { setPermalinkStructure } from './commands/set-permalink-structure';
 import { openDocumentSettingsPanel } from './commands/open-document-settings-panel';
 import { openDocumentSettingsSidebar } from './commands/open-document-settings-sidebar';
 import { deleteAllTerms } from './commands/delete-all-terms';
@@ -22,6 +23,7 @@ declare global {
       deactivateAllPlugins: typeof deactivateAllPlugins;
       activatePlugin: typeof activatePlugin;
       getCurrentPlugin: typeof getCurrentPlugin;
+      setPermalinkStructure: typeof setPermalinkStructure;
       openDocumentSettingsPanel: typeof openDocumentSettingsPanel;
       openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
       deleteAllTerms: typeof deleteAllTerms;
@@ -38,6 +40,7 @@ Cypress.Commands.add('activateAllPlugins', activateAllPlugins);
 Cypress.Commands.add('deactivateAllPlugins', deactivateAllPlugins);
 Cypress.Commands.add('activatePlugin', activatePlugin);
 Cypress.Commands.add('getCurrentPlugin', getCurrentPlugin);
+Cypress.Commands.add('setPermalinkStructure', setPermalinkStructure);
 Cypress.Commands.add('openDocumentSettingsPanel', openDocumentSettingsPanel);
 Cypress.Commands.add(
   'openDocumentSettingsSidebar',
