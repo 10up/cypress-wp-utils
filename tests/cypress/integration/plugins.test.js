@@ -6,12 +6,29 @@ describe('Plugins commands', () => {
   });
 
   it('Test plugins commands', () => {
+    cy.activateAllPlugins();
+    cy.visit('/wp-admin/plugins.php');
+    cy.get('body').then($body => {
+      assert.equal(
+        $body.find('#the-list tr.inactive').length,
+        0,
+        'No inactive plugins'
+      );
+    });
+
     cy.deactivateAllPlugins();
     cy.get('#message.updated.notice').should(
       'contain',
       'Selected plugins deactivated.'
     );
-
+    cy.get('body').then($body => {
+		assert.equal(
+		  $body.find('#the-list tr.active').length,
+		  0,
+		  'No active plugins'
+		);
+	  });
+  
     // Activate current plugin
     cy.getCurrentPlugin().then(plugin => {
       cy.activatePlugin();
