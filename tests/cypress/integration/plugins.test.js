@@ -34,13 +34,13 @@ describe('Plugins commands', () => {
       cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
     });
 
-    // Activate Hello Dolly
-    cy.activatePlugin('hello-dolly');
-    cy.get('[data-slug="hello-dolly"]').should('have.class', 'active');
+    // Activate Classic Editor
+    cy.activatePlugin('classic-editor');
+    cy.get('[data-slug="classic-editor"]').should('have.class', 'active');
     cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
 
-    // Should not fail if Hello Dolly activated again
-    cy.activatePlugin('hello-dolly');
+    // Should not fail if Classic Editor activated again
+    cy.activatePlugin('classic-editor');
     cy.get('body').then($body => {
       assert.equal(
         $body.find('#message.updated.notice').length,
@@ -55,13 +55,13 @@ describe('Plugins commands', () => {
       cy.get(`[data-slug="${plugin}"]`).should('have.class', 'inactive');
     });
 
-    // Activate Hello Dolly
-    cy.deactivatePlugin('hello-dolly');
-    cy.get('[data-slug="hello-dolly"]').should('have.class', 'inactive');
+    // Deactivate Classic Editor
+    cy.deactivatePlugin('classic-editor');
+    cy.get('[data-slug="classic-editor"]').should('have.class', 'inactive');
     cy.get('#message.updated.notice').should('contain', 'Plugin deactivated.');
 
-    // Should not fail if Hello Dolly activated again
-    cy.deactivatePlugin('hello-dolly');
+    // Should not fail if Classic Editor deactivated again
+    cy.deactivatePlugin('classic-editor');
     cy.get('body').then($body => {
       assert.equal(
         $body.find('#message.updated.notice').length,
