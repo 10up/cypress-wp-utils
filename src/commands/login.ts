@@ -18,6 +18,11 @@
  */
 export const login = (username = 'admin', password = 'password'): void => {
   cy.visit('wp-login.php');
-  cy.get('input#user_login').click().clear().type(username);
-  cy.get('input#user_pass').click().clear().type(`${password}{enter}`);
+  cy.get('body').then($body => {
+    if ($body.find('#wpwrap').length == 0) {
+      cy.get('input#user_login').clear();
+      cy.get('input#user_login').click().type(username);
+      cy.get('input#user_pass').type(`${password}{enter}`);
+    }
+  });
 };
