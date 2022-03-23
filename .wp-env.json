@@ -1,5 +1,5 @@
 {
-  "plugins": ["./cypress-test-wordpress-plugin"],
+  "plugins": ["./cypress-test-wordpress-plugin", "WordPress/classic-editor"],
   "env": {
     "tests": {
       "mappings": {
