@@ -1,3 +1,4 @@
+import { setPermalinkStructure } from './commands/set-permalink-structure';
 import { openDocumentSettingsPanel } from './commands/open-document-settings-panel';
 import { openDocumentSettingsSidebar } from './commands/open-document-settings-sidebar';
 import { deleteAllTerms } from './commands/delete-all-terms';
@@ -7,6 +8,7 @@ import { login } from './commands/login';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
+            setPermalinkStructure: typeof setPermalinkStructure;
             openDocumentSettingsPanel: typeof openDocumentSettingsPanel;
             openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
             deleteAllTerms: typeof deleteAllTerms;
