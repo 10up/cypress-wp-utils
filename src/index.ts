@@ -2,6 +2,7 @@
 /// <reference types="cypress" />
 
 // Import commands.
+import { activatePlugin } from './commands/activate-plugin';
 import { getCurrentPlugin } from './helpers/get-current-plugin';
 import { deleteAllTerms } from './commands/delete-all-terms';
 import { createTerm } from './commands/create-term';
@@ -11,6 +12,7 @@ import { login } from './commands/login';
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
+      activatePlugin: typeof activatePlugin;
       getCurrentPlugin: typeof getCurrentPlugin;
       deleteAllTerms: typeof deleteAllTerms;
       createTerm: typeof createTerm;
@@ -21,6 +23,7 @@ declare global {
 }
 
 // Register commands
+Cypress.Commands.add('activatePlugin', activatePlugin);
 Cypress.Commands.add('getCurrentPlugin', getCurrentPlugin);
 Cypress.Commands.add('deleteAllTerms', deleteAllTerms);
 Cypress.Commands.add('createTerm', createTerm);
