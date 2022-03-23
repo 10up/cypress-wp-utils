@@ -1,4 +1,5 @@
 {
+  "plugins": ["./cypress-test-wordpress-plugin"],
   "env": {
     "tests": {
       "mappings": {
