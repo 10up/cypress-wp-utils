@@ -1,8 +1,6 @@
 describe('Plugins commands', () => {
   beforeEach(() => {
     cy.login();
-    // At least one needs to be activated for this test.
-    cy.activatePlugin('hello-dolly');
   });
 
   it('Test plugins commands', () => {
@@ -22,25 +20,58 @@ describe('Plugins commands', () => {
       'Selected plugins deactivated.'
     );
     cy.get('body').then($body => {
-		assert.equal(
-		  $body.find('#the-list tr.active').length,
-		  0,
-		  'No active plugins'
-		);
-	  });
-  
+      assert.equal(
+        $body.find('#the-list tr.active').length,
+        0,
+        'No active plugins'
+      );
+    });
+
     // Activate current plugin
     cy.getCurrentPlugin().then(plugin => {
       cy.activatePlugin();
       cy.get(`[data-slug="${plugin}"]`).should('have.class', 'active');
+      cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
     });
 
     // Activate Hello Dolly
-    const plugin = 'hello-dolly';
-    cy.activatePlugin(plugin);
-    cy.get(`[data-slug="${plugin}"]`).should('have.class', 'active');
+    cy.activatePlugin('hello-dolly');
+    cy.get('[data-slug="hello-dolly"]').should('have.class', 'active');
+    cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
 
     // Should not fail if Hello Dolly activated again
     cy.activatePlugin('hello-dolly');
+    cy.get('body').then($body => {
+      assert.equal(
+        $body.find('#message.updated.notice').length,
+        0,
+        'No notice output'
+      );
+    });
+
+    // Deactivate current plugin
+    cy.getCurrentPlugin().then(plugin => {
+      cy.deactivatePlugin();
+      cy.get(`[data-slug="${plugin}"]`).should('have.class', 'inactive');
+    });
+
+    // Activate Hello Dolly
+    cy.deactivatePlugin('hello-dolly');
+    cy.get('[data-slug="hello-dolly"]').should('have.class', 'inactive');
+    cy.get('#message.updated.notice').should('contain', 'Plugin deactivated.');
+
+    // Should not fail if Hello Dolly activated again
+    cy.deactivatePlugin('hello-dolly');
+    cy.get('body').then($body => {
+      assert.equal(
+        $body.find('#message.updated.notice').length,
+        0,
+        'No notice output'
+      );
+    });
+
+    // Bring previously active plugins back
+    cy.activatePlugin();
+    cy.activatePlugin('classic-editor');
   });
 });
