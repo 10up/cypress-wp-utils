@@ -7,6 +7,8 @@ import { activateAllPlugins } from './commands/activate-all-plugins';
 import { deactivateAllPlugins } from './commands/deactivate-all-plugins';
 import { activatePlugin } from './commands/activate-plugin';
 import { getCurrentPlugin } from './helpers/get-current-plugin';
+import { openDocumentSettingsPanel } from './commands/open-document-settings-panel';
+import { openDocumentSettingsSidebar } from './commands/open-document-settings-sidebar';
 import { deleteAllTerms } from './commands/delete-all-terms';
 import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
@@ -20,6 +22,8 @@ declare global {
       deactivateAllPlugins: typeof deactivateAllPlugins;
       activatePlugin: typeof activatePlugin;
       getCurrentPlugin: typeof getCurrentPlugin;
+      openDocumentSettingsPanel: typeof openDocumentSettingsPanel;
+      openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
       deleteAllTerms: typeof deleteAllTerms;
       createTerm: typeof createTerm;
       logout: typeof logout;
@@ -34,6 +38,11 @@ Cypress.Commands.add('activateAllPlugins', activateAllPlugins);
 Cypress.Commands.add('deactivateAllPlugins', deactivateAllPlugins);
 Cypress.Commands.add('activatePlugin', activatePlugin);
 Cypress.Commands.add('getCurrentPlugin', getCurrentPlugin);
+Cypress.Commands.add('openDocumentSettingsPanel', openDocumentSettingsPanel);
+Cypress.Commands.add(
+  'openDocumentSettingsSidebar',
+  openDocumentSettingsSidebar
+);
 Cypress.Commands.add('deleteAllTerms', deleteAllTerms);
 Cypress.Commands.add('createTerm', createTerm);
 Cypress.Commands.add('logout', logout);

@@ -44,4 +44,57 @@ describe('Command: createTerm', () => {
       'A term with the name provided already exists in this taxonomy'
     );
   });
+
+  it('Should create categories with options', () => {
+    const parentCategory = {
+      name: 'Parent category',
+      description: 'Parent description',
+      slug: 'parent-slug',
+    };
+
+    cy.createTerm(parentCategory.name, 'category', {
+      description: parentCategory.description,
+      slug: parentCategory.slug,
+    });
+
+    // Assertions for parent category
+    cy.get('.notice').should('contain', 'Category added');
+
+    cy.get('#the-list .row-title')
+      .contains(parentCategory.name)
+      .then($parentLink => {
+        // Assertions of parent category
+        const $parentRow = $parentLink.parents('tr');
+
+        cy.wrap($parentRow)
+          .get('.description')
+          .should('contain', parentCategory.description);
+
+        cy.wrap($parentRow).get('.slug').should('contain', parentCategory.slug);
+
+        const parentId = $parentRow.find('input[name="delete_tags[]"]').val();
+
+        cy.createTerm('Child by parent id', 'category', { parent: parentId });
+        cy.wait(100);
+        cy.get('#the-list .row-title')
+          .contains('Child by parent id')
+          .then($child => {
+            cy.wrap($child.parents('tr'))
+              .get('.name .parent')
+              .should('contain', parentId.toString());
+          });
+
+        cy.createTerm('Child by parent name', 'category', {
+          parent: parentCategory.name,
+        });
+        cy.wait(100);
+        cy.get('#the-list .row-title')
+          .contains('Child by parent name')
+          .then($child => {
+            cy.wrap($child.parents('tr'))
+              .get('.name .parent')
+              .should('contain', parentId.toString());
+          });
+      });
+  });
 });
