@@ -43,6 +43,6 @@ describe('Command: setPermalinkStructure', () => {
 
   after(() => {
     // Set permalinks back to plain
-    cy.setPermalinkStructure();
+    cy.setPermalinkStructure('');
   });
 });
