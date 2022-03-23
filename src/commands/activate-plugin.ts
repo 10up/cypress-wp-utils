@@ -16,10 +16,20 @@ export const activatePlugin = (slug = ''): void => {
     // Try to retrieve current plugin from ENV.
     cy.getCurrentPlugin().then(current => {
       if ('string' === typeof current && '' !== current) {
-        cy.get(`#activate-${current}`).click(); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+        cy.get('body').then($body => {
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          if ($body.find(`#activate-${current}`).length > 0) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            cy.get(`#activate-${current}`).click();
+          }
+        });
       }
     });
   } else {
-    cy.get(`#activate-${slug}`).click();
+    cy.get('body').then($body => {
+      if ($body.find(`#activate-${slug}`).length > 0) {
+        cy.get(`#activate-${slug}`).click();
+      }
+    });
   }
 };
