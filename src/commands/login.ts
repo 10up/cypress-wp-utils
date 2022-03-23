@@ -17,7 +17,7 @@
  * ```
  */
 export const login = (username = 'admin', password = 'password'): void => {
-  cy.visit('wp-login.php');
+  cy.visit('/wp-admin/');
   cy.get('body').then($body => {
     if ($body.find('#wpwrap').length == 0) {
       cy.get('input#user_login').clear();
