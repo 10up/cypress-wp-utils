@@ -3,6 +3,11 @@
  *
  * @param name - Term name
  * @param taxonomy - Taxonomy
+ * @param options {
+ *          slug - Taxonomy slug
+ *          parent - Parent taxonomy (ID or name)
+ *          description - Taxonomy description
+ *        }
  *
  * @example
  * Create new category with default name "Test category"
@@ -21,5 +26,19 @@
  * ```
  * cy.createTerm('Product name', 'product')
  * ```
+ *
+ * @example
+ * Create child category for existing Parent with custom description and slug
+ * ```
+ * cy.createTerm('Child', 'category', {
+ *   parent: 'Parent',
+ *   slug: 'child-slug',
+ *   description: 'Custom description'
+ * })
+ * ```
  */
-export declare const createTerm: (name?: string, taxonomy?: string) => void;
+export declare const createTerm: (name?: string, taxonomy?: string, { slug, parent, description, }?: {
+    slug?: string | undefined;
+    parent?: string | number | undefined;
+    description?: string | undefined;
+}) => void;
