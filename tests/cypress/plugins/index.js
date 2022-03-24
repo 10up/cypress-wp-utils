@@ -29,5 +29,9 @@ module.exports = async ( on, config ) => {
 		}
 	}
 
+	if ( undefined === typeof config.pluginName ) {
+		config.pluginName = process.cwd().split('/').pop();	
+	}
+
 	return config;
 };

@@ -2,6 +2,8 @@
 /// <reference types="cypress" />
 
 // Import commands.
+import { wpCliEval } from './commands/wp-cli-eval';
+import { wpCli } from './commands/wp-cli';
 import { setPermalinkStructure } from './commands/set-permalink-structure';
 import { openDocumentSettingsPanel } from './commands/open-document-settings-panel';
 import { openDocumentSettingsSidebar } from './commands/open-document-settings-sidebar';
@@ -13,6 +15,8 @@ import { login } from './commands/login';
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
+      wpCliEval: typeof wpCliEval;
+      wpCli: typeof wpCli;
       setPermalinkStructure: typeof setPermalinkStructure;
       openDocumentSettingsPanel: typeof openDocumentSettingsPanel;
       openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
@@ -25,6 +29,8 @@ declare global {
 }
 
 // Register commands
+Cypress.Commands.add('wpCliEval', wpCliEval);
+Cypress.Commands.add('wpCli', wpCli);
 Cypress.Commands.add('setPermalinkStructure', setPermalinkStructure);
 Cypress.Commands.add('openDocumentSettingsPanel', openDocumentSettingsPanel);
 Cypress.Commands.add(
