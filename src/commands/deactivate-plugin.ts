@@ -12,9 +12,11 @@
 export const deactivatePlugin = (slug: string): void => {
   cy.visit('/wp-admin/plugins.php');
   if ('' !== slug) {
-    cy.get('body').then($body => {
-      if ($body.find(`#deactivate-${slug}`).length > 0) {
-        cy.get(`#deactivate-${slug}`).click();
+    cy.get(`#the-list tr[data-slug="${slug}"]`).then($pluginRow => {
+      if ($pluginRow.find('.deactivate > a').length > 0) {
+        cy.get(`#the-list tr[data-slug="${slug}"] .deactivate > a`)
+          .should('have.text', 'Deactivate')
+          .click();
       }
     });
   }
