@@ -51,7 +51,7 @@ describe('Plugins commands', () => {
         'Plugin deactivated.'
       );
 
-      // Should not fail if Classic Editor deactivated again
+      // Should not fail if deactivated again
       cy.deactivatePlugin(plugin);
       cy.get('body').then($body => {
         assert.equal(
