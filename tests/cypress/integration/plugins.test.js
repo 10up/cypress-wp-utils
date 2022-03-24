@@ -27,51 +27,42 @@ describe('Plugins commands', () => {
       );
     });
 
-    // Activate current plugin
-    cy.getCurrentPlugin().then(plugin => {
-      cy.activatePlugin();
+    const plugins = ['classic-editor', 'cypress-test-wordpress-plugin'];
+
+    plugins.forEach(plugin => {
+      cy.activatePlugin(plugin);
       cy.get(`[data-slug="${plugin}"]`).should('have.class', 'active');
       cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
-    });
 
-    // Activate Classic Editor
-    cy.activatePlugin('classic-editor');
-    cy.get('[data-slug="classic-editor"]').should('have.class', 'active');
-    cy.get('#message.updated.notice').should('contain', 'Plugin activated.');
+      // Should not fail if activated again
+      cy.activatePlugin(plugin);
+      cy.get('body').then($body => {
+        assert.equal(
+          $body.find('#message.updated.notice').length,
+          0,
+          'No notice output'
+        );
+      });
 
-    // Should not fail if Classic Editor activated again
-    cy.activatePlugin('classic-editor');
-    cy.get('body').then($body => {
-      assert.equal(
-        $body.find('#message.updated.notice').length,
-        0,
-        'No notice output'
-      );
-    });
-
-    // Deactivate current plugin
-    cy.getCurrentPlugin().then(plugin => {
-      cy.deactivatePlugin();
+      cy.deactivatePlugin(plugin);
       cy.get(`[data-slug="${plugin}"]`).should('have.class', 'inactive');
-    });
-
-    // Deactivate Classic Editor
-    cy.deactivatePlugin('classic-editor');
-    cy.get('[data-slug="classic-editor"]').should('have.class', 'inactive');
-    cy.get('#message.updated.notice').should('contain', 'Plugin deactivated.');
-
-    // Should not fail if Classic Editor deactivated again
-    cy.deactivatePlugin('classic-editor');
-    cy.get('body').then($body => {
-      assert.equal(
-        $body.find('#message.updated.notice').length,
-        0,
-        'No notice output'
+      cy.get('#message.updated.notice').should(
+        'contain',
+        'Plugin deactivated.'
       );
-    });
 
-    // Bring previously active plugins back
-    cy.activatePlugin();
-    cy.activatePlugin('classic-editor');
+      // Should not fail if Classic Editor deactivated again
+      cy.deactivatePlugin(plugin);
+      cy.get('body').then($body => {
+        assert.equal(
+          $body.find('#message.updated.notice').length,
+          0,
+          'No notice output'
+        );
+      });
+
+      // Bring previously active plugin back
+      cy.activatePlugin(plugin);
+    });
   });
 });
