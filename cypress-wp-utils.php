@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin name: Cypress test WordPress plugin
+ * Plugin name: Cypress WP Utils
  *
  * @package cypress-wp-utils
  */

@@ -27,7 +27,7 @@ describe('Plugins commands', () => {
       );
     });
 
-    const plugins = ['classic-editor', 'cypress-test-wordpress-plugin'];
+    const plugins = ['classic-editor', 'cypress-wp-utils'];
 
     plugins.forEach(plugin => {
       cy.activatePlugin(plugin);
