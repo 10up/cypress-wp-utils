@@ -22,6 +22,14 @@
  * ```
  *
  * @example
+ * Create a category and use it's ID
+ * ```
+ * cy.createTerm('Category').then(term => {
+ *   cy.log(term.term_id);
+ * });
+ * ```
+ *
+ * @example
  * Create new term in a product taxonomy
  * ```
  * cy.createTerm('Product name', 'product')
