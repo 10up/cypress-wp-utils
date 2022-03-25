@@ -85,13 +85,32 @@ export const createTerm = (
     const body = Cypress.$.parseXML(response.response?.body);
 
     // Find term data.
-    const term_data = Cypress.$(body).find('response term supplemental');
+    const term_data = Cypress.$(body).find('response term supplemental > *');
 
-    // Compile the resulting term object.
-    const term = {
-      term_id: parseInt(term_data.find('term_id').text()),
-      slug: term_data.find('slug').text(),
-    };
+    if (term_data.length === 0) {
+      cy.wrap(false);
+      return;
+    }
+
+    interface TermData {
+      [key: string]: any;
+    }
+
+    // Extract term data into the object.
+    const term = term_data.toArray().reduce((map: TermData, el) => {
+      const $el = Cypress.$(el);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      map[$el.prop('tagName')] = $el.text();
+      return map;
+    }, {});
+
+    // Sanitize numeric values.
+    ['term_id', 'count', 'parent', 'term_group', 'term_taxonomy_id'].forEach(
+      index => {
+        term[index] = parseInt(term[index]);
+      }
+    );
+
     cy.wrap(term);
   });
 };

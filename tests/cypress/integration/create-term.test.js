@@ -102,6 +102,7 @@ describe('Command: createTerm', () => {
     const termName = 'Retrieval Category';
     const expectedSlug = 'retrieval-category';
     cy.createTerm(termName).then(term => {
+      assert(term.name === termName, 'Term name is the same');
       assert(term.term_id > 0, 'Term ID should be greater than 0');
       assert(term.slug === expectedSlug, 'Should have correct term slug');
     });
