@@ -2,6 +2,8 @@
 /// <reference types="cypress" />
 
 // Import commands.
+import { wpCliEval } from './commands/wp-cli-eval';
+import { wpCli } from './commands/wp-cli';
 import { deactivatePlugin } from './commands/deactivate-plugin';
 import { activateAllPlugins } from './commands/activate-all-plugins';
 import { deactivateAllPlugins } from './commands/deactivate-all-plugins';
@@ -17,6 +19,8 @@ import { login } from './commands/login';
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
+      wpCliEval: typeof wpCliEval;
+      wpCli: typeof wpCli;
       deactivatePlugin: typeof deactivatePlugin;
       activateAllPlugins: typeof activateAllPlugins;
       deactivateAllPlugins: typeof deactivateAllPlugins;
@@ -33,6 +37,8 @@ declare global {
 }
 
 // Register commands
+Cypress.Commands.add('wpCliEval', wpCliEval);
+Cypress.Commands.add('wpCli', wpCli);
 Cypress.Commands.add('deactivatePlugin', deactivatePlugin);
 Cypress.Commands.add('activateAllPlugins', activateAllPlugins);
 Cypress.Commands.add('deactivateAllPlugins', deactivateAllPlugins);
