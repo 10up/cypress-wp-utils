@@ -11,6 +11,7 @@ import { deleteAllTerms } from './commands/delete-all-terms';
 import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
 import { login } from './commands/login';
+import { createPost } from './commands/create-post';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
@@ -25,6 +26,7 @@ declare global {
             openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
             deleteAllTerms: typeof deleteAllTerms;
             createTerm: typeof createTerm;
+            createPost: typeof createPost;
             logout: typeof logout;
             login: typeof login;
         }
