@@ -11,7 +11,7 @@
  * @example
  * Create a Post
  * ```
- * cy.publishPost({
+ * cy.createPost({
  *   title: 'Test Post',
  *   content: 'Test Content'
  * })
@@ -20,7 +20,7 @@
  * @example
  * Create a Post with draft status.
  * ```
- * cy.publishPost({
+ * cy.createPost({
  *   title: 'Test Post',
  *   content: 'Test Content',
  *   status: 'draft'
@@ -30,7 +30,7 @@
  * @example
  * Create a Page
  * ```
- * cy.publishPost({
+ * cy.createPost({
  *   postType: 'page'
  *   title: 'Test page',
  *   content: 'Page Content'
@@ -48,7 +48,6 @@ export const createPost = ({
   content?: string;
   status?: string;
 }): void => {
-  cy.log(postType);
   cy.visit(`/wp-admin/post-new.php?post_type=${postType}`);
 
   const titleInput = 'h1.editor-post-title__input, #post-title-0';
