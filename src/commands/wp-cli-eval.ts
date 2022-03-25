@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Wp Cli Eval
  *
