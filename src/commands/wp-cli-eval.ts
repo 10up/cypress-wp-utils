@@ -14,13 +14,15 @@ export const wpCliEval = (command: string): void => {
   const escapedCommand = command.replace(/^<\?php /, '');
   cy.writeFile(fileName, `<?php ${escapedCommand}`);
 
-  const pluginName = Cypress.config('pluginName'); // @ts-ignore
+  cy.exec('echo $(basename $(pwd))').then(result => {
+    const pluginName = result.stdout;
 
-  // which is read from it's proper location in the plugins directory
-  cy.exec(
-    `npm --silent run env run tests-cli "eval-file wp-content/plugins/${pluginName}/${fileName}"` // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  ).then(result => {
-    cy.exec(`rm ${fileName}`);
-    cy.wrap(result);
+    // which is read from it's proper location in the plugins directory
+    cy.exec(
+      `npm --silent run env run tests-cli "eval-file wp-content/plugins/${pluginName}/${fileName}"` // eslint-disable-line @typescript-eslint/restrict-template-expressions
+    ).then(result => {
+      cy.exec(`rm ${fileName}`);
+      cy.wrap(result);
+    });
   });
 };
