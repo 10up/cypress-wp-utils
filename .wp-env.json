@@ -1,5 +1,5 @@
 {
-  "plugins": ["WordPress/classic-editor"],
+  "plugins": [".", "WordPress/classic-editor"],
   "env": {
     "tests": {
       "mappings": {
