@@ -22,6 +22,14 @@
  * ```
  *
  * @example
+ * Create a category and use it's ID
+ * ```
+ * cy.createTerm('Category').then(term => {
+ *   cy.log(term.term_id);
+ * });
+ * ```
+ *
+ * @example
  * Create new term in a product taxonomy
  * ```
  * cy.createTerm('Product name', 'product')
@@ -47,6 +55,13 @@ export const createTerm = (
   }: { slug?: string; parent?: number | string; description?: string } = {}
 ): void => {
   cy.visit(`/wp-admin/edit-tags.php?taxonomy=${taxonomy}`);
+
+  cy.intercept('POST', '/wp-admin/admin-ajax.php', req => {
+    if ('string' === typeof req.body && req.body.includes('action=add-tag')) {
+      req.alias = 'ajaxAddTag';
+    }
+  });
+
   cy.get('#tag-name').click().type(`${name}`);
 
   if (slug) {
@@ -64,4 +79,38 @@ export const createTerm = (
   });
 
   cy.get('#submit').click();
+
+  cy.wait('@ajaxAddTag').then(response => {
+    // WordPress AJAX result for add tag is XML document, so we parse it with jQuery.
+    const body = Cypress.$.parseXML(response.response?.body);
+
+    // Find term data.
+    const term_data = Cypress.$(body).find('response term supplemental > *');
+
+    if (term_data.length === 0) {
+      cy.wrap(false);
+      return;
+    }
+
+    interface TermData {
+      [key: string]: any;
+    }
+
+    // Extract term data into the object.
+    const term = term_data.toArray().reduce((map: TermData, el) => {
+      const $el = Cypress.$(el);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      map[$el.prop('tagName')] = $el.text();
+      return map;
+    }, {});
+
+    // Sanitize numeric values.
+    ['term_id', 'count', 'parent', 'term_group', 'term_taxonomy_id'].forEach(
+      index => {
+        term[index] = parseInt(term[index]);
+      }
+    );
+
+    cy.wrap(term);
+  });
 };
