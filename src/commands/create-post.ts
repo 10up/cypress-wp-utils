@@ -83,16 +83,8 @@ export const createPost = ({
 
     cy.get('.editor-post-publish-button').click();
 
-    cy.get('body').then($body => {
-      if ($body.find('.components-snackbar').length > 0) {
-        cy.get('.components-snackbar').should('be.visible');
-      } else {
-        // WP 5.2
-        cy.get('.components-notice.is-success').should(
-          'contain.text',
-          'published'
-        );
-      }
-    });
+    cy.get('.components-snackbar, .components-notice.is-success').should(
+      'be.visible'
+    );
   }
 };
