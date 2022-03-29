@@ -1,4 +1,9 @@
 describe('Command: createPost', () => {
+  before(()=>{
+    cy.login();
+    cy.deactivatePlugin('classic-editor');
+  });
+  
   beforeEach(() => {
     cy.login();
   });
