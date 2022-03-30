@@ -8,21 +8,34 @@ describe('Command: createTerm', () => {
   it('Should be able to Create a category', () => {
     const termName = 'My category';
     cy.createTerm(termName);
-    cy.get('.notice').should('contain', 'Category added');
+    cy.get('body').then($body => {
+      if ( $body.find('.notice').is(':visible') ) {
+        cy.get('.notice').should('contain', 'Category added');
+      }
+    });
     cy.get('.row-title').first().should('have.text', termName);
+
   });
 
   it('Should be able to Create a tag', () => {
     const termName = 'My tag';
     cy.createTerm(termName, 'post_tag');
-    cy.get('.notice').should('contain', 'Tag added');
+    cy.get('body').then($body => {
+      if ( $body.find('.notice').is(':visible') ) {
+        cy.get('.notice').should('contain', 'Tag added');
+      }
+    });
     cy.get('.row-title').first().should('have.text', termName);
   });
 
   it('Duplicate category should not be created', () => {
     const termName = 'My category';
     cy.createTerm(termName);
-    cy.get('.notice').should('contain', 'Category added');
+    cy.get('body').then($body => {
+      if ( $body.find('.notice').is(':visible') ) {
+        cy.get('.notice').should('contain', 'Category added');
+      }
+    });
     cy.get('.row-title').first().should('have.text', termName);
 
     cy.createTerm(termName);
@@ -35,7 +48,11 @@ describe('Command: createTerm', () => {
   it('Duplicate tag should not be created', () => {
     const termName = 'My tag';
     cy.createTerm(termName, 'post_tag');
-    cy.get('.notice').should('contain', 'Tag added');
+    cy.get('body').then($body => {
+      if ( $body.find('.notice').is(':visible') ) {
+        cy.get('.notice').should('contain', 'Tag added');
+      }
+    });
     cy.get('.row-title').first().should('have.text', termName);
 
     cy.createTerm(termName, 'post_tag');
@@ -58,7 +75,11 @@ describe('Command: createTerm', () => {
     });
 
     // Assertions for parent category
-    cy.get('.notice').should('contain', 'Category added');
+    cy.get('body').then($body => {
+      if ( $body.find('.notice').is(':visible') ) {
+        cy.get('.notice').should('contain', 'Category added');
+      }
+    });
 
     cy.get('#the-list .row-title')
       .contains(parentCategory.name)
