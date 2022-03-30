@@ -21,7 +21,7 @@ export const openDocumentSettingsPanel = (name: string, tab = 'Post'): void => {
   cy.openDocumentSettingsSidebar(tab);
 
   cy.get('.components-panel__body .components-panel__body-title button')
-    .contains(name)
+    .contains(name, { matchCase: false })
     .then($button => {
       // Find the panel container
       const $panel = $button.parents('.components-panel__body');
