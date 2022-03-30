@@ -62,12 +62,16 @@ export const createPost = ({
   cy.get('body').then($body => {
     if ($body.find(welcomeGuide).length > 0) {
       cy.get(welcomeGuide).click();
+      // WP 5.2
+    } else if ($body.find('.nux-dot-tip__disable').length > 0) {
+      cy.get('.nux-dot-tip__disable').click();
     }
   });
 
   // Fill out data.
   cy.get(titleInput).clear().type(title);
-  cy.get(contentInput).type(content);
+  cy.get(contentInput).click();
+  cy.get('.block-editor-rich-text__editable').type(content);
 
   // Save/Publish Post.
   if (status === 'draft') {
@@ -79,6 +83,8 @@ export const createPost = ({
 
     cy.get('.editor-post-publish-button').click();
 
-    cy.get('.components-snackbar').should('be.visible');
+    cy.get('.components-snackbar, .components-notice.is-success').should(
+      'be.visible'
+    );
   }
 };
