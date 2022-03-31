@@ -1,3 +1,4 @@
+import { closeWelcomeGuide } from './commands/close-welcome-guide';
 import { wpCliEval } from './commands/wp-cli-eval';
 import { wpCli } from './commands/wp-cli';
 import { deactivatePlugin } from './commands/deactivate-plugin';
@@ -15,6 +16,7 @@ import { createPost } from './commands/create-post';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
+            closeWelcomeGuide: typeof closeWelcomeGuide;
             wpCliEval: typeof wpCliEval;
             wpCli: typeof wpCli;
             deactivatePlugin: typeof deactivatePlugin;
