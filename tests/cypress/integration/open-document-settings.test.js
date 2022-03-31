@@ -32,13 +32,7 @@ describe('Commands: openDocumentSettings*', () => {
 
   it("Should be able to open (don't close) Status Panel on a new post", () => {
     cy.visit(`/wp-admin/post-new.php`);
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
     const name = 'Status & visibility';
     cy.openDocumentSettingsPanel(name);
@@ -55,15 +49,9 @@ describe('Commands: openDocumentSettings*', () => {
   it('Should be able to open Tags panel on the existing post', () => {
     cy.visit(`/wp-admin/edit.php?post_type=post`);
     cy.get('#the-list .row-title').first().click();
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
-    cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+    // cy.get('.block-editor-block-list__layout > .wp-block').first().click();
 
     const name = 'Tags';
     cy.openDocumentSettingsPanel(name);
@@ -80,13 +68,7 @@ describe('Commands: openDocumentSettings*', () => {
   it('Should be able to open Discussion panel on the existing page', () => {
     cy.visit(`/wp-admin/edit.php?post_type=page`);
     cy.get('#the-list .row-title').first().click();
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
     cy.get('.block-editor-block-list__layout > .wp-block').first().click();
 
@@ -106,13 +88,7 @@ describe('Commands: openDocumentSettings*', () => {
 
   it('Should be able to Open Post Settings Sidebar on a new Post', () => {
     cy.visit(`/wp-admin/post-new.php`);
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
     cy.openDocumentSettingsSidebar();
 
@@ -134,13 +110,7 @@ describe('Commands: openDocumentSettings*', () => {
   it('Should be able to Open Block tab of the first block on existing post', () => {
     cy.visit(`/wp-admin/edit.php?post_type=post`);
     cy.get('#the-list .row-title').first().click();
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
     cy.get('.block-editor-block-list__layout > .wp-block').first().click();
     cy.openDocumentSettingsSidebar('Block');
@@ -157,13 +127,7 @@ describe('Commands: openDocumentSettings*', () => {
   it('Should be able to open Page Settings sidebar on an existing page', () => {
     cy.visit(`/wp-admin/edit.php?post_type=page`);
     cy.get('#the-list .row-title').first().click();
-    const welcomeGuideCloseButton =
-      'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
-    cy.get('body').then($body => {
-      if ($body.find(welcomeGuideCloseButton).length > 0) {
-        cy.get(welcomeGuideCloseButton).click();
-      }
-    });
+    cy.closeWelcomeGuide();
 
     cy.get('.block-editor-block-list__layout > .wp-block').first().click();
 
