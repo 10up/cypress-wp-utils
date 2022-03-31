@@ -1,4 +1,16 @@
 describe('Command: createPost', () => {
+  before(()=>{
+    cy.login();
+    cy.deactivatePlugin('classic-editor');
+    
+    // Ignore WP 5.2 Synchronous XHR error.
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (err.message.includes("Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://localhost:8889/wp-admin/admin-ajax.php': Synchronous XHR in page dismissal") ){
+        return false;
+      }
+    });
+  });
+
   beforeEach(() => {
     cy.login();
   });
@@ -10,7 +22,7 @@ describe('Command: createPost', () => {
       content: 'Test Content',
     });
 
-    cy.visit('/wp-admin/edit.php?orderby=date&order=desc');
+    cy.visit('/wp-admin/edit.php?orderby=date&order=desc');   
     cy.get('#the-list td.title a.row-title').first().should('have.text', title);
   });
 
