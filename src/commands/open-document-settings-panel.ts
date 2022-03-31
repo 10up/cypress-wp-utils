@@ -1,3 +1,6 @@
+import { capitalize } from '../functions/capitalize';
+import { ucFirst } from '../functions/uc-first';
+
 /**
  * Open Document Settings Panel
  *
@@ -20,18 +23,24 @@ export const openDocumentSettingsPanel = (name: string, tab = 'Post'): void => {
   // Open Settings tab
   cy.openDocumentSettingsSidebar(tab);
 
-  cy.get('.components-panel__body .components-panel__body-title button')
-    .contains(name, { matchCase: false })
-    .then($button => {
-      // Find the panel container
-      const $panel = $button.parents('.components-panel__body');
+  // WordPress prior to 5.4 is using upper-case-words for panel names
+  // WordPress 5.3 and below: "Status & Visibility"
+  // WordPress 5.4 and after: "Status & visibility"
+  const ucFirstName = ucFirst(name);
+  const ucWordsName = capitalize(name);
 
-      // Only click the button if the panel is collapsed
-      if (!$panel.hasClass('is-opened')) {
-        cy.wrap($button).click();
-        cy.wrap($button)
-          .parents('.components-panel__body')
-          .should('have.class', 'is-opened');
-      }
-    });
+  const panelButtonSelector = `.components-panel__body .components-panel__body-title button:contains("${ucWordsName}"),.components-panel__body .components-panel__body-title button:contains("${ucFirstName}")`;
+
+  cy.get(panelButtonSelector).then($button => {
+    // Find the panel container
+    const $panel = $button.parents('.components-panel__body');
+
+    // Only click the button if the panel is collapsed
+    if (!$panel.hasClass('is-opened')) {
+      cy.wrap($button)
+        .click()
+        .parents('.components-panel__body')
+        .should('have.class', 'is-opened');
+    }
+  });
 };
