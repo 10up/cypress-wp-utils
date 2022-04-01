@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-This library requires Cypress. Use https://github.com/10up/cypress-wp-setup to set up Cypress automatically.
+This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically.
 
 ## Installation
 
