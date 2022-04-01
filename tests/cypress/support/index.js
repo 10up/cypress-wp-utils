@@ -22,5 +22,6 @@ import '../../../lib/index';
 describe('Init', () => {
   it('Log in', () => {
     cy.login();
+	cy.get('h1').should('contain', 'Dashboard');
   });
 });
