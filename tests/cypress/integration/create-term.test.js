@@ -1,3 +1,5 @@
+const { randomName } = require('../support/functions');
+
 describe('Command: createTerm', () => {
   beforeEach(() => {
     cy.login();
@@ -6,36 +8,36 @@ describe('Command: createTerm', () => {
   });
 
   it('Should be able to Create a category', () => {
-    const termName = 'My category';
+    const termName = 'Category ' + randomName();
     cy.createTerm(termName);
     cy.get('body').then($body => {
       if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Category added');
       }
     });
-    cy.get('.row-title').first().should('have.text', termName);
+    cy.get(`.row-title:contains("${termName}")`).should('exist');
   });
 
   it('Should be able to Create a tag', () => {
-    const termName = 'My tag';
+    const termName = 'Tag ' + randomName();
     cy.createTerm(termName, 'post_tag');
     cy.get('body').then($body => {
       if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Tag added');
       }
     });
-    cy.get('.row-title').first().should('have.text', termName);
+    cy.get(`.row-title:contains("${termName}")`).should('exist');
   });
 
   it('Duplicate category should not be created', () => {
-    const termName = 'My category';
+    const termName = 'Category ' + randomName();
     cy.createTerm(termName);
     cy.get('body').then($body => {
       if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Category added');
       }
     });
-    cy.get('.row-title').first().should('have.text', termName);
+    cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName);
     cy.get('.error').should(
@@ -45,14 +47,14 @@ describe('Command: createTerm', () => {
   });
 
   it('Duplicate tag should not be created', () => {
-    const termName = 'My tag';
+    const termName = 'Tag ' + randomName();
     cy.createTerm(termName, 'post_tag');
     cy.get('body').then($body => {
       if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Tag added');
       }
     });
-    cy.get('.row-title').first().should('have.text', termName);
+    cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName, 'post_tag');
     cy.get('.error').should(
@@ -63,8 +65,8 @@ describe('Command: createTerm', () => {
 
   it('Should create categories with options', () => {
     const parentCategory = {
-      name: 'Parent category',
-      description: 'Parent description',
+      name: 'Parent ' + randomName(),
+      description: 'Description ' + randomName(),
       slug: 'parent-slug',
     };
 
@@ -80,9 +82,8 @@ describe('Command: createTerm', () => {
       }
     });
 
-    cy.get('#the-list .row-title')
-      .contains(parentCategory.name)
-      .then($parentLink => {
+    cy.get(`.row-title:contains("${parentCategory.name}")`).then(
+      $parentLink => {
         // Assertions of parent category
         const $parentRow = $parentLink.parents('tr');
 
@@ -94,33 +95,31 @@ describe('Command: createTerm', () => {
 
         const parentId = $parentRow.find('input[name="delete_tags[]"]').val();
 
-        cy.createTerm('Child by parent id', 'category', { parent: parentId });
-        cy.wait(100);
-        cy.get('#the-list .row-title')
-          .contains('Child by parent id')
-          .then($child => {
-            cy.wrap($child.parents('tr'))
-              .get('.name .parent')
-              .should('contain', parentId.toString());
-          });
+        const childById = 'Child ' + randomName();
+        cy.createTerm(childById, 'category', { parent: parentId });
+        cy.get(`.row-title:contains("${childById}")`).then($child => {
+          cy.wrap($child.parents('tr'))
+            .get('.name .parent')
+            .should('contain', parentId.toString());
+        });
 
-        cy.createTerm('Child by parent name', 'category', {
+        const childByName = 'Child ' + randomName();
+        cy.createTerm(childByName, 'category', {
           parent: parentCategory.name,
         });
-        cy.wait(100);
-        cy.get('#the-list .row-title')
-          .contains('Child by parent name')
-          .then($child => {
-            cy.wrap($child.parents('tr'))
-              .get('.name .parent')
-              .should('contain', parentId.toString());
-          });
-      });
+        cy.get(`.row-title:contains("${childByName}")`).then($child => {
+          cy.wrap($child.parents('tr'))
+            .get('.name .parent')
+            .should('contain', parentId.toString());
+        });
+      }
+    );
   });
 
   it('Should retrieve term data from the command', () => {
-    const termName = 'Retrieval Category';
-    const expectedSlug = 'retrieval-category';
+    const randomSuffix = randomName();
+    const termName = 'Category ' + randomSuffix;
+    const expectedSlug = 'category-' + randomSuffix;
     cy.createTerm(termName).then(term => {
       assert(term.name === termName, 'Term name is the same');
       assert(term.term_id > 0, 'Term ID should be greater than 0');
