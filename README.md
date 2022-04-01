@@ -1,5 +1,7 @@
 # cypress-wp-utils
 
+![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.0-blue) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.2-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg)
+
 > Utilities library for WordPress E2E testing in the Cypress environment.
 
 ## Prerequisites
