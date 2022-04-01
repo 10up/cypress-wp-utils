@@ -9,19 +9,18 @@ describe('Command: createTerm', () => {
     const termName = 'My category';
     cy.createTerm(termName);
     cy.get('body').then($body => {
-      if ( $body.find('.notice').is(':visible') ) {
+      if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Category added');
       }
     });
     cy.get('.row-title').first().should('have.text', termName);
-
   });
 
   it('Should be able to Create a tag', () => {
     const termName = 'My tag';
     cy.createTerm(termName, 'post_tag');
     cy.get('body').then($body => {
-      if ( $body.find('.notice').is(':visible') ) {
+      if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Tag added');
       }
     });
@@ -32,7 +31,7 @@ describe('Command: createTerm', () => {
     const termName = 'My category';
     cy.createTerm(termName);
     cy.get('body').then($body => {
-      if ( $body.find('.notice').is(':visible') ) {
+      if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Category added');
       }
     });
@@ -49,7 +48,7 @@ describe('Command: createTerm', () => {
     const termName = 'My tag';
     cy.createTerm(termName, 'post_tag');
     cy.get('body').then($body => {
-      if ( $body.find('.notice').is(':visible') ) {
+      if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Tag added');
       }
     });
@@ -76,7 +75,7 @@ describe('Command: createTerm', () => {
 
     // Assertions for parent category
     cy.get('body').then($body => {
-      if ( $body.find('.notice').is(':visible') ) {
+      if ($body.find('.notice').is(':visible')) {
         cy.get('.notice').should('contain', 'Category added');
       }
     });
