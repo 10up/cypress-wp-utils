@@ -1,4 +1,8 @@
 describe('Command: createTerm', () => {
+  before(() => {
+    cy.login();
+  });
+
   beforeEach(() => {
     Cypress.Cookies.defaults({
       preserve: /^wordpress.*?/,

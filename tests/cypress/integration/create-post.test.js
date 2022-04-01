@@ -1,8 +1,6 @@
 describe('Command: createPost', () => {
   before(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
+    cy.login();
 
     cy.deactivatePlugin('classic-editor');
     

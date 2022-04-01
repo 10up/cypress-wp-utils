@@ -1,8 +1,6 @@
 describe('Commands: openDocumentSettings*', () => {
   before(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
+    cy.login();
 
     // Disable Classic Editor if it's enabled
     cy.visit('/wp-admin/options-writing.php');

@@ -18,10 +18,3 @@ import '../../../lib/index';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-describe('Init', () => {
-  it('Log in', () => {
-    cy.login();
-	cy.get('h1').should('contain', 'Dashboard');
-  });
-});

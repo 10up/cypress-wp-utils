@@ -1,4 +1,8 @@
 describe('Plugins commands', () => {
+  before(() => {
+    cy.login();
+  });
+
   beforeEach(() => {
     Cypress.Cookies.defaults({
       preserve: /^wordpress.*?/,

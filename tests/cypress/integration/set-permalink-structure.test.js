@@ -1,4 +1,8 @@
 describe('Command: setPermalinkStructure', () => {
+  before(() => {
+    cy.login();
+  });
+
   beforeEach(() => {
     Cypress.Cookies.defaults({
       preserve: /^wordpress.*?/,
