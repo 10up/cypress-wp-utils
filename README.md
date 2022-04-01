@@ -60,3 +60,26 @@ Loaded templates: _templates
 ```sh
 npm i -D path/to/the/library
 ```
+
+### Test against every WordPress major release
+
+For every incoming pull request by default on GitHub Actions we automatically perform tests against:
+- current minimum supported WordPress 5.2
+- WordPress [latest release](https://github.com/WordPress/WordPress/tags)
+- current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
+
+To run tests locally against every WordPress major release since minimum support (5.2) to the latest nightly build (6.0-alpha) use this script:
+
+```sh
+./run-all-cores.sh
+```
+
+It has optional parameter `-s` to specify only one test suite to run:
+
+```sh
+./run-all-cores.sh -s tests/cypress/intergation/login.test.js
+```
+
+## Like what you see?
+
+[![Work with us](https://10up.com/uploads/2016/10/10up-Github-Banner.png)](http://10up.com/contact/)
