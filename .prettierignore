@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Compiled code
+lib/
+
+# Documentation
+docs/
