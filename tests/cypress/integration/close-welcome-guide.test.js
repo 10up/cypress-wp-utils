@@ -1,6 +1,8 @@
 describe('Command: closeWelcomeGuide', () => {
   before(() => {
-    cy.login();
+    Cypress.Cookies.defaults({
+      preserve: /^wordpress.*?/,
+    });
 
     // Disable Classic Editor if it's enabled
     cy.visit('/wp-admin/options-writing.php');
@@ -27,7 +29,9 @@ describe('Command: closeWelcomeGuide', () => {
   });
 
   beforeEach(() => {
-    cy.login();
+    Cypress.Cookies.defaults({
+      preserve: /^wordpress.*?/,
+    });
   });
 
   it('Should be able to Close Welcome Guide', () => {

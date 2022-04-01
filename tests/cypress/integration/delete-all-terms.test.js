@@ -1,6 +1,8 @@
 describe('Command: deleteAllTerms', () => {
   beforeEach(() => {
-    cy.login();
+    Cypress.Cookies.defaults({
+      preserve: /^wordpress.*?/,
+    });
   });
 
   after(() => {

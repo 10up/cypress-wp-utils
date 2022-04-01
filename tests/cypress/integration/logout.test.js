@@ -10,4 +10,8 @@ describe('Command: logout', () => {
     cy.visit(`/`);
     cy.logout();
   });
+
+  after(() => {
+    cy.login();
+  });
 });

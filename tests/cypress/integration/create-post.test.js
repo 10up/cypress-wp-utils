@@ -1,6 +1,9 @@
 describe('Command: createPost', () => {
-  before(()=>{
-    cy.login();
+  before(() => {
+    Cypress.Cookies.defaults({
+      preserve: /^wordpress.*?/,
+    });
+
     cy.deactivatePlugin('classic-editor');
     
     // Ignore WP 5.2 Synchronous XHR error.
@@ -12,7 +15,9 @@ describe('Command: createPost', () => {
   });
 
   beforeEach(() => {
-    cy.login();
+    Cypress.Cookies.defaults({
+      preserve: /^wordpress.*?/,
+    });
   });
 
   it('Should be able to create Post', () => {
