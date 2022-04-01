@@ -12,12 +12,6 @@ describe('Command: createPost', () => {
     });
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   it('Should be able to create Post', () => {
     const title = 'Test Post';
     cy.createPost({

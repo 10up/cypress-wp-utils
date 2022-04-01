@@ -26,12 +26,6 @@ describe('Command: closeWelcomeGuide', () => {
     });
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   it('Should be able to Close Welcome Guide', () => {
     const welcomeGuideWindow = '.edit-post-welcome-guide';
 

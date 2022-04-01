@@ -3,12 +3,6 @@ describe('Plugins commands', () => {
     cy.login();
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   it('Test plugins commands', () => {
     cy.activateAllPlugins();
     cy.visit('/wp-admin/plugins.php');

@@ -3,12 +3,6 @@ describe('Command: setPermalinkStructure', () => {
     cy.login();
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   const structures = [
     { name: 'Plain', value: '' },
     { name: 'Day and name', value: '/%year%/%monthnum%/%day%/%postname%/' },

@@ -26,12 +26,6 @@ describe('Commands: openDocumentSettings*', () => {
     });
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   it("Should be able to open (don't close) Status Panel on a new post", () => {
     cy.visit(`/wp-admin/post-new.php`);
     cy.closeWelcomeGuide();

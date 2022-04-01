@@ -4,10 +4,6 @@ describe('Command: createTerm', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-
     cy.deleteAllTerms();
     cy.deleteAllTerms('post_tag');
   });

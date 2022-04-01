@@ -3,12 +3,6 @@ describe('Command: deleteAllTerms', () => {
     cy.login();
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.defaults({
-      preserve: /^wordpress.*?/,
-    });
-  });
-
   after(() => {
     // Restore default 20 items per page
     cy.visit(`/wp-admin/edit-tags.php?taxonomy=category`);

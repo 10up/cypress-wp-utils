@@ -18,3 +18,8 @@ import '../../../lib/index';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+beforeEach(() => {
+  Cypress.Cookies.defaults({
+    preserve: /^wordpress.*?/,
+  });
+});
