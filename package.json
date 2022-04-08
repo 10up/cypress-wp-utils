@@ -14,6 +14,7 @@
     "coverage": "codecov",
     "lint": "eslint ./src/ --fix",
     "prepare": "husky install",
+    "prettify": "prettier --write \"**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit",
     "cypress:open": "cypress open --config-file tests/cypress/config.json",
     "cypress:run": "cypress run --config-file tests/cypress/config.json",
@@ -67,6 +68,7 @@
     "typescript": "^4.2.4"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache --cache-location .eslintcache --fix"
+    "*.ts": "eslint --cache --cache-location .eslintcache --fix",
+    "*.{ts,js}": "prettier --write"
   }
 }

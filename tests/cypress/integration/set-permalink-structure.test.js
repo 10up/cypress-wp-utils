@@ -28,7 +28,10 @@ describe('Command: setPermalinkStructure', () => {
   it('Should be able to set custom permalinks', () => {
     const structure = '/custom/%second%/';
     cy.setPermalinkStructure(structure);
-    cy.get('.notice-success, .notice.updated').should('contain', 'Permalink structure updated.');
+    cy.get('.notice-success, .notice.updated').should(
+      'contain',
+      'Permalink structure updated.'
+    );
     cy.get('.form-table.permalink-structure :checked').should(
       'have.value',
       'custom'
@@ -36,9 +39,12 @@ describe('Command: setPermalinkStructure', () => {
     cy.get('#permalink_structure').should('have.value', structure);
   });
 
-  it('Should receive error if no tag added', ()=>{
-	cy.setPermalinkStructure('no-tag');	
-	cy.get('.notice-error, .notice.error').should('contain', 'A structure tag is required when using custom permalinks.');
+  it('Should receive error if no tag added', () => {
+    cy.setPermalinkStructure('no-tag');
+    cy.get('.notice-error, .notice.error').should(
+      'contain',
+      'A structure tag is required when using custom permalinks.'
+    );
   });
 
   after(() => {
