@@ -73,7 +73,7 @@ export const createTerm = (
   }
 
   cy.get('body').then($body => {
-    if ($body.find('#parent:visible').length !== 0) {
+    if ($body.find('#parent').length !== 0) {
       cy.get('#parent').select(parent.toString());
     }
   });
