@@ -72,11 +72,13 @@ export const createTerm = (
     cy.get('#tag-description').click().type(`${description}`);
   }
 
-  cy.get('body').then($body => {
-    if ($body.find('#parent').length !== 0) {
-      cy.get('#parent').select(parent.toString());
-    }
-  });
+  if (parent !== -1) {
+    cy.get('body').then($body => {
+      if ($body.find('#parent').length !== 0) {
+        cy.get('#parent').select(parent.toString());
+      }
+    });
+  }
 
   cy.get('#submit').click();
 
