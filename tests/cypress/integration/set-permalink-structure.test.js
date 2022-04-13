@@ -1,5 +1,5 @@
 describe('Command: setPermalinkStructure', () => {
-  beforeEach(() => {
+  before(() => {
     cy.login();
   });
 

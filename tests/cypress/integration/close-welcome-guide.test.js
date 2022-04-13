@@ -26,10 +26,6 @@ describe('Command: closeWelcomeGuide', () => {
     });
   });
 
-  beforeEach(() => {
-    cy.login();
-  });
-
   it('Should be able to Close Welcome Guide', () => {
     const welcomeGuideWindow = '.edit-post-welcome-guide';
 

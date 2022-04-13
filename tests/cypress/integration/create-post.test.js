@@ -1,6 +1,7 @@
 describe('Command: createPost', () => {
   before(() => {
     cy.login();
+
     cy.deactivatePlugin('classic-editor');
 
     // Ignore WP 5.2 Synchronous XHR error.
@@ -13,10 +14,6 @@ describe('Command: createPost', () => {
         return false;
       }
     });
-  });
-
-  beforeEach(() => {
-    cy.login();
   });
 
   it('Should be able to create Post', () => {
