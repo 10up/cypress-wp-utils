@@ -1,10 +1,12 @@
 # cypress-wp-utils
 
+![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.0-blue) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.2-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg)
+
 > Utilities library for WordPress E2E testing in the Cypress environment.
 
 ## Prerequisites
 
-This library requires Cypress. Use https://github.com/10up/cypress-wp-setup to set up Cypress automatically.
+This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically, including this library.
 
 ## Installation
 
@@ -58,3 +60,26 @@ Loaded templates: _templates
 ```sh
 npm i -D path/to/the/library
 ```
+
+### Test against every WordPress major release
+
+For every incoming pull request by default on GitHub Actions we automatically perform tests against:
+- current minimum supported WordPress 5.2
+- WordPress [latest release](https://github.com/WordPress/WordPress/tags)
+- current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
+
+To run tests locally against every WordPress major release since minimum support (5.2) to the latest nightly build (6.0-alpha) use this script:
+
+```sh
+./run-all-cores.sh
+```
+
+It has optional parameter `-s` to specify only one test suite to run:
+
+```sh
+./run-all-cores.sh -s tests/cypress/intergation/login.test.js
+```
+
+## Like what you see?
+
+[![Work with us](https://10up.com/uploads/2016/10/10up-Github-Banner.png)](http://10up.com/contact/)
