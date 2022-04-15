@@ -129,4 +129,22 @@ describe('Command: createTerm', () => {
       assert(term.slug === expectedSlug, 'Should have correct term slug');
     });
   });
+
+  it('Should be able to use beforeSave hook', () => {
+    const termName = 'Category ' + randomName();
+    const termSlug = 'cat-' + randomName();
+    const overrideSlug = 'cat-' + randomName();
+    cy.createTerm(termName, 'category', {
+      slug: termSlug,
+      beforeSave: () => {
+        cy.get('#tag-slug').click().type('{selectAll}').type(overrideSlug);
+      },
+    });
+
+    cy.get('td.name')
+      .contains(termName)
+      .parents('tr')
+      .find('.slug')
+      .should('contain.text', overrideSlug);
+  });
 });
