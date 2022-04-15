@@ -5,7 +5,8 @@
  *          `postType` - Post type,
  *          `title` - Post Title,
  *          `content` - Post Content,
- *          `status` - Post Status
+ *          `status` - Post Status,
+ *          `beforeSave` - Callback
  *        }
  *
  * @example
@@ -36,17 +37,30 @@
  *   content: 'Page Content'
  * })
  * ```
+ *
+ * @example
+ * Perform custom actions before saving the post
+ * ```
+ * cy.createPost({
+ *   title: 'Post Title',
+ *   beforeSave: () => {
+ *     // Change additional metaboxes.
+ *   }
+ * })
+ * ```
  */
 export const createPost = ({
   postType = 'post',
   title = 'Test Post',
   content = 'Test content',
   status = 'publish',
+  beforeSave,
 }: {
   title: string;
   postType?: string;
   content?: string;
   status?: string;
+  beforeSave?: CallableFunction;
 }): void => {
   cy.visit(`/wp-admin/post-new.php?post_type=${postType}`);
 
@@ -72,6 +86,10 @@ export const createPost = ({
   cy.get(titleInput).clear().type(title);
   cy.get(contentInput).click();
   cy.get('.block-editor-rich-text__editable').type(content);
+
+  if ('undefined' !== typeof beforeSave) {
+    beforeSave();
+  }
 
   // Save/Publish Post.
   if (status === 'draft') {
