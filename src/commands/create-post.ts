@@ -6,7 +6,7 @@
  *          `title` - Post Title,
  *          `content` - Post Content,
  *          `status` - Post Status,
- *          `beforeSave` - Callback
+ *          `beforeSave` - Callable function hook
  *        }
  *
  * @example

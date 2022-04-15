@@ -7,7 +7,7 @@
  *          slug - Taxonomy slug
  *          parent - Parent taxonomy (ID or name)
  *          description - Taxonomy description
- * 			beforeSave - Callback
+ * 			beforeSave - Callable function hook
  *        }
  *
  * @example
