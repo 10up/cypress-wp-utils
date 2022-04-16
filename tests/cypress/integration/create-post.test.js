@@ -1,3 +1,5 @@
+const { randomName } = require('../support/functions');
+
 describe('Command: createPost', () => {
   before(() => {
     cy.login();
@@ -72,5 +74,30 @@ describe('Command: createPost', () => {
         cy.wrap($row).find('a.row-title').should('have.text', title);
         cy.wrap($row).find('span.post-state').should('have.text', 'Draft');
       });
+  });
+
+  it('Should be able to use beforeSave hook', () => {
+    const postTitle = 'Post ' + randomName();
+    const postContent = 'Content ' + randomName();
+    cy.createPost({
+      title: postTitle,
+      content: postContent,
+      beforeSave: () => {
+        cy.openDocumentSettingsPanel('Status & visibility');
+        cy.get('label')
+          .contains('Stick to the top of the blog')
+          .click()
+          .parent()
+          .find('input[type="checkbox"]')
+          .should('be.checked');
+      },
+    });
+
+    cy.visit('/wp-admin/edit.php?post_type=post');
+    cy.get('td.title')
+      .contains(postTitle)
+      .parent()
+      .find('.post-state')
+      .should('contain.text', 'Sticky');
   });
 });

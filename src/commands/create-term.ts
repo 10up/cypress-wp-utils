@@ -7,6 +7,7 @@
  *          slug - Taxonomy slug
  *          parent - Parent taxonomy (ID or name)
  *          description - Taxonomy description
+ * 			beforeSave - Callable function hook
  *        }
  *
  * @example
@@ -52,7 +53,13 @@ export const createTerm = (
     slug = '',
     parent = -1,
     description = '',
-  }: { slug?: string; parent?: number | string; description?: string } = {}
+    beforeSave,
+  }: {
+    slug?: string;
+    parent?: number | string;
+    description?: string;
+    beforeSave?: CallableFunction;
+  } = {}
 ): void => {
   cy.visit(`/wp-admin/edit-tags.php?taxonomy=${taxonomy}`);
 
@@ -78,6 +85,10 @@ export const createTerm = (
         cy.get('#parent').select(parent.toString());
       }
     });
+  }
+
+  if ('undefined' !== typeof beforeSave) {
+    beforeSave();
   }
 
   cy.get('#submit').click();
