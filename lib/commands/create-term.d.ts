@@ -7,6 +7,7 @@
  *          slug - Taxonomy slug
  *          parent - Parent taxonomy (ID or name)
  *          description - Taxonomy description
+ * 			beforeSave - Callable function hook
  *        }
  *
  * @example
@@ -45,8 +46,9 @@
  * })
  * ```
  */
-export declare const createTerm: (name?: string, taxonomy?: string, { slug, parent, description, }?: {
+export declare const createTerm: (name?: string, taxonomy?: string, { slug, parent, description, beforeSave, }?: {
     slug?: string | undefined;
     parent?: string | number | undefined;
     description?: string | undefined;
+    beforeSave?: CallableFunction | undefined;
 }) => void;
