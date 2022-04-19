@@ -10,15 +10,11 @@ on:
     - cron: '36 7 * * 6'
 
 jobs:
-  cypress:
-    name: ${{ matrix.core.name }}
+  changed-files:
+    name: Changed Files
+    outputs:
+      status: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        core:
-          - { name: 'WP latest', version: 'latest' }
-          - { name: 'WP trunk', version: 'WordPress/WordPress#master' }
-          - { name: 'WP minimum', version: 'WordPress/WordPress#5.2' }
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,6 +32,18 @@ jobs:
       - name: List Modified Files
         run: echo "${{ steps.changed-files.outputs.all_changed_files }}" | xargs ls -lh
 
+  cypress:
+    name: ${{ matrix.core.name }}
+    needs: changed-files
+    if: needs.changed-files.outputs.status == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        core:
+          - { name: 'WP latest', version: 'latest' }
+          - { name: 'WP trunk', version: 'WordPress/WordPress#master' }
+          - { name: 'WP minimum', version: 'WordPress/WordPress#5.2' }
+    steps:
       - name: Install dependencies
         run: npm install
       - name: Build
