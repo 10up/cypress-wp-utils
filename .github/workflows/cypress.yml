@@ -22,6 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
+            .github/workflows/cypress.yml
             src/*
             tests/*
             cypress-wp-utils.php
