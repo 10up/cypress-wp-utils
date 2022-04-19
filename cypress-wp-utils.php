@@ -6,3 +6,4 @@
  */
 
 add_action( 'init', '__return_false' );
+// Test change.
