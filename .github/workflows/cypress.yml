@@ -17,13 +17,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - id: changed-files
-        uses: sk-/pr-changed-files
+        uses: tj-actions/changed-files@v18.7
+        with:
+          files: |
+            .github/*
+            src/*
+            tests/*
+            cypress-wp-utils.php
+            .wp-env.json
+            package.json
+            package-lock.json
       - name: List Modified Files
-        run: echo "${{ steps.changed-files.outputs.files }}" | xargs ls -lh
+        run: echo "${{ steps.changed-files.outputs.all_changed_files }}" | xargs ls -lh
 
   cypress:
     name: ${{ matrix.core.name }}
     runs-on: ubuntu-latest
+    if: jobs.changed-files.steps.changed-files.outputs.any_changed == 'true'
     strategy:
       matrix:
         core:
