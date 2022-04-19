@@ -22,7 +22,6 @@ jobs:
         uses: tj-actions/changed-files@v18.7
         with:
           files: |
-            .github/*
             src/*
             tests/*
             cypress-wp-utils.php
