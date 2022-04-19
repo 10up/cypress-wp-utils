@@ -10,6 +10,17 @@ on:
     - cron: '36 7 * * 6'
 
 jobs:
+  changed-files:
+    name: Changed Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - id: changed-files
+        uses: sk-/pr-changed-files
+      - name: List Modified Files
+        run: echo "${{ steps.changed-files.outputs.files }}" | xargs ls -lh
+
   cypress:
     name: ${{ matrix.core.name }}
     runs-on: ubuntu-latest
