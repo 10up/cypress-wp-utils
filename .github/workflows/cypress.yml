@@ -35,7 +35,7 @@ jobs:
   cypress:
     name: ${{ matrix.core.name }}
     needs: changed-files
-    if: needs.changed-files.outputs.status == 'true'
+    if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -44,6 +44,8 @@ jobs:
           - { name: 'WP trunk', version: 'WordPress/WordPress#master' }
           - { name: 'WP minimum', version: 'WordPress/WordPress#5.2' }
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
       - name: Build
