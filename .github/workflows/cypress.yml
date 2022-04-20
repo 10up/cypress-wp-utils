@@ -32,17 +32,22 @@ jobs:
 
   build:
     name: Build
+    needs: changed-files
+    if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Node
         uses: actions/cache@v3
         with:
-          path: |
-            ~/lib
-            ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('package-lock.json') }}
+      - name: Cache Build
+        uses: actions/cache@v3
+        with:
+          path: lib
+          key: ${{ runner.os }}-build-${{ hashFiles('src/**') }}
       - name: Install dependencies
         run: npm install
       - name: Build
@@ -50,8 +55,7 @@ jobs:
 
   cypress:
     name: ${{ matrix.core.name }}
-    needs: changed-files
-    if: ${{ needs.changed-files.outputs.status == 'true' }}
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -62,13 +66,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Node
         uses: actions/cache@v3
         with:
-          path: |
-            ~/lib
-            ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('package-lock.json') }}
+      - name: Cache Build
+        uses: actions/cache@v3
+        with:
+          path: lib
+          key: ${{ runner.os }}-build-${{ hashFiles('src/**') }}
       - name: Set the core version
         run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
       - name: Set up WP environment
