@@ -78,25 +78,31 @@ describe('Command: insertBlock', () => {
   });
 
   it('Should be able to insert Post-nav sub-block', () => {
-    cy.createPost({
-      beforeSave: () => {
-        cy.get('body').then($body => {
-          // Only run test on newer WordPress with "Post Next" block
-          if (
-            $body.find(
-              '[class*="editor-block-list-item-post-navigation-link/post-next"]'
-            ).length > 0
-          ) {
+    cy.visit('/wp-admin/post-new.php');
+    cy.closeWelcomeGuide();
+    const titleInput = 'h1.editor-post-title__input, #post-title-0';
+    cy.get(titleInput).should('exist');
+    cy.get(
+      '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
+    ).click();
+
+    // Detect if the block exist (added in 5.9)
+    cy.get('.block-editor-inserter__search').click().type('Next post');
+    cy.get('body').then($body => {
+      const slug = 'post-navigation-link\\/post-next';
+      if ($body.find(`.editor-block-list-item-${slug}`).length > 0) {
+        cy.createPost({
+          beforeSave: () => {
             cy.insertBlock('core/post-navigation-link/post-next', 'Next');
 
             cy.get('.wp-block-post-navigation-link > a')
               .should('have.attr', 'aria-label')
               .and('eq', 'Next post');
-          } else {
-            expect(true, "Skipping the test, block hasn't been added yet");
-          }
+          },
         });
-      },
+      } else {
+        expect(true, 'Skipping test, Next Page block does not exist');
+      }
     });
   });
 });
