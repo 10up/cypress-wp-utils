@@ -10,8 +10,30 @@ on:
     - cron: '36 7 * * 6'
 
 jobs:
+  changed-files:
+    name: Changed Files
+    outputs:
+      status: ${{ steps.changed-files.outputs.any_changed }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - id: changed-files
+        uses: tj-actions/changed-files@v18.7
+        with:
+          files: |
+            .github/workflows/cypress.yml
+            src/*
+            tests/*
+            cypress-wp-utils.php
+            .wp-env.json
+            package.json
+            package-lock.json
+
   cypress:
     name: ${{ matrix.core.name }}
+    needs: changed-files
+    if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
