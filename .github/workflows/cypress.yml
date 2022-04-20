@@ -30,6 +30,24 @@ jobs:
             package.json
             package-lock.json
 
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/lib
+            ~/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+
   cypress:
     name: ${{ matrix.core.name }}
     needs: changed-files
@@ -44,11 +62,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-        continue-on-error: true
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/lib
+            ~/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - name: Set the core version
         run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
       - name: Set up WP environment
