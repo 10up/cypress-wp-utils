@@ -1,4 +1,4 @@
-# cypress-wp-utils
+# Cypress Utilities for WordPress
 
 > Utilities library for WordPress E2E testing in the Cypress environment.
 
@@ -16,7 +16,7 @@ npm i "https://github.com/10up/cypress-wp-utils#build" -D
 
 ## Usage
 
-Just import the libary in `support/index.js` file then you're ready:
+Import the libary in `support/index.js` file:
 
 ```js
 // tests/cypress/support/index.js
@@ -39,11 +39,9 @@ Add a `tsconfig.json` file into the cypress folder to enable code completion for
 }
 ```
 
-## Contributing
+### Adding a new command
 
-### Adding new command
-
-This project use `hygen` to scaffold new command to reduce the effort of manually importing and registering new commands:
+This project uses `hygen` to scaffold new commands to reduce the effort of manually importing and registering new commands:
 
 ```sh
 $ npx hygen cypress-command new customCommand
@@ -55,7 +53,7 @@ Loaded templates: _templates
       inject: src/index.ts
 ```
 
-### Install the the library locally
+### Install the library locally
 
 ```sh
 npm i -D path/to/the/library
@@ -68,7 +66,7 @@ For every incoming pull request by default on GitHub Actions we automatically pe
 - WordPress [latest release](https://github.com/WordPress/WordPress/tags)
 - current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
 
-To run tests locally against every WordPress major release since minimum support (5.2) to the latest nightly build (6.0-alpha) use this script:
+To run tests locally against every WordPress major release since minimum support (5.2) to the latest nightly build (e.g., 6.0-alpha) use this script:
 
 ```sh
 ./run-all-cores.sh
@@ -79,6 +77,10 @@ It has optional parameter `-s` to specify only one test suite to run:
 ```sh
 ./run-all-cores.sh -s tests/cypress/intergation/login.test.js
 ```
+
+## Contributing
+
+Please read [CODE_OF_CONDUCT.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CODE_OF_CONDUCT.md) for details on our code of conduct, [CONTRIBUTING.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CONTRIBUTING.md) for details on the process for submitting pull requests to us, and [CREDITS.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CREDITS.md) for a list of maintainers, contributors, and libraries used in this repository.
 
 ## Support Level
 
