@@ -1,8 +1,8 @@
 # cypress-wp-utils
 
-![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.0-blue) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.2-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg)
-
 > Utilities library for WordPress E2E testing in the Cypress environment.
+
+[![Support Level](https://img.shields.io/badge/support-beta-blueviolet.svg)](#support-level) ![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.0-blue) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.2-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg)
 
 ## Prerequisites
 
@@ -79,6 +79,10 @@ It has optional parameter `-s` to specify only one test suite to run:
 ```sh
 ./run-all-cores.sh -s tests/cypress/intergation/login.test.js
 ```
+
+## Support Level
+
+**Beta:** This project is quite new and we're not sure what our ongoing support level for this will be. Bug reports, feature requests, questions, and pull requests are welcome. If you like this project please let us know, but be cautious using this in a Production environment!
 
 ## Like what you see?
 
