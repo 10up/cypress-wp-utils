@@ -4,34 +4,29 @@ describe('Command: insertBlock', () => {
   before(() => {
     cy.login();
     cy.deactivatePlugin('classic-editor');
+    // Ignore WP 5.2 Synchronous XHR error.
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (
+        err.message.includes(
+          "Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://localhost:8889/wp-admin/admin-ajax.php': Synchronous XHR in page dismissal"
+        )
+      ) {
+        return false;
+      }
+    });
   });
 
   it('Should be able to Insert first paragraph on page', () => {
     const paragraph = 'Paragraph ' + randomName();
     cy.createPost({
       beforeSave: () => {
-        // remove the existing paragraph
-        cy.get('.edit-post-header-toolbar__list-view-toggle').click();
-        cy.get('.block-editor-list-view-tree .block-editor-list-view-leaf')
-          .first()
-          .find('.components-dropdown-menu__toggle')
-          .click();
-        cy.get('.components-popover .components-menu-item__button')
-          .contains('Remove Paragraph')
-          .click();
-        cy.get(
-          '.edit-post-header-toolbar__list-view-toggle.is-pressed'
-        ).click();
-
         cy.insertBlock('core/paragraph').then(id => {
           cy.get(`#${id}`).click().type(paragraph);
         });
       },
     });
 
-    cy.get('.block-editor-writing-flow')
-      .should('not.contain.text', 'Test content')
-      .should('contain.text', paragraph);
+    cy.get('.block-editor-writing-flow').should('contain.text', paragraph);
   });
 
   it('Should be able to Insert Heading', () => {
@@ -39,20 +34,12 @@ describe('Command: insertBlock', () => {
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('core/heading').then(id => {
-          cy.get(`#${id}`).click();
-          cy.get(
-            '.components-popover .components-button[aria-label="Change heading level"]'
-          ).click();
-          cy.get('.components-button[aria-label="Heading 3"]').click();
           cy.get(`#${id}`).click().type(heading);
         });
       },
     });
 
-    cy.get('.block-editor-writing-flow h3.wp-block').should(
-      'contain.text',
-      heading
-    );
+    cy.get('.block-editor-writing-flow h2').should('contain.text', heading);
   });
 
   it('Should be able to insert Pullquote', () => {
@@ -61,8 +48,14 @@ describe('Command: insertBlock', () => {
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('core/pullquote').then(id => {
-          cy.get(`#${id} [aria-label="Pullquote text"]`).click().type(quote);
-          cy.get(`#${id} [aria-label="Pullquote citation text"]`)
+          cy.get(
+            `#${id} [aria-label="Pullquote text"], #${id} [aria-label="Write quote…"]`
+          )
+            .click()
+            .type(quote);
+          cy.get(
+            `#${id} [aria-label="Pullquote citation text"], #${id} [aria-label="Write citation…"]`
+          )
             .click()
             .type(cite);
         });
@@ -77,7 +70,7 @@ describe('Command: insertBlock', () => {
   it('Should be able to insert an Embed sub-block', () => {
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/embed/twitter');
+        cy.insertBlock('core/embed/twitter', 'Twitter');
       },
     });
 
@@ -87,12 +80,23 @@ describe('Command: insertBlock', () => {
   it('Should be able to insert Post-nav sub-block', () => {
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/post-navigation-link/post-next');
+        cy.get('body').then($body => {
+          // Only run test on newer WordPress with "Post Next" block
+          if (
+            $body.find(
+              '[class*="editor-block-list-item-post-navigation-link/post-next"]'
+            ).length > 0
+          ) {
+            cy.insertBlock('core/post-navigation-link/post-next', 'Next');
+
+            cy.get('.wp-block-post-navigation-link > a')
+              .should('have.attr', 'aria-label')
+              .and('eq', 'Next post');
+          } else {
+            expect(true, "Skipping the test, block hasn't been added yet");
+          }
+        });
       },
     });
-
-    cy.get('.wp-block-post-navigation-link > a')
-      .should('have.attr', 'aria-label')
-      .and('eq', 'Next post');
   });
 });
