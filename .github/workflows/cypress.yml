@@ -41,7 +41,10 @@ jobs:
       - name: Cache Node
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: |
+            node_modules
+            ~/.cache
+            ~/.npm
           key: ${{ runner.os }}-build-${{ hashFiles('package-lock.json') }}
       - name: Cache Build
         uses: actions/cache@v3
@@ -55,7 +58,8 @@ jobs:
 
   cypress:
     name: ${{ matrix.core.name }}
-    needs: build
+    needs: [changed-files, build]
+    if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -69,7 +73,10 @@ jobs:
       - name: Cache Node
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: |
+            node_modules
+            ~/.cache
+            ~/.npm
           key: ${{ runner.os }}-build-${{ hashFiles('package-lock.json') }}
       - name: Cache Build
         uses: actions/cache@v3
