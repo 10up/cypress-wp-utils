@@ -105,4 +105,17 @@ describe('Command: insertBlock', () => {
       }
     });
   });
+
+  it('Should be able to insert custom block', () => {
+    cy.createPost({
+      beforeSave: () => {
+        cy.insertBlock('tenup/winamp-block').then(id => {
+          cy.get(`#${id}`)
+            .should('contain.text', 'Add Audio')
+            .should('have.attr', 'data-type')
+            .and('eq', 'tenup/winamp-block');
+        });
+      },
+    });
+  });
 });
