@@ -56,20 +56,24 @@ export const checkBlockPatternExists = ({
     }
   });
 
-  // Move to the "Patterns" tab.
-  cy.get('.components-tab-panel__tabs button:nth-child(2)').click();
-
-  // Select pattern category if dropdown available (in a few WP versions).
   cy.get('body').then($body => {
+    // Move to the "Patterns" tab. This will skip further test for lower WP versions.
     if ($body.find('.components-select-control__input').length > 0) {
-      cy.get('.components-select-control__input').select(categoryValue, {
-        force: true,
-      });
+      cy.get('.components-tab-panel__tabs button:nth-child(2)').click();
+
+      // Select pattern category if dropdown available (in a few WP versions).
+      if ($body.find('.components-select-control__input').length > 0) {
+        cy.get('.components-select-control__input').select(categoryValue, {
+          force: true,
+        });
+      }
+
+      // Check if block pattern exist, insert if exist.
+      cy.get(
+        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
+      )
+        .should('exist')
+        .click();
     }
   });
-
-  // Check if block pattern exist, insert if exist.
-  cy.get('.block-editor-inserter__panel-content [aria-label="' + title + '"]')
-    .should('exist')
-    .click();
 };
