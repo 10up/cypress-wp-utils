@@ -118,7 +118,7 @@ describe('Command: insertBlock', () => {
     // Detect if the block exist (added in 5.9)
     cy.get('.block-editor-inserter__search').click().type('winamp');
     cy.get('body').then($body => {
-      const slug = 'tenup\\/winamp-block';
+      const slug = 'tenup-winamp-block';
       if ($body.find(`.editor-block-list-item-${slug}`).length > 0) {
         cy.createPost({
           beforeSave: () => {
