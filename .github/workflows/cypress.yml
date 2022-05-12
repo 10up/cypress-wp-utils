@@ -88,7 +88,9 @@ jobs:
       - name: Set up WP environment
         run: npm run env:start
       - name: Test
-        run: npm run cypress:run
+        run: npm run cypress:run > cypress.log
+      - name: Update summary
+        run: cat cypress.log >> $GITHUB_STEP_SUMMARY
       - name: Make artifacts available
         uses: actions/upload-artifact@v2
         if: failure()
