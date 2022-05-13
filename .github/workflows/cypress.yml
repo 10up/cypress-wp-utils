@@ -88,9 +88,11 @@ jobs:
       - name: Set up WP environment
         run: npm run env:start
       - name: Test
-        run: npm run cypress:run > cypress.log
+        run: npm run cypress:run
       - name: Update summary
-        run: cat cypress.log >> $GITHUB_STEP_SUMMARY
+        run: |
+          npx mochawesome-json-to-md -p ./tests/cypress/results/mochawesome.json -o ./tests/cypress/results/mochawesome.md
+          cat ./tests/cypress/results/mochawesome.md >> $GITHUB_STEP_SUMMARY
       - name: Make artifacts available
         uses: actions/upload-artifact@v2
         if: failure()
@@ -101,3 +103,4 @@ jobs:
             ${{ github.workspace }}/tests/cypress/screenshots/
             ${{ github.workspace }}/tests/cypress/videos/
             ${{ github.workspace }}/tests/cypress/logs/
+            ${{ github.workspace }}/tests/cypress/reports/

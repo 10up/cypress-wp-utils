@@ -1,5 +1,6 @@
 tests/cypress/screenshots
 tests/cypress/videos
+tests/cypress/reports
 
 # wp-env files
 .wp-env.override.json
