@@ -91,7 +91,7 @@ jobs:
         run: npm run cypress:run
       - name: Update summary
         run: |
-          npx mochawesome-json-to-md -p ./tests/cypress/results/mochawesome.json -o ./tests/cypress/results/mochawesome.md
+          npx mochawesome-json-to-md -p ./tests/cypress/reports/mochawesome.json -o ./tests/cypress/reports/mochawesome.md
           cat ./tests/cypress/results/mochawesome.md >> $GITHUB_STEP_SUMMARY
       - name: Make artifacts available
         uses: actions/upload-artifact@v2
