@@ -100,4 +100,20 @@ describe('Command: createPost', () => {
       .find('.post-state')
       .should('contain.text', 'Sticky');
   });
+
+  it('Should be able to get published post details', () => {
+    const postTitle = 'Post ' + randomName();
+    const postContent = 'Content ' + randomName();
+    cy.createPost({
+      title: postTitle,
+      content: postContent,
+    }).then(post => {
+      console.log(post);
+      assert(post.title.raw === postTitle, 'Post title is the same');
+      assert(
+        post.content.rendered.includes(postContent),
+        'Post content is the same'
+      );
+    });
+  });
 });
