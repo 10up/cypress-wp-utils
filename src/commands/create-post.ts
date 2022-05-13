@@ -1,3 +1,8 @@
+interface PublishPostData {
+  status: string;
+  title: string;
+}
+
 /**
  * Create a Post
  *
@@ -15,7 +20,9 @@
  * cy.createPost({
  *   title: 'Test Post',
  *   content: 'Test Content'
- * })
+ * }).then(post => {
+ *   const id = post.id;
+ * });
  * ```
  *
  * @example
@@ -99,10 +106,21 @@ export const createPost = ({
     cy.get('.editor-post-publish-panel__toggle').should('be.enabled');
     cy.get('.editor-post-publish-panel__toggle').click();
 
+    cy.intercept({ method: 'POST' }, req => {
+      const body: PublishPostData = req.body;
+      if (body.status === 'publish' && body.title === title) {
+        req.alias = 'publishPost';
+      }
+    });
+
     cy.get('.editor-post-publish-button').click();
 
     cy.get('.components-snackbar, .components-notice.is-success').should(
       'be.visible'
     );
+
+    cy.wait('@publishPost').then(response => {
+      cy.wrap(response.response?.body);
+    });
   }
 };
