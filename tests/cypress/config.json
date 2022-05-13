@@ -9,9 +9,10 @@
   "video": true,
   "reporter": "mochawesome",
   "reporterOptions": {
+    "reportFilename": "mochawesome-[name]",
     "reportDir": "tests/cypress/reports",
-    "overwrite": true,
-    "html": true,
+    "overwrite": false,
+    "html": false,
     "json": true
   }
 }
