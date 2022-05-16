@@ -1,7 +1,8 @@
+/* eslint-disable tsdoc/syntax */
 /**
- * Check Block Pattern Exists. Works only with WordPress >=5.5
+ * Check Block Pattern Exists. Works only with WordPress \>=5.5
  *
- * @param postData {
+ * \@param postData {
  *          `title` - Patttern name/title,
  *          `categoryValue` - Value of the pattern category,
  *        }
@@ -33,47 +34,51 @@ export const checkBlockPatternExists = ({
   cy.visit('/wp-admin/post-new.php');
 
   // Close Welcome Guide.
-  const welcomeGuide =
-    '.edit-post-welcome-guide .components-modal__header button';
-  cy.get('body').then($body => {
-    if ($body.find(welcomeGuide).length > 0) {
-      cy.get(welcomeGuide).click();
-      // WP 5.2
-    } else if ($body.find('.nux-dot-tip__disable').length > 0) {
-      cy.get('.nux-dot-tip__disable').click();
-    }
-  });
+  cy.closeWelcomeGuide();
 
-  // Open inerter.
+  // Open inserter.
   const inserterWPOld =
     '.edit-post-header-toolbar .block-editor-inserter__toggle';
   const inserterWPNew = '.edit-post-header-toolbar__inserter-toggle';
   cy.get('body').then($body => {
     if ($body.find(inserterWPOld).length > 0) {
-      cy.get(inserterWPOld).click({ force: true });
+      cy.get(inserterWPOld).click();
     } else {
-      cy.get(inserterWPNew).click({ force: true });
+      cy.get(inserterWPNew).click();
     }
   });
 
+  // Move to the "Patterns" tab. This will skip further test for lower WP versions.
   cy.get('body').then($body => {
-    // Move to the "Patterns" tab. This will skip further test for lower WP versions.
-    if ($body.find('.components-select-control__input').length > 0) {
+    if (
+      $body.find('.components-tab-panel__tabs button:nth-child(2)').length > 0
+    ) {
       cy.get('.components-tab-panel__tabs button:nth-child(2)').click();
-
-      // Select pattern category if dropdown available (in a few WP versions).
-      if ($body.find('.components-select-control__input').length > 0) {
-        cy.get('.components-select-control__input').select(categoryValue, {
-          force: true,
-        });
-      }
-
-      // Check if block pattern exist, insert if exist.
-      cy.get(
-        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
-      )
-        .should('exist')
-        .click();
     }
   });
+
+  // Select pattern category if dropdown available.
+  cy.get('body').then($body => {
+    if ($body.find('.components-select-control__input').length > 0) {
+      console.log(categoryValue);
+      cy.get('.components-select-control__input').select(categoryValue);
+    }
+  });
+
+  // Check if block pattern exist.
+  // eslint-disable-next-line
+  const exists = cy.get(
+    '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  if (exists.should('exist')) {
+    // Check if block pattern exist, insert if exist.
+    cy.wrap(
+      '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
+    );
+    return;
+  }
+
+  cy.wrap(false);
 };

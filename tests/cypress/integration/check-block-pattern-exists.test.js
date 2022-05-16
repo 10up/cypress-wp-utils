@@ -6,8 +6,15 @@ describe('Command: checkBlockPatternExists', () => {
 
   it('Should be able to Check Block Pattern Exists', () => {
     cy.checkBlockPatternExists({
-      title: 'Three columns with offset images',
-      categoryValue: 'gallery',
+      title: 'Quote',
+      categoryValue: 'text',
+    }).then(exists => {
+      if (exists) {
+        // insert pattern
+        cy.get(exists).click();
+      } else {
+        alert('pattern not found!');
+      }
     });
   });
 });
