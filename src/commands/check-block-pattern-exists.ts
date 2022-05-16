@@ -65,20 +65,22 @@ export const checkBlockPatternExists = ({
     }
   });
 
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(10000);
+
   // Check if block pattern exist.
-  // eslint-disable-next-line
-  const exists = cy.get(
-    '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
-  );
-
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  if (exists.should('exist')) {
-    // Check if block pattern exist, insert if exist.
-    cy.wrap(
-      '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
-    );
-    return;
-  }
-
-  cy.wrap(false);
+  cy.get('body').then($body => {
+    if (
+      $body.find(
+        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
+      ).length > 0
+    ) {
+      // Check if block pattern exist, insert if exist.
+      cy.wrap(
+        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
+      );
+      return;
+    }
+    cy.wrap(false);
+  });
 };
