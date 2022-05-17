@@ -24,6 +24,12 @@
  * });
  * ```
  */
+declare global {
+  interface Window {
+    wp: any;
+  }
+}
+
 export const checkBlockPatternExists = ({
   title,
   categoryValue = 'featured',
@@ -37,21 +43,22 @@ export const checkBlockPatternExists = ({
   cy.closeWelcomeGuide();
 
   cy.window().then(win => {
-    // @ts-ignore
     const { wp } = win;
 
     /* eslint-disable */
     const { getSettings } = wp.data.select('core/block-editor');
     const allRegisteredPatterns = getSettings().__experimentalBlockPatterns;
 
-    for (let i = 0; i < allRegisteredPatterns.length; i++) {
-      if (
-        title === allRegisteredPatterns[i].title &&
-        allRegisteredPatterns[i].categories &&
-        allRegisteredPatterns[i].categories.includes(categoryValue)
-      ) {
-        cy.wrap(true);
-        return;
+    if (undefined !== allRegisteredPatterns) {
+      for (let i = 0; i < allRegisteredPatterns.length; i++) {
+        if (
+          title === allRegisteredPatterns[i].title &&
+          allRegisteredPatterns[i].categories &&
+          allRegisteredPatterns[i].categories.includes(categoryValue)
+        ) {
+          cy.wrap(true);
+          return;
+        }
       }
     }
     /* eslint-enable */
