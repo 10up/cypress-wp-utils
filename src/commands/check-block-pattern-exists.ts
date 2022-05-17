@@ -36,51 +36,25 @@ export const checkBlockPatternExists = ({
   // Close Welcome Guide.
   cy.closeWelcomeGuide();
 
-  // Open inserter.
-  const inserterWPOld =
-    '.edit-post-header-toolbar .block-editor-inserter__toggle';
-  const inserterWPNew = '.edit-post-header-toolbar__inserter-toggle';
-  cy.get('body').then($body => {
-    if ($body.find(inserterWPOld).length > 0) {
-      cy.get(inserterWPOld).click();
-    } else {
-      cy.get(inserterWPNew).click();
-    }
-  });
+  cy.window().then(win => {
+    // @ts-ignore
+    const { wp } = win;
 
-  // Move to the "Patterns" tab. This will skip further test for lower WP versions.
-  cy.get('body').then($body => {
-    if (
-      $body.find('.components-tab-panel__tabs button:nth-child(2)').length > 0
-    ) {
-      cy.get('.components-tab-panel__tabs button:nth-child(2)').click();
-    }
-  });
+    /* eslint-disable */
+    const { getSettings } = wp.data.select('core/block-editor');
+    const allRegisteredPatterns = getSettings().__experimentalBlockPatterns;
 
-  // Select pattern category if dropdown available.
-  cy.get('body').then($body => {
-    if ($body.find('.components-select-control__input').length > 0) {
-      console.log(categoryValue);
-      cy.get('.components-select-control__input').select(categoryValue);
+    for (let i = 0; i < allRegisteredPatterns.length; i++) {
+      if (
+        title === allRegisteredPatterns[i].title &&
+        allRegisteredPatterns[i].categories &&
+        allRegisteredPatterns[i].categories.includes(categoryValue)
+      ) {
+        cy.wrap(true);
+        return;
+      }
     }
-  });
-
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(10000);
-
-  // Check if block pattern exist.
-  cy.get('body').then($body => {
-    if (
-      $body.find(
-        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
-      ).length > 0
-    ) {
-      // Check if block pattern exist, insert if exist.
-      cy.wrap(
-        '.block-editor-inserter__panel-content [aria-label="' + title + '"]'
-      );
-      return;
-    }
+    /* eslint-enable */
     cy.wrap(false);
   });
 };

@@ -10,10 +10,9 @@ describe('Command: checkBlockPatternExists', () => {
       categoryValue: 'text',
     }).then(exists => {
       if (exists) {
-        // Insert pattern.
-        cy.get(exists).click();
+        alert('The block patter exists!');
       } else {
-        alert('pattern not found!');
+        alert('The block pattern does not exist!');
       }
     });
   });
