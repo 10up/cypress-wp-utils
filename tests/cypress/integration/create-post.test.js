@@ -108,7 +108,6 @@ describe('Command: createPost', () => {
       title: postTitle,
       content: postContent,
     }).then(post => {
-      console.log(post);
       assert(post.title.raw === postTitle, 'Post title is the same');
       assert(
         post.content.rendered.includes(postContent),
