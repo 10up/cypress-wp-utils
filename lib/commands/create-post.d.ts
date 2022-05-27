@@ -1,21 +1,21 @@
 /**
  * Create a Post
  *
- * @param postData {
- *          `postType` - Post type,
- *          `title` - Post Title,
- *          `content` - Post Content,
- *          `status` - Post Status,
- *          `beforeSave` - Callable function hook
- *        }
+ * @param postData - Post data
+ *
+ * @returns Wraps post data object. See WP_REST_Posts_Controller::prepare_item_for_response
+ *          for the reference of post object contents:
+ *          https://github.com/WordPress/WordPress/blob/master/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php
  *
  * @example
- * Create a Post
+ * Create a Post and get ID
  * ```
  * cy.createPost({
  *   title: 'Test Post',
  *   content: 'Test Content'
- * })
+ * }).then(post => {
+ *   const id = post.id;
+ * });
  * ```
  *
  * @example
