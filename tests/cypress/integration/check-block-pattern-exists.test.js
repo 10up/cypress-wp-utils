@@ -16,8 +16,8 @@ describe('Command: checkBlockPatternExists', () => {
     const shouldIt = testCase.expected ? 'should' : 'shoult not';
     it(`Pattern "${testCase.title}" ${shouldIt} exist in category "${testCase.cat}"`, () => {
       cy.checkBlockPatternExists({
-        title: 'Quote',
-        categoryValue: 'text',
+        title: testCase.title,
+        categoryValue: testCase.cat,
       }).then(exists => {
         assert(
           exists === testCase.expected,
