@@ -62,6 +62,7 @@ jobs:
     if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         core:
           - { name: 'WP latest', version: 'latest', number: '6.0.0' }
