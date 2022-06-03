@@ -10,9 +10,9 @@ describe('Command: checkBlockPatternExists', () => {
       categoryValue: 'text',
     }).then(exists => {
       if (exists) {
-        alert('The block patter exists!');
+        // The block patter exists!
       } else {
-        alert('The block pattern does not exist!');
+        // The block pattern does not exist!
       }
     });
   });
