@@ -1,9 +1,23 @@
+import PostData from '../interface/post-data';
+
 /**
- * Classic Create Post
+ * Create Post in Classic Editor
+ *
+ * @param postData - Post data.
  *
  * @example
  * ```
- * cy.classicCreatePost()
+ * cy.classicCreatePost({
+ *   title: 'Post title',
+ *   content: 'Post content',
+ *   beforeSave: () => {
+ *     // Do something before save.
+ *   },
+ *   postType: 'page',
+ *   status: 'draft'
+ * }).then(postID => {
+ *   cy.log(postID);
+ * })
  * ```
  */
 export const classicCreatePost = ({
@@ -12,13 +26,7 @@ export const classicCreatePost = ({
   content = 'Test content',
   status = 'publish',
   beforeSave,
-}: {
-  title: string;
-  postType?: string;
-  content?: string;
-  status?: string;
-  beforeSave?: CallableFunction;
-}): void => {
+}: PostData): void => {
   cy.visit(`/wp-admin/post-new.php?post_type=${postType}`);
 
   cy.get('#title').click().clear().type(title);
