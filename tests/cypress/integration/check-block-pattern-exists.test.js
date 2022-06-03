@@ -15,7 +15,6 @@ describe('Command: checkBlockPatternExists', () => {
   testPatterns.forEach(testCase => {
     const shouldIt = testCase.expected ? 'should' : 'shoult not';
     it(`Pattern "${testCase.title}" ${shouldIt} exist in category "${testCase.cat}"`, () => {
-      console.log(Cypress.config('wpEnv'));
       cy.checkBlockPatternExists({
         title: 'Quote',
         categoryValue: 'text',
