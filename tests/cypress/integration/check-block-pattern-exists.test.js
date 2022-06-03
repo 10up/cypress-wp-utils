@@ -1,8 +1,8 @@
 const { randomName } = require('../support/functions');
-const semver = require('semver');
+import { compare } from 'compare-versions';
 
 describe('Command: checkBlockPatternExists', () => {
-  if (semver.gte(Cypress.env('WORDPRESS_CORE').toString(), '5.5.0')) {
+  if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.5', '>=')) {
     before(() => {
       cy.login();
       cy.deactivatePlugin('classic-editor');
@@ -15,12 +15,17 @@ describe('Command: checkBlockPatternExists', () => {
     ];
 
     testPatterns.forEach(testCase => {
-      const shouldIt = testCase.expected ? 'should' : 'shoult not';
+      const shouldIt = testCase.expected ? 'should' : 'should not';
       it(`Pattern "${testCase.title}" ${shouldIt} exist in category "${testCase.cat}"`, () => {
-        cy.checkBlockPatternExists({
+        const args = {
           title: testCase.title,
-          categoryValue: testCase.cat,
-        }).then(exists => {
+        };
+
+        if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.8', '>=')) {
+          args.categoryValue = testCase.cat;
+        }
+
+        cy.checkBlockPatternExists(args).then(exists => {
           assert(
             exists === testCase.expected,
             `Pattern "${testCase.title}" in category "${testCase.cat}": ${testCase.expected}`
@@ -29,7 +34,7 @@ describe('Command: checkBlockPatternExists', () => {
       });
     });
   } else {
-    it('Skip Block Pattern test, WordPress version too low', () => {
+    it('Skip checkBlockPatternExists test, WordPress version too low', () => {
       assert(true);
     });
   }

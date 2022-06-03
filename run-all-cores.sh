@@ -19,6 +19,6 @@ for VERSION in $VERSIONS; do
 	npm run env:start
 	npm run env run tests-cli "core update-db"
 	npm run env clean
-	npm run cypress:run $SPEC
+	CYPRESS_WORDPRESS_CORE="$VERSION" npm run cypress:run $SPEC
 	npm run env:stop
 done
