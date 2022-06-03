@@ -1,5 +1,9 @@
 {
-  "plugins": [".", "WordPress/classic-editor"],
+  "plugins": [
+    ".",
+    "WordPress/classic-editor",
+    "https://github.com/10up/retro-winamp-block/releases/download/1.0.1/retro-winamp-block.zip"
+  ],
   "env": {
     "tests": {
       "mappings": {
