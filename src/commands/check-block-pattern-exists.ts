@@ -37,11 +37,6 @@ export const checkBlockPatternExists = ({
   title: string;
   categoryValue?: string;
 }): void => {
-  cy.visit('/wp-admin/post-new.php');
-
-  // Close Welcome Guide.
-  cy.closeWelcomeGuide();
-
   cy.window().then(win => {
     const { wp } = win;
 

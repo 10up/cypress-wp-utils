@@ -6,6 +6,8 @@ describe('Command: checkBlockPatternExists', () => {
     before(() => {
       cy.login();
       cy.deactivatePlugin('classic-editor');
+      cy.visit('/wp-admin/post-new.php');
+      cy.closeWelcomeGuide();
     });
 
     const testPatterns = [
@@ -17,6 +19,9 @@ describe('Command: checkBlockPatternExists', () => {
     testPatterns.forEach(testCase => {
       const shouldIt = testCase.expected ? 'should' : 'should not';
       it(`Pattern "${testCase.title}" ${shouldIt} exist in category "${testCase.cat}"`, () => {
+        // Wait for patterns to load on the post edit page.
+        cy.wait(1000);
+
         const args = {
           title: testCase.title,
         };
