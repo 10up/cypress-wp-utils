@@ -40,5 +40,11 @@ export const checkPostExists = ({
   cy.get(searchInput).clear().type(title).get(searchSubmit).click();
 
   // See if the post is listed in the search result.
-  cy.get(postLabel).should('exist');
+  cy.get('body').then($body => {
+    if ($body.find(postLabel).length > 0) {
+      cy.wrap(true);
+    } else {
+      cy.wrap(false);
+    }
+  });
 };
