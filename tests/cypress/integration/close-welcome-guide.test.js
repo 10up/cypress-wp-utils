@@ -2,6 +2,8 @@ describe('Command: closeWelcomeGuide', () => {
   before(() => {
     cy.login();
 
+    cy.deactivatePlugin('classic-editor');
+
     // Disable Classic Editor if it's enabled
     cy.visit('/wp-admin/options-writing.php');
     cy.get('body').then($body => {
