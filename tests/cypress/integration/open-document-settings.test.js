@@ -1,3 +1,5 @@
+const { randomName } = require('../support/functions');
+
 describe('Commands: openDocumentSettings*', () => {
   before(() => {
     cy.login();
@@ -45,43 +47,47 @@ describe('Commands: openDocumentSettings*', () => {
   });
 
   it('Should be able to open Tags panel on the existing post', () => {
-    cy.visit(`/wp-admin/edit.php?post_type=post`);
-    cy.get('#the-list .row-title').first().click();
-    cy.closeWelcomeGuide();
+    cy.createPost({
+      title: randomName(),
+    }).then(post => {
+      console.log(post);
+      cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
+      cy.closeWelcomeGuide();
 
-    // cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      const name = 'Tags';
+      cy.openDocumentSettingsPanel(name);
 
-    const name = 'Tags';
-    cy.openDocumentSettingsPanel(name);
-
-    // Assertion: Add new tag input should be visible
-    cy.get('.components-panel__body .components-panel__body-title button')
-      .contains(name)
-      .then($button => {
-        const $panel = $button.parents('.components-panel__body');
-        cy.wrap($panel).should('contain', 'Add New Tag');
-      });
+      // Assertion: Add new tag input should be visible
+      cy.get('.components-panel__body .components-panel__body-title button')
+        .contains(name)
+        .then($button => {
+          const $panel = $button.parents('.components-panel__body');
+          cy.wrap($panel).should('contain', 'Add New Tag');
+        });
+    });
   });
 
   it('Should be able to open Discussion panel on the existing page', () => {
-    cy.visit(`/wp-admin/edit.php?post_type=page`);
-    cy.get('#the-list .row-title').first().click();
-    cy.closeWelcomeGuide();
+    cy.createPost({
+      title: randomName(),
+      postType: 'page',
+    }).then(post => {
+      cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
+      cy.closeWelcomeGuide();
 
-    cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      const name = 'Discussion';
+      cy.openDocumentSettingsPanel(name, 'Page');
 
-    const name = 'Discussion';
-    cy.openDocumentSettingsPanel(name, 'Page');
-
-    // Assertion: Allow comments checkbox should be visible
-    cy.get('.components-panel__body .components-panel__body-title button')
-      .contains(name)
-      .then($button => {
-        const $panel = $button.parents('.components-panel__body');
-        cy.wrap($panel)
-          .contains('Allow comments', { matchCase: false })
-          .should('exist');
-      });
+      // Assertion: Allow comments checkbox should be visible
+      cy.get('.components-panel__body .components-panel__body-title button')
+        .contains(name)
+        .then($button => {
+          const $panel = $button.parents('.components-panel__body');
+          cy.wrap($panel)
+            .contains('Allow comments', { matchCase: false })
+            .should('exist');
+        });
+    });
   });
 
   it('Should be able to Open Post Settings Sidebar on a new Post', () => {
@@ -106,43 +112,51 @@ describe('Commands: openDocumentSettings*', () => {
   });
 
   it('Should be able to Open Block tab of the first block on existing post', () => {
-    cy.visit(`/wp-admin/edit.php?post_type=post`);
-    cy.get('#the-list .row-title').first().click();
-    cy.closeWelcomeGuide();
+    cy.createPost({
+      title: randomName(),
+    }).then(post => {
+      cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
+      cy.closeWelcomeGuide();
 
-    cy.get('.block-editor-block-list__layout > .wp-block').first().click();
-    cy.openDocumentSettingsSidebar('Block');
+      cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      cy.openDocumentSettingsSidebar('Block');
 
-    // Assertions:
-    cy.get('.edit-post-sidebar__panel-tab')
-      .contains('Block')
-      .should('have.class', 'is-active');
-    cy.get(
-      '.components-panel .block-editor-block-inspector, .components-panel .edit-post-settings-sidebar__panel-block'
-    ).should('be.visible');
+      // Assertions:
+      cy.get('.edit-post-sidebar__panel-tab')
+        .contains('Block')
+        .should('have.class', 'is-active');
+      cy.get(
+        '.components-panel .block-editor-block-inspector, .components-panel .edit-post-settings-sidebar__panel-block'
+      ).should('be.visible');
+    });
   });
 
   it('Should be able to open Page Settings sidebar on an existing page', () => {
-    cy.visit(`/wp-admin/edit.php?post_type=page`);
-    cy.get('#the-list .row-title').first().click();
-    cy.closeWelcomeGuide();
+    cy.createPost({
+      title: randomName(),
+      postType: 'page',
+    }).then(post => {
+      cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
+      cy.closeWelcomeGuide();
 
-    cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      cy.openDocumentSettingsSidebar('Page');
 
-    cy.openDocumentSettingsSidebar('Page');
-
-    cy.get('body').then($body => {
-      let postTabSelector = '.edit-post-sidebar__panel-tab[data-label="Page"]';
-      if (
-        $body.find('.edit-post-sidebar__panel-tab[data-label="Page"]')
-          .length === 0
-      ) {
-        // Post tab name for WordPress 5.2
-        postTabSelector =
-          '.edit-post-sidebar__panel-tab[data-label="Document"]';
-      }
-      cy.get(postTabSelector).should('have.class', 'is-active');
-      cy.get('.components-panel .components-panel__body').should('be.visible');
+      cy.get('body').then($body => {
+        let postTabSelector =
+          '.edit-post-sidebar__panel-tab[data-label="Page"]';
+        if (
+          $body.find('.edit-post-sidebar__panel-tab[data-label="Page"]')
+            .length === 0
+        ) {
+          // Post tab name for WordPress 5.2
+          postTabSelector =
+            '.edit-post-sidebar__panel-tab[data-label="Document"]';
+        }
+        cy.get(postTabSelector).should('have.class', 'is-active');
+        cy.get('.components-panel .components-panel__body').should(
+          'be.visible'
+        );
+      });
     });
   });
 });
