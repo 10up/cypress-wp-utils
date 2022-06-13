@@ -50,7 +50,6 @@ describe('Commands: openDocumentSettings*', () => {
     cy.createPost({
       title: randomName(),
     }).then(post => {
-      console.log(post);
       cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
       cy.closeWelcomeGuide();
 
