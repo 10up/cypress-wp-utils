@@ -1,34 +1,57 @@
+const { randomName } = require('../support/functions');
+
 describe('Command: checkPostExists', () => {
+  const tests = [
+    {
+      postType: 'post',
+      postTitle: 'Post ' + randomName(),
+      expected: true,
+    },
+    {
+      postType: 'post',
+      postTitle: 'Post ' + randomName(),
+      expected: false,
+    },
+    {
+      postType: 'page',
+      postTitle: 'Page ' + randomName(),
+      expected: true,
+    },
+    {
+      postType: 'page',
+      postTitle: 'Post ' + randomName(),
+      expected: false,
+    },
+  ];
+
   before(() => {
     cy.login();
-  });
 
-  it('Should be able to Check if Post Exists', () => {
-    cy.checkPostExists({
-      title: 'Hello world!',
-    }).then(exists => {
-      if (exists) {
-        console.log('The post exists!');
-        // The block patter exists!
-      } else {
-        console.log('The post does not exist!');
-        // The block pattern does not exist!
+    // Create posts which expected to exist during tests
+    tests.forEach(test => {
+      if (test.expected) {
+        cy.classicCreatePost({
+          postType: test.postType,
+          title: test.postTitle,
+        });
       }
     });
   });
 
-  it('Should be able to Check if Page Exists', () => {
-    cy.checkPostExists({
-      title: 'Sample Page',
-      postType: 'page',
-    }).then(exists => {
-      if (exists) {
-        console.log('The page exists!');
-        // The block patter exists!
-      } else {
-        console.log('The page does not exist!');
-        // The block pattern does not exist!
+  tests.forEach(test => {
+    const shouldIt = test.exists ? 'should' : 'should not';
+    it(`${test.postTitle} ${shouldIt} exist`, () => {
+      const args = {
+        title: test.postTitle,
+      };
+
+      // make 'postType' argument optional to test default value
+      if ('post' !== test.postType) {
+        args.postType = test.postType;
       }
+      cy.checkPostExists(args).then(exists => {
+        assert(exists === test.expected, `Post ${shouldIt} exist`);
+      });
     });
   });
 });
