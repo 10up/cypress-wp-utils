@@ -40,7 +40,7 @@ describe('Command: checkPostExists', () => {
   });
 
   tests.forEach(test => {
-    const shouldIt = test.exists ? 'should' : 'should not';
+    const shouldIt = test.expected ? 'should' : 'should not';
     it(`${test.postTitle} ${shouldIt} exist`, () => {
       const args = {
         title: test.postTitle,
