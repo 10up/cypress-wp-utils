@@ -28,6 +28,17 @@ describe('Command: checkPostExists', () => {
     cy.login();
     cy.deactivatePlugin('classic-editor');
 
+    // Ignore WP 5.2 Synchronous XHR error.
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (
+        err.message.includes(
+          "Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://localhost:8889/wp-admin/admin-ajax.php': Synchronous XHR in page dismissal"
+        )
+      ) {
+        return false;
+      }
+    });
+
     // Create posts which expected to exist during tests
     tests.forEach(test => {
       if (test.expected) {
