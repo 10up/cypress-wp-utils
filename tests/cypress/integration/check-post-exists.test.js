@@ -26,12 +26,12 @@ describe('Command: checkPostExists', () => {
 
   before(() => {
     cy.login();
-    cy.activatePlugin('classic-editor');
+    cy.deactivatePlugin('classic-editor');
 
     // Create posts which expected to exist during tests
     tests.forEach(test => {
       if (test.expected) {
-        cy.classicCreatePost({
+        cy.createPost({
           postType: test.postType,
           title: test.postTitle,
         });
