@@ -19,6 +19,7 @@ import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
 import { login } from './commands/login';
 import { createPost } from './commands/create-post';
+import { uploadMedia } from './commands/upload-media';
 
 declare global {
   namespace Cypress {
@@ -38,6 +39,7 @@ declare global {
       deleteAllTerms: typeof deleteAllTerms;
       createTerm: typeof createTerm;
       createPost: typeof createPost;
+      uploadMedia: typeof uploadMedia;
       logout: typeof logout;
       login: typeof login;
     }
@@ -63,5 +65,6 @@ Cypress.Commands.add(
 Cypress.Commands.add('deleteAllTerms', deleteAllTerms);
 Cypress.Commands.add('createTerm', createTerm);
 Cypress.Commands.add('createPost', createPost);
+Cypress.Commands.add('uploadMedia', uploadMedia);
 Cypress.Commands.add('logout', logout);
 Cypress.Commands.add('login', login);
