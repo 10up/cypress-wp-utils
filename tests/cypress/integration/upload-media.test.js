@@ -3,7 +3,7 @@ describe('Command: uploadMedia', () => {
     cy.login();
   });
 
-  it('Should be able to upload image', () => {
+  it('Should be able to upload media', () => {
     cy.uploadMedia('tests/cypress/fixtures/10up.png').then(response => {
       expect(response.success).to.equal(true);
       expect(Number.isNaN(response.mediaId)).to.equal(false);
@@ -14,7 +14,7 @@ describe('Command: uploadMedia', () => {
     });
   });
 
-  it('Should be able to upload image', () => {
+  it('Should be able to detect upload media failure', () => {
     cy.uploadMedia('tests/cypress/fixtures/example.json').then(response => {
       expect(response.success).to.equal(false);
       expect(response.errorMessage).to.be.a('string');

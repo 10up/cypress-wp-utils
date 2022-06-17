@@ -1,18 +1,15 @@
 /**
  * Upload a media file
  *
- * @param file - file path or alias.
+ * @param file - file path.
+ *
+ * @returns Media ID with upload status. eg: `{ success: true, mediaId: 123}`,
+ *          for failure `{ success: false, errorMessage: '"file" has failed to upload' }`
  *
  * @example
- * Upload a media file using file path.
+ * Upload a media file.
  * ```
  * cy.uploadMedia('tests/cypress/fixtures/image.png')
- * ```
- *
- * @example
- * Upload a media file using alias.
- * ```
- * cy.uploadMedia('@profileImage')
  * ```
  */
 export const uploadMedia = (filePath: string): void => {
