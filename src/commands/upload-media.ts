@@ -1,7 +1,7 @@
 /**
  * Upload a media file
  *
- * @param file - file path.
+ * @param filePath - A path to a file within the project root (Eg: 'tests/cypress/fixtures/10up.png').
  *
  * @returns Media ID with upload status. eg: `{ success: true, mediaId: 123}`,
  *          for failure `{ success: false, errorMessage: '"file" has failed to upload' }`
