@@ -15,6 +15,7 @@ import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
 import { login } from './commands/login';
 import { createPost } from './commands/create-post';
+import { uploadMedia } from './commands/upload-media';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
@@ -33,6 +34,7 @@ declare global {
             deleteAllTerms: typeof deleteAllTerms;
             createTerm: typeof createTerm;
             createPost: typeof createPost;
+            uploadMedia: typeof uploadMedia;
             logout: typeof logout;
             login: typeof login;
         }
