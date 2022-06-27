@@ -62,6 +62,7 @@ npm i -D path/to/the/library
 ### Test against every WordPress major release
 
 For every incoming pull request by default on GitHub Actions we automatically perform tests against:
+
 - current minimum supported WordPress 5.2
 - WordPress [latest release](https://github.com/WordPress/WordPress/tags)
 - current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
@@ -78,6 +79,31 @@ It has optional parameter `-s` to specify only one test suite to run:
 ./run-all-cores.sh -s tests/cypress/intergation/login.test.js
 ```
 
+### Test against WordPress multisite
+
+There are some issues setting up multisite environment for testing:
+
+- `wp-env` hasn't supported multisite out of the box.
+- WordPress doesn't support installing multisite for domain with custom ports number (`80` and `443` are supported).`
+- Update hosts file is error-prone and not practical.
+
+With those limitation in mind, we can set up subfolder multisite environment for testing by:
+
+1. Use the port `80` for the test environment. This isn't a great solution for local development and test, but it has no problem in CI. The port can be changed in the `.wp-env.json`:
+
+```json
+{
+  "env": {
+    "tests": {
+      "port": 80
+    }
+  }
+}
+```
+
+2. Convert the test environment to multisite using CLI `wp-env run tests-cli 'wp core multisite-convert'`.
+3. Update the `.htaccess` file of test environment with rules from [here](https://wordpress.org/support/article/htaccess/#wordpress-3-5-and-up).
+
 ## Contributing
 
 Please read [CODE_OF_CONDUCT.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CODE_OF_CONDUCT.md) for details on our code of conduct, [CONTRIBUTING.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CONTRIBUTING.md) for details on the process for submitting pull requests to us, and [CREDITS.md](https://github.com/10up/cypress-wp-utils/blob/trunk/CREDITS.md) for a list of maintainers, contributors, and libraries used in this repository.
@@ -89,3 +115,7 @@ Please read [CODE_OF_CONDUCT.md](https://github.com/10up/cypress-wp-utils/blob/t
 ## Like what you see?
 
 [![Work with us](https://10up.com/uploads/2016/10/10up-Github-Banner.png)](http://10up.com/contact/)
+
+```
+
+```
