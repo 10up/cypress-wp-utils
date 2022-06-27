@@ -6,5 +6,13 @@
   "videosFolder": "tests/cypress/videos",
   "downloadsFolder": "tests/cypress/downloads",
   "supportFile": "tests/cypress/support/index.js",
-  "video": true
+  "video": true,
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportFilename": "mochawesome-[name]",
+    "reportDir": "tests/cypress/reports",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
 }
