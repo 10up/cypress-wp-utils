@@ -37,26 +37,42 @@ export const checkBlockPatternExists = ({
   title: string;
   categoryValue?: string;
 }): void => {
-  cy.window().then(win => {
-    const { wp } = win;
+  cy.window()
+    .then(win => {
+      /* eslint-disable */
+      return new Promise(resolve => {
+        let elapsed = 0;
 
-    /* eslint-disable */
-    const { getSettings } = wp.data.select('core/block-editor');
-    const allRegisteredPatterns = getSettings().__experimentalBlockPatterns;
+        setInterval(function () {
+          if (elapsed > 2500) {
+            resolve(false);
+          }
 
-    if (undefined !== allRegisteredPatterns) {
-      for (let i = 0; i < allRegisteredPatterns.length; i++) {
-        if (
-          title === allRegisteredPatterns[i].title &&
-          allRegisteredPatterns[i].categories &&
-          allRegisteredPatterns[i].categories.includes(categoryValue)
-        ) {
-          cy.wrap(true);
-          return;
-        }
-      }
-    }
-    /* eslint-enable */
-    cy.wrap(false);
-  });
+          const { wp } = win;
+
+          const { getSettings } = wp.data.select('core/block-editor');
+          const allRegisteredPatterns =
+            getSettings().__experimentalBlockPatterns;
+
+          if (undefined !== allRegisteredPatterns) {
+            for (let i = 0; i < allRegisteredPatterns.length; i++) {
+              if (
+                title === allRegisteredPatterns[i].title &&
+                allRegisteredPatterns[i].categories &&
+                allRegisteredPatterns[i].categories.includes(categoryValue)
+              ) {
+                resolve(true);
+                return;
+              }
+            }
+          }
+
+          elapsed += 100;
+        }, 100);
+      });
+    })
+    .then(val => {
+      /* eslint-enable */
+      cy.wrap(val);
+    });
 };
