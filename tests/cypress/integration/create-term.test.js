@@ -43,7 +43,7 @@ describe('Command: createTerm', () => {
     cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName);
-    cy.get('.error').should(
+    cy.get('.error, .notice-error').should(
       'contain',
       'A term with the name provided already exists with this parent'
     );
@@ -60,7 +60,7 @@ describe('Command: createTerm', () => {
     cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName, 'post_tag');
-    cy.get('.error').should(
+    cy.get('.error, .notice-error').should(
       'contain',
       'A term with the name provided already exists in this taxonomy'
     );
