@@ -35,8 +35,9 @@ describe('Commands: openDocumentSettings*', () => {
     cy.closeWelcomeGuide();
 
     // WP 6.1 renamed the panel name "Status & visibility" to "Summary".
-    let name = 'Status & visibility';
+    cy.openDocumentSettingsSidebar('Post');
     cy.get('body').then($body => {
+      let name = 'Status & visibility';
       if (
         $body.find(
           '.components-panel__body .components-panel__body-title button:contains("Summary")'
