@@ -34,16 +34,26 @@ describe('Commands: openDocumentSettings*', () => {
     cy.visit(`/wp-admin/post-new.php`);
     cy.closeWelcomeGuide();
 
-    const name = 'Status & visibility';
-    cy.openDocumentSettingsPanel(name);
+    // WP 6.1 renamed the panel name "Status & visibility" to "Summary".
+    let name = 'Status & visibility';
+    cy.get('body').then($body => {
+      if (
+        $body.find(
+          '.components-panel__body .components-panel__body-title button:contains("Summary")'
+        ).length > 0
+      ) {
+        name = 'Summary';
+      }
+      cy.openDocumentSettingsPanel(name);
 
-    // Assertion: Stick to the top checkbox should be visible
-    cy.get('.components-panel__body .components-panel__body-title button')
-      .contains(name, { matchCase: false })
-      .then($button => {
-        const $panel = $button.parents('.components-panel__body');
-        cy.wrap($panel).should('contain', 'Stick to the top of the blog');
-      });
+      // Assertion: Stick to the top checkbox should be visible
+      cy.get('.components-panel__body .components-panel__body-title button')
+        .contains(name, { matchCase: false })
+        .then($button => {
+          const $panel = $button.parents('.components-panel__body');
+          cy.wrap($panel).should('contain', 'Stick to the top of the blog');
+        });
+    });
   });
 
   it('Should be able to open Tags panel on the existing post', () => {

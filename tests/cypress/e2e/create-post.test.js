@@ -83,7 +83,20 @@ describe('Command: createPost', () => {
       title: postTitle,
       content: postContent,
       beforeSave: () => {
-        cy.openDocumentSettingsPanel('Status & visibility');
+        // WP 6.1 renamed the panel name "Status & visibility" to "Summary".
+        cy.openDocumentSettingsSidebar('Post');
+        cy.get('body').then($body => {
+          let name = 'Status & visibility';
+          if (
+            $body.find(
+              '.components-panel__body .components-panel__body-title button:contains("Summary")'
+            ).length > 0
+          ) {
+            name = 'Summary';
+          }
+          cy.openDocumentSettingsPanel(name);
+        });
+
         cy.get('label')
           .contains('Stick to the top of the blog')
           .click()
