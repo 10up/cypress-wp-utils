@@ -1,3 +1,4 @@
+import { checkPostExists } from './commands/check-post-exists';
 import { classicCreatePost } from './commands/classic-create-post';
 import { insertBlock } from './commands/insert-block';
 import { closeWelcomeGuide } from './commands/close-welcome-guide';
@@ -20,6 +21,7 @@ import { uploadMedia } from './commands/upload-media';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
+            checkPostExists: typeof checkPostExists;
             classicCreatePost: typeof classicCreatePost;
             insertBlock: typeof insertBlock;
             closeWelcomeGuide: typeof closeWelcomeGuide;
