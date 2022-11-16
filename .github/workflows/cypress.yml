@@ -62,11 +62,12 @@ jobs:
     if: ${{ needs.changed-files.outputs.status == 'true' }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         core:
-          - { name: 'WP latest', version: 'latest' }
-          - { name: 'WP trunk', version: 'WordPress/WordPress#master' }
-          - { name: 'WP minimum', version: 'WordPress/WordPress#5.2' }
+          - { name: 'WP latest', version: 'latest', number: '6.0' }
+          - { name: 'WP trunk', version: 'WordPress/WordPress#master', number: '6.1' }
+          - { name: 'WP minimum', version: 'WordPress/WordPress#5.2', number: '5.2' }
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -89,6 +90,8 @@ jobs:
         run: npm run env:start
       - name: Test
         run: npm run cypress:run
+        env:
+          CYPRESS_WORDPRESS_CORE: ${{ matrix.core.number }}
       - name: Update summary
         run: |
           npx mochawesome-merge ./tests/cypress/reports/*.json -o tests/cypress/reports/mochawesome.json
