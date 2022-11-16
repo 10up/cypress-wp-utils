@@ -21,7 +21,6 @@ describe('Command: checkBlockPatternExists', () => {
       it(`Pattern "${testCase.title}" ${shouldIt} exist in category "${testCase.cat}"`, () => {
         // Wait for patterns to load on the post edit page.
 
-
         const args = {
           title: testCase.title,
         };
