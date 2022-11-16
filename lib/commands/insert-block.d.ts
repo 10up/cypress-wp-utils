@@ -13,4 +13,4 @@
  * });
  * ```
  */
-export declare const insertBlock: (type: string, name?: string | undefined) => void;
+export declare const insertBlock: (type: string, name?: string) => void;
