@@ -2,6 +2,7 @@
 /// <reference types="cypress" />
 
 // Import commands.
+import { classicCreatePost } from './commands/classic-create-post';
 import { insertBlock } from './commands/insert-block';
 import { closeWelcomeGuide } from './commands/close-welcome-guide';
 import { wpCliEval } from './commands/wp-cli-eval';
@@ -19,10 +20,12 @@ import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
 import { login } from './commands/login';
 import { createPost } from './commands/create-post';
+import { uploadMedia } from './commands/upload-media';
 
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
+      classicCreatePost: typeof classicCreatePost;
       insertBlock: typeof insertBlock;
       closeWelcomeGuide: typeof closeWelcomeGuide;
       wpCliEval: typeof wpCliEval;
@@ -38,6 +41,7 @@ declare global {
       deleteAllTerms: typeof deleteAllTerms;
       createTerm: typeof createTerm;
       createPost: typeof createPost;
+      uploadMedia: typeof uploadMedia;
       logout: typeof logout;
       login: typeof login;
     }
@@ -45,6 +49,7 @@ declare global {
 }
 
 // Register commands
+Cypress.Commands.add('classicCreatePost', classicCreatePost);
 Cypress.Commands.add('insertBlock', insertBlock);
 Cypress.Commands.add('closeWelcomeGuide', closeWelcomeGuide);
 Cypress.Commands.add('wpCliEval', wpCliEval);
@@ -63,5 +68,6 @@ Cypress.Commands.add(
 Cypress.Commands.add('deleteAllTerms', deleteAllTerms);
 Cypress.Commands.add('createTerm', createTerm);
 Cypress.Commands.add('createPost', createPost);
+Cypress.Commands.add('uploadMedia', uploadMedia);
 Cypress.Commands.add('logout', logout);
 Cypress.Commands.add('login', login);
