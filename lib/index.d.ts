@@ -10,6 +10,7 @@ import { activatePlugin } from './commands/activate-plugin';
 import { setPermalinkStructure } from './commands/set-permalink-structure';
 import { openDocumentSettingsPanel } from './commands/open-document-settings-panel';
 import { openDocumentSettingsSidebar } from './commands/open-document-settings-sidebar';
+import { checkBlockPatternExists } from './commands/check-block-pattern-exists';
 import { deleteAllTerms } from './commands/delete-all-terms';
 import { createTerm } from './commands/create-term';
 import { logout } from './commands/logout';
@@ -31,6 +32,7 @@ declare global {
             setPermalinkStructure: typeof setPermalinkStructure;
             openDocumentSettingsPanel: typeof openDocumentSettingsPanel;
             openDocumentSettingsSidebar: typeof openDocumentSettingsSidebar;
+            checkBlockPatternExists: typeof checkBlockPatternExists;
             deleteAllTerms: typeof deleteAllTerms;
             createTerm: typeof createTerm;
             createPost: typeof createPost;
