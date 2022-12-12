@@ -13,33 +13,18 @@ describe('Command: createTerm', () => {
   it('Should be able to Create a category', () => {
     const termName = 'Category ' + randomName();
     cy.createTerm(termName);
-    cy.get('body').then($body => {
-      if ($body.find('.notice').is(':visible')) {
-        cy.get('.notice').should('contain', 'Category added');
-      }
-    });
     cy.get(`.row-title:contains("${termName}")`).should('exist');
   });
 
   it('Should be able to Create a tag', () => {
     const termName = 'Tag ' + randomName();
     cy.createTerm(termName, 'post_tag');
-    cy.get('body').then($body => {
-      if ($body.find('.notice').is(':visible')) {
-        cy.get('.notice').should('contain', 'Tag added');
-      }
-    });
     cy.get(`.row-title:contains("${termName}")`).should('exist');
   });
 
   it('Duplicate category should not be created', () => {
     const termName = 'Category ' + randomName();
     cy.createTerm(termName);
-    cy.get('body').then($body => {
-      if ($body.find('.notice').is(':visible')) {
-        cy.get('.notice').should('contain', 'Category added');
-      }
-    });
     cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName);
@@ -52,11 +37,6 @@ describe('Command: createTerm', () => {
   it('Duplicate tag should not be created', () => {
     const termName = 'Tag ' + randomName();
     cy.createTerm(termName, 'post_tag');
-    cy.get('body').then($body => {
-      if ($body.find('.notice').is(':visible')) {
-        cy.get('.notice').should('contain', 'Tag added');
-      }
-    });
     cy.get(`.row-title:contains("${termName}")`).should('exist');
 
     cy.createTerm(termName, 'post_tag');
@@ -79,12 +59,6 @@ describe('Command: createTerm', () => {
     });
 
     // Assertions for parent category
-    cy.get('body').then($body => {
-      if ($body.find('.notice').is(':visible')) {
-        cy.get('.notice').should('contain', 'Category added');
-      }
-    });
-
     cy.get(`.row-title:contains("${parentCategory.name}")`).then(
       $parentLink => {
         // Assertions of parent category
