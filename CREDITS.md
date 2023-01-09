@@ -6,7 +6,7 @@ The following acknowledges the Maintainers for this repository, those who have C
 
 The following individuals are responsible for curating the list of issues, responding to pull requests, and ensuring regular releases happen.
 
-[Tung Du (@dinhtungdu)](https://github.com/dinhtungdu), [Max Lyuchin (@cadic)](https://github.com/cadic).
+[Max Lyuchin (@cadic)](https://github.com/cadic).
 
 ## Contributors
 
