@@ -11,7 +11,7 @@ This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/1
 ## Installation
 
 ```sh
-npm i "https://github.com/10up/cypress-wp-utils#build" -D
+npm install @10up/cypress-wp-utils --save-dev
 ```
 
 ## Usage
