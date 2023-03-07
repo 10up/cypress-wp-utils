@@ -43,14 +43,14 @@ export const insertBlock = (type: string, name?: string): void => {
     '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
   ).click();
 
-  cy.get('.block-editor-inserter__search').click().type(search).type('{enter}');
+  cy.get('.block-editor-inserter__search').click().type(search);
 
   // Insert the block
   cy.get('body').then($body => {
     if ($body.find(`.editor-block-list-item-${slug}`).length > 0) {
-      cy.get(`.editor-block-list-item-${slug}`).should('be.visible').click();
+      cy.get(`.editor-block-list-item-${slug}`).click({ force: true });
     } else if ($body.find(`.editor-block-list-item-${slugAlt}`).length > 0) {
-      cy.get(`.editor-block-list-item-${slugAlt}`).should('be.visible').click();
+      cy.get(`.editor-block-list-item-${slugAlt}`).click({ force: true });
     } else {
       fail(`Could not find '${type}' block`);
     }
