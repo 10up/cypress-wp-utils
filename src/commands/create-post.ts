@@ -76,7 +76,7 @@ export const createPost = ({
   // Fill out data.
   cy.get(titleInput).clear().type(title);
   cy.get(contentInput).click();
-  cy.get('.block-editor-rich-text__editable').type(content);
+  cy.get('.block-editor-rich-text__editable').first().type(content);
 
   if ('undefined' !== typeof beforeSave) {
     beforeSave();
