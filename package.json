@@ -1,6 +1,6 @@
 {
   "name": "@10up/cypress-wp-utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Cypress command utilities for testing WordPress",
   "main": "./lib/index.js",
   "files": [
@@ -29,11 +29,7 @@
     "url": "git+https://github.com/10up/cypress-wp-utils.git"
   },
   "license": "MIT",
-  "author": {
-    "name": "10up",
-    "email": "10up@users.noreply.github.com",
-    "url": "https://github.com/10up"
-  },
+  "author": "10up <10up@users.noreply.github.com> (https://github.com/10up)",
   "engines": {
     "node": ">=12.0"
   },
