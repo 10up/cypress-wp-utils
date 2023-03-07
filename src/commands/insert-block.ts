@@ -46,15 +46,10 @@ export const insertBlock = (type: string, name?: string): void => {
   cy.get('.block-editor-inserter__search').click().type(search);
 
   // Insert the block
-  cy.get('body').then($body => {
-    if ($body.find(`.editor-block-list-item-${slug}`).length > 0) {
-      cy.get(`.editor-block-list-item-${slug}`).click({ force: true });
-    } else if ($body.find(`.editor-block-list-item-${slugAlt}`).length > 0) {
-      cy.get(`.editor-block-list-item-${slugAlt}`).click({ force: true });
-    } else {
-      fail(`Could not find '${type}' block`);
-    }
-  });
+  cy.get(`.editor-block-list-item-${slug}, .editor-block-list-item-${slugAlt}`)
+    .first()
+    .should('be.visible')
+    .click();
 
   // Close blocks panel
   cy.get('body').then($body => {
