@@ -14,6 +14,7 @@
     "coverage": "codecov",
     "lint": "eslint ./src/ --fix",
     "prepare": "husky install",
+    "prepublishOnly": "npm run build",
     "prettify": "prettier --write \"**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit",
     "cypress:open": "cypress open --config-file tests/cypress/cypress-config.js --e2e --browser chrome",
