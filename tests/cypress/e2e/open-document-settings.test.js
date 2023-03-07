@@ -129,7 +129,7 @@ describe('Commands: openDocumentSettings*', () => {
       cy.closeWelcomeGuide();
 
       cy.get('body').then($body => {
-        if ($body.find('.wp-block-post-content > .wp-block')) {
+        if ($body.find('.wp-block-post-content > .wp-block').length > 0) {
           cy.get('.wp-block-post-content > .wp-block').first().click();
         } else {
           // Fallback for WordPress 5.7
