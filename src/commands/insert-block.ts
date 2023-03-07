@@ -45,6 +45,8 @@ export const insertBlock = (type: string, name?: string): void => {
 
   cy.get('.block-editor-inserter__search').click().type(search);
 
+  cy.wait(300); // eslint-disable-line
+
   // Insert the block
   cy.get(`.editor-block-list-item-${slug}, .editor-block-list-item-${slugAlt}`)
     .first()
