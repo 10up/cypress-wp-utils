@@ -128,7 +128,7 @@ describe('Commands: openDocumentSettings*', () => {
       cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
       cy.closeWelcomeGuide();
 
-      cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      cy.get('.wp-block-post-content > .wp-block').first().click();
       cy.openDocumentSettingsSidebar('Block');
 
       // Assertions:
