@@ -66,21 +66,12 @@ export const createPost = ({
 
   const titleInput = 'h1.editor-post-title__input, #post-title-0';
   const contentInput = '.block-editor-default-block-appender__content';
-  const welcomeGuide =
-    '.edit-post-welcome-guide .components-modal__header button';
 
   // Make sure editor loaded properly.
   cy.get(titleInput).should('exist');
 
   // Close Welcome Guide.
-  cy.get('body').then($body => {
-    if ($body.find(welcomeGuide).length > 0) {
-      cy.get(welcomeGuide).click();
-      // WP 5.2
-    } else if ($body.find('.nux-dot-tip__disable').length > 0) {
-      cy.get('.nux-dot-tip__disable').click();
-    }
-  });
+  cy.closeWelcomeGuide();
 
   // Fill out data.
   cy.get(titleInput).clear().type(title);
