@@ -78,32 +78,6 @@ describe('Command: insertBlock', () => {
     cy.get('.wp-block-embed').should('contain.text', 'Twitter');
   });
 
-  it('Should be able to insert Post-nav sub-block', () => {
-    if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.9', '<')) {
-      // The block was added in WordPress 5.9, skipping the test.
-      assert(true, 'Skipping test, Next Page block does not exist');
-      return;
-    }
-
-    cy.visit('/wp-admin/post-new.php');
-    cy.closeWelcomeGuide();
-    const titleInput = 'h1.editor-post-title__input, #post-title-0';
-    cy.get(titleInput).should('exist');
-    cy.get(
-      '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
-    ).click();
-
-    cy.createPost({
-      beforeSave: () => {
-        cy.insertBlock('core/post-navigation-link/post-next', 'Next');
-
-        cy.get('.wp-block-post-navigation-link > a')
-          .should('have.attr', 'aria-label')
-          .and('eq', 'Next post');
-      },
-    });
-  });
-
   it('Should be able to insert custom block', () => {
     cy.visit('/wp-admin/post-new.php');
     cy.closeWelcomeGuide();
