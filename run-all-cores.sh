@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSIONS="5.2 5.3 5.4 5.5 5.6 5.7 5.8 5.9 latest:6.0 master:6.1"
+VERSIONS="5.7 5.8 5.9 6.0 6.1 master:6.2"
 
 SPEC="-- --quiet"
 

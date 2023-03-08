@@ -9,7 +9,7 @@
 export const closeWelcomeGuide = (): void => {
   const titleInput = 'h1.editor-post-title__input, #post-title-0';
   const closeButtonSelector =
-    'button[aria-label="Close dialog"], button[aria-label="Disable tips"]';
+    '.edit-post-welcome-guide .components-modal__header button';
 
   // Wait for edit page to load
   cy.get(titleInput).should('exist');
