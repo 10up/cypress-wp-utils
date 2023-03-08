@@ -2,7 +2,7 @@
 
 > Utilities library for WordPress E2E testing in the Cypress environment.
 
-[![Support Level](https://img.shields.io/badge/support-beta-blueviolet.svg)](#support-level) ![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.0-blue) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.2-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg) [![MIT License](https://img.shields.io/github/license/10up/cypress-wp-utils.svg)](https://github.com/10up/cypress-wp-utils/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-beta-blueviolet.svg)](#support-level) ![WordPress latest](https://img.shields.io/badge/WordPress%20up%20to-6.2-blue) [![Release Version](https://img.shields.io/github/release/10up/cypress-wp-utils.svg)](https://github.com/10up/cypress-wp-utils/releases/latest) ![WordPress minimum](https://img.shields.io/badge/WordPress%20since-5.7-blue) ![Test PRs](https://github.com/10up/cypress-wp-utils/actions/workflows/cypress.yml/badge.svg) ![CodeQL](https://github.com/10up/cypress-wp-utils/actions/workflows/codeql-analysis.yml/badge.svg) [![MIT License](https://img.shields.io/github/license/10up/cypress-wp-utils.svg)](https://github.com/10up/cypress-wp-utils/blob/develop/LICENSE.md)
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/1
 ## Installation
 
 ```sh
-npm i "https://github.com/10up/cypress-wp-utils#build" -D
+npm install @10up/cypress-wp-utils --save-dev
 ```
 
 ## Usage
