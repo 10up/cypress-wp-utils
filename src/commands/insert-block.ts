@@ -43,12 +43,14 @@ export const insertBlock = (type: string, name?: string): void => {
     '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
   ).click();
 
-  cy.get('.block-editor-inserter__search').click().type(search);
+  cy.get('.block-editor-inserter__search')
+    .click()
+    .type(search)
+    .type('{enter}', { delay: 500 });
 
   // Insert the block
   cy.get(`.editor-block-list-item-${slug}, .editor-block-list-item-${slugAlt}`)
     .first()
-    .should('be.visible')
     .click();
 
   // Close blocks panel

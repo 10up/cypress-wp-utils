@@ -1,4 +1,5 @@
 const { randomName } = require('../support/functions');
+import { compare } from 'compare-versions';
 
 describe('Command: insertBlock', () => {
   before(() => {
@@ -78,6 +79,12 @@ describe('Command: insertBlock', () => {
   });
 
   it('Should be able to insert Post-nav sub-block', () => {
+    if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.9', '<')) {
+      // The block was added in WordPress 5.9, skipping the test.
+      assert(true, 'Skipping test, Next Page block does not exist');
+      return;
+    }
+
     cy.visit('/wp-admin/post-new.php');
     cy.closeWelcomeGuide();
     const titleInput = 'h1.editor-post-title__input, #post-title-0';
@@ -86,23 +93,14 @@ describe('Command: insertBlock', () => {
       '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
     ).click();
 
-    // Detect if the block exist (added in 5.9)
-    cy.get('.block-editor-inserter__search').click().type('Next post');
-    cy.get('body').then($body => {
-      const slug = 'post-navigation-link\\/post-next';
-      if ($body.find(`.editor-block-list-item-${slug}`).length > 0) {
-        cy.createPost({
-          beforeSave: () => {
-            cy.insertBlock('core/post-navigation-link/post-next', 'Next');
+    cy.createPost({
+      beforeSave: () => {
+        cy.insertBlock('core/post-navigation-link/post-next', 'Next');
 
-            cy.get('.wp-block-post-navigation-link > a')
-              .should('have.attr', 'aria-label')
-              .and('eq', 'Next post');
-          },
-        });
-      } else {
-        assert(true, 'Skipping test, Next Page block does not exist');
-      }
+        cy.get('.wp-block-post-navigation-link > a')
+          .should('have.attr', 'aria-label')
+          .and('eq', 'Next post');
+      },
     });
   });
 
