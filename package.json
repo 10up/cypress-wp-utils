@@ -29,7 +29,7 @@
     "url": "git+https://github.com/10up/cypress-wp-utils.git"
   },
   "license": "MIT",
-  "author": "10up <10up@users.noreply.github.com> (https://github.com/10up)",
+  "author": "10up <opensource@10up.com> (https://github.com/10up)",
   "engines": {
     "node": ">=12.0"
   },
