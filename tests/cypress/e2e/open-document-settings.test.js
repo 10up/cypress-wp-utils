@@ -128,7 +128,17 @@ describe('Commands: openDocumentSettings*', () => {
       cy.visit(`/wp-admin/post.php?post=${post.id}&action=edit`);
       cy.closeWelcomeGuide();
 
-      cy.get('.block-editor-block-list__layout > .wp-block').first().click();
+      cy.get('body').then($body => {
+        if ($body.find('.wp-block-post-content > .wp-block').length > 0) {
+          cy.get('.wp-block-post-content > .wp-block').first().click();
+        } else {
+          // Fallback for WordPress 5.7
+          cy.get('.block-editor-block-list__layout > .wp-block')
+            .first()
+            .click();
+        }
+      });
+
       cy.openDocumentSettingsSidebar('Block');
 
       // Assertions:
