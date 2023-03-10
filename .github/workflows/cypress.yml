@@ -2,10 +2,10 @@ name: E2E test
 
 on:
   push:
-    branches: [trunk]
+    branches: [trunk, develop]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [trunk]
+    branches: [develop]
   schedule:
     - cron: '36 7 * * 6'
 

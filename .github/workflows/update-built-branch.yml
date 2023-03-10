@@ -2,7 +2,7 @@ name: Update built branch
 
 on:
   push:
-    branches: [trunk]
+    branches: [develop]
 
 jobs:
   build:
