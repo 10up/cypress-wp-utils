@@ -1,9 +1,9 @@
 name: Build and Deploy Documentation
 
 on:
-  # Triggers the workflow on push or pull request events but only for the trunk branch
-  push:
-    branches: [ trunk, develop ]
+  release:
+    types: [published]
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
