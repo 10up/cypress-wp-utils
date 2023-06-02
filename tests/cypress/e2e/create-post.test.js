@@ -128,4 +128,30 @@ describe('Command: createPost', () => {
       );
     });
   });
+
+  it('Should be able to create Post without title', () => {
+    cy.createPost({
+      title: '',
+      content: 'Test Content',
+    });
+
+    cy.visit('/wp-admin/edit.php?orderby=date&order=desc');
+    cy.get('#the-list td.title a.row-title')
+      .first()
+      .should(element => {
+        // WordPress changed the default title for posts without a title at some point.
+        expect(element.text()).to.be.oneOf(['(no title)', 'Untitled']);
+      });
+  });
+
+  it('Should be able to create Post without content', () => {
+    const title = 'No Content Post';
+    cy.createPost({
+      title,
+      content: '',
+    }).then(post => {
+      assert(post.title.raw === title, 'Post title is the same');
+      assert(post.content.rendered.length === 0, 'Post content is empty');
+    });
+  });
 });
