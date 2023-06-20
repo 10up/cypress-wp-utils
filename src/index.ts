@@ -22,6 +22,7 @@ import { logout } from './commands/logout';
 import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
+import { checkSitemap } from './commands/check-sitemap-exists';
 
 declare global {
   namespace Cypress {
@@ -74,3 +75,4 @@ Cypress.Commands.add('createPost', createPost);
 Cypress.Commands.add('uploadMedia', uploadMedia);
 Cypress.Commands.add('logout', logout);
 Cypress.Commands.add('login', login);
+Cypress.Commands.add('checkSitemap', checkSitemap);
