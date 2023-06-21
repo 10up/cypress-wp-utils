@@ -47,6 +47,7 @@ declare global {
       uploadMedia: typeof uploadMedia;
       logout: typeof logout;
       login: typeof login;
+      checkSitemap: typeof checkSitemap;
     }
   }
 }
