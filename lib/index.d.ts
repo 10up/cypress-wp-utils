@@ -18,6 +18,7 @@ import { logout } from './commands/logout';
 import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
+import { checkSitemap } from './commands/check-sitemap-exists';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
@@ -41,6 +42,7 @@ declare global {
             uploadMedia: typeof uploadMedia;
             logout: typeof logout;
             login: typeof login;
+            checkSitemap: typeof checkSitemap;
         }
     }
 }
