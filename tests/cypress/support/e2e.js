@@ -19,7 +19,8 @@ import '../../../lib/index';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 beforeEach(() => {
-  Cypress.Cookies.defaults({
-    preserve: /^wordpress.*?/,
+  const id = Cypress._.uniqueId();
+  cy.session(id, cy.login, {
+    cacheAcrossSpecs: true,
   });
 });
