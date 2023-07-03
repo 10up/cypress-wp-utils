@@ -39,6 +39,23 @@ describe('Command: checkPostExists', () => {
       }
     });
 
+    // Run the tests before seeding any posts to ensure we get false.
+    tests.forEach(test => {
+      it(`${test.postTitle} should not exist`, () => {
+        const args = {
+          title: test.postTitle,
+        };
+
+        // make 'postType' argument optional to test default value
+        if ('post' !== test.postType) {
+          args.postType = test.postType;
+        }
+        cy.checkPostExists(args).then(exists => {
+          assert(exists === false, `Post should not exist`);
+        });
+      });
+    });
+
     // Create posts which expected to exist during tests
     tests.forEach(test => {
       if (test.expected) {
@@ -50,6 +67,7 @@ describe('Command: checkPostExists', () => {
     });
   });
 
+  // Run the tests again after seeding posts to ensure we get the correct response.
   tests.forEach(test => {
     const shouldIt = test.expected ? 'should' : 'should not';
     it(`${test.postTitle} ${shouldIt} exist`, () => {
