@@ -15,12 +15,22 @@ describe('Command: insertBlock', () => {
         return false;
       }
     });
+
+    // Ignore error related to CORS that occurs when trying to access a remote resource.
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (err.message.includes('FastAverageColor: Error loading image')) {
+        return false;
+      }
+    });
   });
 
   it('Should be able to Insert first paragraph on page', () => {
     const paragraph = 'Paragraph ' + randomName();
     cy.createPost({
       beforeSave: () => {
+        // Close Welcome Guide.
+        cy.closeWelcomeGuide();
+
         cy.insertBlock('core/paragraph').then(id => {
           cy.get(`#${id}`).click().type(paragraph);
         });
