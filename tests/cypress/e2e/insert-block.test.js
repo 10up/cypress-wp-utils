@@ -28,9 +28,6 @@ describe('Command: insertBlock', () => {
     const paragraph = 'Paragraph ' + randomName();
     cy.createPost({
       beforeSave: () => {
-        // Close Welcome Guide.
-        cy.closeWelcomeGuide();
-
         cy.insertBlock('core/paragraph').then(id => {
           cy.get(`#${id}`).click().type(paragraph);
         });
