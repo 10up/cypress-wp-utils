@@ -71,7 +71,7 @@ export const createPost = ({
   cy.get(contentInput).should('exist');
 
   // Close Welcome Guide.
-  cy.closeWelcomeGuide();
+  cy.closeWelcomeGuideJavascript();
 
   // Fill out data.
   if (title.length > 0) {
