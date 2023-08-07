@@ -23,7 +23,6 @@ import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
 import { checkSitemap } from './commands/check-sitemap-exists';
-import { closeWelcomeGuideJavascript } from "./commands/close-welcome-guide-javascript";
 
 declare global {
   namespace Cypress {
@@ -32,7 +31,6 @@ declare global {
       classicCreatePost: typeof classicCreatePost;
       insertBlock: typeof insertBlock;
       closeWelcomeGuide: typeof closeWelcomeGuide;
-      closeWelcomeGuideJavascript: typeof closeWelcomeGuideJavascript;
       wpCliEval: typeof wpCliEval;
       wpCli: typeof wpCli;
       deactivatePlugin: typeof deactivatePlugin;
@@ -59,7 +57,6 @@ Cypress.Commands.add('checkPostExists', checkPostExists);
 Cypress.Commands.add('classicCreatePost', classicCreatePost);
 Cypress.Commands.add('insertBlock', insertBlock);
 Cypress.Commands.add('closeWelcomeGuide', closeWelcomeGuide);
-Cypress.Commands.add('closeWelcomeGuideJavascript', closeWelcomeGuideJavascript);
 Cypress.Commands.add('wpCliEval', wpCliEval);
 Cypress.Commands.add('wpCli', wpCli);
 Cypress.Commands.add('deactivatePlugin', deactivatePlugin);
