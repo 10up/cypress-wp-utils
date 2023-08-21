@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
+import 'cypress-iframe';
+
 // Import commands.
 import { checkPostExists } from './commands/check-post-exists';
 import { classicCreatePost } from './commands/classic-create-post';
@@ -23,6 +25,7 @@ import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
 import { checkSitemap } from './commands/check-sitemap-exists';
+import { getBlockEditor } from './commands/get-block-editor';
 
 declare global {
   namespace Cypress {
@@ -48,6 +51,7 @@ declare global {
       logout: typeof logout;
       login: typeof login;
       checkSitemap: typeof checkSitemap;
+      getBlockEditor: typeof getBlockEditor;
     }
   }
 }
@@ -77,3 +81,4 @@ Cypress.Commands.add('uploadMedia', uploadMedia);
 Cypress.Commands.add('logout', logout);
 Cypress.Commands.add('login', login);
 Cypress.Commands.add('checkSitemap', checkSitemap);
+Cypress.Commands.add('getBlockEditor', getBlockEditor);
