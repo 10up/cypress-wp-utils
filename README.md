@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically, including this library.
+This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically, including this library. If running tests against WordPress 6.3, you'll probably need to set `chromeWebSecurity: false` in your Cypress config file. This allows Cypress to properly interact with the iframed Block Editor.
 
 ## Installation
 
@@ -23,7 +23,7 @@ Import the libary in `support/index.js` file:
 import '@10up/cypress-wp-utils';
 ```
 
-Documentation for commands can be found at https://10up.github.io/cypress-wp-utils/.
+Documentation for commands can be found at [https://10up.github.io/cypress-wp-utils/](https://10up.github.io/cypress-wp-utils/).
 
 ### IntelliSense and code completion for Cypress commands
 
@@ -47,7 +47,7 @@ This project uses `hygen` to scaffold new commands to reduce the effort of manua
 $ npx hygen cypress-command new customCommand
 
 Loaded templates: _templates
-       added: src/commands/custom-command.ts
+      added: src/commands/custom-command.ts
       inject: src/index.ts
       inject: src/index.ts
       inject: src/index.ts
@@ -67,7 +67,7 @@ Every incoming pull request will automatically run tests against:
 - WordPress [latest release](https://github.com/WordPress/WordPress/tags)
 - current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
 
-To run tests locally against every WordPress major release since minimum support (5.7) to the latest nightly build (e.g., 6.4s-alpha) use this script:
+To run tests locally against every WordPress major release since minimum support (5.7) to the latest nightly build (e.g., 6.4-alpha) use this script:
 
 ```sh
 ./run-all-cores.sh
