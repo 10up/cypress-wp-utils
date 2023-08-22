@@ -43,10 +43,7 @@ export const insertBlock = (type: string, name?: string): void => {
     '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
   ).click();
 
-  cy.get('.block-editor-inserter__search')
-    .click()
-    .type(search)
-    .type('{enter}', { delay: 500 });
+  cy.get('.block-editor-inserter__search').click().type(search);
 
   // Insert the block
   cy.get(`.editor-block-list-item-${slug}, .editor-block-list-item-${slugAlt}`)
@@ -69,21 +66,46 @@ export const insertBlock = (type: string, name?: string): void => {
   const blockTypeAlt = type.replace('/', '-');
 
   // Get last block of the current type
+  // Pull from the iframe editor first, if it exists
   cy.get('body').then($body => {
-    if ($body.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
-      cy.get(`.wp-block[data-type="${blockType}"]`)
-        .last()
-        .then(block => {
-          const id = block.prop('id');
-          cy.wrap(id);
-        });
-    } else if ($body.find(`.wp-block[data-type="${blockTypeAlt}"]`)) {
-      cy.get(`.wp-block[data-type="${blockTypeAlt}"]`)
-        .last()
-        .then(block => {
-          const id = block.prop('id');
-          cy.wrap(id);
-        });
+    if ($body.find('iframe[name="editor-canvas"]').length) {
+      cy.iframe('iframe[name="editor-canvas"]').then($iframe => {
+        if ($iframe.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
+          cy.iframe('iframe[name="editor-canvas"]')
+            .find(`.wp-block[data-type="${blockType}"]`)
+            .last()
+            .then(block => {
+              const id = block.prop('id');
+              cy.wrap(id);
+            });
+        } else if (
+          $iframe.find(`.wp-block[data-type="${blockTypeAlt}"]`).length
+        ) {
+          cy.iframe('iframe[name="editor-canvas"]')
+            .find(`.wp-block[data-type="${blockTypeAlt}"]`)
+            .last()
+            .then(block => {
+              const id = block.prop('id');
+              cy.wrap(id);
+            });
+        }
+      });
+    } else {
+      if ($body.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
+        cy.get(`.wp-block[data-type="${blockType}"]`)
+          .last()
+          .then(block => {
+            const id = block.prop('id');
+            cy.wrap(id);
+          });
+      } else if ($body.find(`.wp-block[data-type="${blockTypeAlt}"]`)) {
+        cy.get(`.wp-block[data-type="${blockTypeAlt}"]`)
+          .last()
+          .then(block => {
+            const id = block.prop('id');
+            cy.wrap(id);
+          });
+      }
     }
   });
 };
