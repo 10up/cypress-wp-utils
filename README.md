@@ -61,12 +61,13 @@ npm i -D path/to/the/library
 
 ### Test against every WordPress major release
 
-For every incoming pull request by default on GitHub Actions we automatically perform tests against:
-- current minimum supported WordPress 5.2
+Every incoming pull request will automatically run tests against:
+
+- our current minimum supported WordPress version, 5.7
 - WordPress [latest release](https://github.com/WordPress/WordPress/tags)
 - current WordPress [future release](https://github.com/WordPress/WordPress/tree/master)
 
-To run tests locally against every WordPress major release since minimum support (5.2) to the latest nightly build (e.g., 6.0-alpha) use this script:
+To run tests locally against every WordPress major release since minimum support (5.7) to the latest nightly build (e.g., 6.4s-alpha) use this script:
 
 ```sh
 ./run-all-cores.sh

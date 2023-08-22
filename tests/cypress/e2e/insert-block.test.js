@@ -28,7 +28,7 @@ describe('Command: insertBlock', () => {
     });
 
     cy.getBlockEditor()
-      .find('.wp-block-post-content')
+      .find('.wp-block-post-content, .block-editor-writing-flow')
       .should('contain.text', paragraph);
   });
 
@@ -43,7 +43,7 @@ describe('Command: insertBlock', () => {
     });
 
     cy.getBlockEditor()
-      .find('.wp-block-post-content h2')
+      .find('.wp-block-post-content h2, .block-editor-writing-flow h2')
       .should('contain.text', heading);
   });
 
@@ -94,6 +94,8 @@ describe('Command: insertBlock', () => {
       return;
     }
 
+    cy.activatePlugin('retro-winamp-block');
+
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('tenup/winamp-block', 'WinAmp');
@@ -105,5 +107,7 @@ describe('Command: insertBlock', () => {
       .should('contain.text', 'Add Audio')
       .should('have.attr', 'data-type')
       .and('eq', 'tenup/winamp-block');
+
+    cy.deactivatePlugin('retro-winamp-block');
   });
 });

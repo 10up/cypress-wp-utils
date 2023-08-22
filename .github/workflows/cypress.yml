@@ -65,7 +65,7 @@ jobs:
       fail-fast: false
       matrix:
         core:
-          - { name: 'WP latest', version: 'latest', number: 'latest' }
+          - { name: 'WP latest', version: 'latest', number: '6.3' }
           - { name: 'WP trunk', version: 'WordPress/WordPress#master', number: '6.3' }
           - { name: 'WP minimum', version: 'WordPress/WordPress#5.7', number: '5.7' }
     steps:
