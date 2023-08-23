@@ -39,20 +39,18 @@ export const insertBlock = (type: string, name?: string): void => {
   // Remove block patterns
   /* eslint-disable */
   let patterns: any[] = [];
-  cy.window()
-    .then(win => {
-      const settings = win.wp.data.select('core/block-editor').getSettings();
-      patterns = settings?.__experimentalBlockPatterns || [];
-      if (patterns.length > 0) {
-        win.wp.data
-          .select('core/block-editor')
-          .getSettings().__experimentalBlockPatterns = [];
-      }
-    })
-    .as('patternsRemoved');
-  /* eslint-enable */
+  cy.window().then(win => {
+    const settings = win.wp.data.select('core/block-editor').getSettings();
+    patterns = settings?.__experimentalBlockPatterns || [];
+    if (patterns.length > 0) {
+      win.wp.data
+        .select('core/block-editor')
+        .getSettings().__experimentalBlockPatterns = [];
+    }
+  });
 
-  cy.wait('@patternsRemoved');
+  cy.wait(500);
+  /* eslint-enable */
 
   // Open blocks panel
   cy.get(
@@ -81,16 +79,14 @@ export const insertBlock = (type: string, name?: string): void => {
 
   // Add patterns back
   /* eslint-disable */
-  cy.window()
-    .then(win => {
-      win.wp.data
-        .select('core/block-editor')
-        .getSettings().__experimentalBlockPatterns = patterns || [];
-    })
-    .as('patternsAdded');
-  /* eslint-enable */
+  cy.window().then(win => {
+    win.wp.data
+      .select('core/block-editor')
+      .getSettings().__experimentalBlockPatterns = patterns || [];
+  });
 
-  cy.wait('@patternsAdded');
+  cy.wait(500);
+  /* eslint-enable */
 
   // Remove tailing suffix of sub-blocks
   const blockType = type.replace(/^(.*?)\/(.*?)\/[^/]+$/, '$1/$2');
