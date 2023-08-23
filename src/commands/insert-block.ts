@@ -39,13 +39,12 @@ export const insertBlock = (type: string, name?: string): void => {
   // Remove block patterns
   /* eslint-disable */
   let patterns: any[] = [];
+  let settings: any = {};
   cy.window().then(win => {
-    const settings = win.wp.data.select('core/block-editor').getSettings();
+    settings = win.wp.data.select('core/block-editor').getSettings();
     patterns = settings?.__experimentalBlockPatterns || [];
     if (patterns.length > 0) {
-      win.wp.data
-        .select('core/block-editor')
-        .getSettings().__experimentalBlockPatterns = [];
+      settings.__experimentalBlockPatterns = [];
     }
   });
 
@@ -78,15 +77,10 @@ export const insertBlock = (type: string, name?: string): void => {
   });
 
   // Add patterns back
-  /* eslint-disable */
-  cy.window().then(win => {
-    win.wp.data
-      .select('core/block-editor')
-      .getSettings().__experimentalBlockPatterns = patterns || [];
-  });
-
-  cy.wait(500);
-  /* eslint-enable */
+  if (patterns.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    settings.__experimentalBlockPatterns = patterns;
+  }
 
   // Remove tailing suffix of sub-blocks
   const blockType = type.replace(/^(.*?)\/(.*?)\/[^/]+$/, '$1/$2');
