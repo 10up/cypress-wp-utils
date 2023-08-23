@@ -1,5 +1,3 @@
-import { fail } from 'assert';
-
 /**
  * Inserts Block
  *
@@ -38,6 +36,24 @@ export const insertBlock = (type: string, name?: string): void => {
     }
   }
 
+  // Remove block patterns
+  /* eslint-disable */
+  let patterns: any[] = [];
+  cy.window()
+    .then(win => {
+      const settings = win.wp.data.select('core/block-editor').getSettings();
+      patterns = settings?.__experimentalBlockPatterns || [];
+      if (patterns.length > 0) {
+        win.wp.data
+          .select('core/block-editor')
+          .getSettings().__experimentalBlockPatterns = [];
+      }
+    })
+    .as('patternsRemoved');
+  /* eslint-enable */
+
+  cy.wait('@patternsRemoved');
+
   // Open blocks panel
   cy.get(
     '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
@@ -62,6 +78,19 @@ export const insertBlock = (type: string, name?: string): void => {
       cy.get('.edit-post-header-toolbar__inserter-toggle.is-pressed').click();
     }
   });
+
+  // Add patterns back
+  /* eslint-disable */
+  cy.window()
+    .then(win => {
+      win.wp.data
+        .select('core/block-editor')
+        .getSettings().__experimentalBlockPatterns = patterns || [];
+    })
+    .as('patternsAdded');
+  /* eslint-enable */
+
+  cy.wait('@patternsAdded');
 
   // Remove tailing suffix of sub-blocks
   const blockType = type.replace(/^(.*?)\/(.*?)\/[^/]+$/, '$1/$2');
