@@ -1,3 +1,5 @@
+import { getIframe } from '../functions/get-iframe';
+
 /**
  * Get the Block Editor
  *
@@ -17,7 +19,7 @@ export const getBlockEditor = (): Cypress.Chainable<unknown> => {
     .get('body')
     .then($body => {
       if ($body.find('iframe[name="editor-canvas"]').length) {
-        return cy.iframe('iframe[name="editor-canvas"]');
+        return getIframe('iframe[name="editor-canvas"]');
       }
       return $body;
     })

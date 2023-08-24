@@ -1,3 +1,5 @@
+import { getIframe } from '../functions/get-iframe';
+
 /**
  * Inserts Block
  *
@@ -91,9 +93,9 @@ export const insertBlock = (type: string, name?: string): void => {
   // Pull from the iframe editor first, if it exists
   cy.get('body').then($body => {
     if ($body.find('iframe[name="editor-canvas"]').length) {
-      cy.iframe('iframe[name="editor-canvas"]').then($iframe => {
+      getIframe('iframe[name="editor-canvas"]').then($iframe => {
         if ($iframe.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
-          cy.iframe('iframe[name="editor-canvas"]')
+          getIframe('iframe[name="editor-canvas"]')
             .find(`.wp-block[data-type="${blockType}"]`)
             .last()
             .then(block => {
@@ -103,7 +105,7 @@ export const insertBlock = (type: string, name?: string): void => {
         } else if (
           $iframe.find(`.wp-block[data-type="${blockTypeAlt}"]`).length
         ) {
-          cy.iframe('iframe[name="editor-canvas"]')
+          getIframe('iframe[name="editor-canvas"]')
             .find(`.wp-block[data-type="${blockTypeAlt}"]`)
             .last()
             .then(block => {

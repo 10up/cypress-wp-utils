@@ -1,4 +1,5 @@
 const { randomName } = require('../support/functions');
+import { getIframe } from '../../../lib/functions/get-iframe';
 
 describe('Commands: openDocumentSettings*', () => {
   before(() => {
@@ -131,17 +132,17 @@ describe('Commands: openDocumentSettings*', () => {
       cy.get('body').then($body => {
         if ($body.find('iframe[name="editor-canvas"]').length) {
           if (
-            cy
-              .iframe('iframe[name="editor-canvas"]')
-              .find('.wp-block-post-content > .wp-block').length > 0
+            getIframe('iframe[name="editor-canvas"]').find(
+              '.wp-block-post-content > .wp-block'
+            ).length > 0
           ) {
-            cy.iframe('iframe[name="editor-canvas"]')
+            getIframe('iframe[name="editor-canvas"]')
               .find('.wp-block-post-content > .wp-block')
               .first()
               .click();
           } else {
             // Fallback for WordPress 5.7
-            cy.iframe('iframe[name="editor-canvas"]')
+            getIframe('iframe[name="editor-canvas"]')
               .find('.block-editor-block-list__layout > .wp-block')
               .first()
               .click();

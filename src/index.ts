@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
-import 'cypress-iframe';
-
 // Import commands.
 import { checkPostExists } from './commands/check-post-exists';
 import { classicCreatePost } from './commands/classic-create-post';
@@ -52,6 +50,17 @@ declare global {
       login: typeof login;
       checkSitemap: typeof checkSitemap;
       getBlockEditor: typeof getBlockEditor;
+      frameLoaded: IframeHandler<JQuery<HTMLElement>>;
+      iframe: IframeHandler<JQuery<HTMLBodyElement>>;
+    }
+
+    interface IframeHandler<T> {
+      (options?: Partial<IframeOptions>): Chainable<T>;
+      (selector: string, options?: Partial<IframeOptions>): Chainable<T>;
+    }
+
+    interface IframeOptions extends Loggable, Timeoutable {
+      url?: RegExp | string;
     }
   }
 }

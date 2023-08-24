@@ -6,18 +6,12 @@
 
 ## Prerequisites
 
-This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically, including this library. If running tests against WordPress 6.3, you'll also need to install the [Cypress iframe package](https://gitlab.com/kgroat/cypress-iframe) and you'll probably need to set `chromeWebSecurity: false` in your Cypress config file. This allows Cypress to properly interact with the iframed Block Editor.
+This library requires Cypress. Use [@10up/cypress-wp-setup](https://github.com/10up/cypress-wp-setup) to set up Cypress automatically, including this library. If running tests against WordPress 6.3, you'll probably need to set `chromeWebSecurity: false` in your Cypress config file. This allows Cypress to properly interact with the iframed Block Editor.
 
 ## Installation
 
 ```sh
 npm install @10up/cypress-wp-utils --save-dev
-```
-
-If needed, install the Cypress iframe package:
-
-```sh
-npm install cypress-iframe --save-dev
 ```
 
 ## Usage
