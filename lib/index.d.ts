@@ -1,3 +1,6 @@
+/// <reference types="cypress" />
+/// <reference types="cypress" />
+/// <reference types="cypress" />
 import { checkPostExists } from './commands/check-post-exists';
 import { classicCreatePost } from './commands/classic-create-post';
 import { insertBlock } from './commands/insert-block';
@@ -19,6 +22,7 @@ import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
 import { checkSitemap } from './commands/check-sitemap-exists';
+import { getBlockEditor } from './commands/get-block-editor';
 declare global {
     namespace Cypress {
         interface Chainable<Subject> {
@@ -43,6 +47,16 @@ declare global {
             logout: typeof logout;
             login: typeof login;
             checkSitemap: typeof checkSitemap;
+            getBlockEditor: typeof getBlockEditor;
+            frameLoaded: IframeHandler<JQuery<HTMLElement>>;
+            iframe: IframeHandler<JQuery<HTMLBodyElement>>;
+        }
+        interface IframeHandler<T> {
+            (options?: Partial<IframeOptions>): Chainable<T>;
+            (selector: string, options?: Partial<IframeOptions>): Chainable<T>;
+        }
+        interface IframeOptions extends Loggable, Timeoutable {
+            url?: RegExp | string;
         }
     }
 }
