@@ -23,6 +23,7 @@ import { login } from './commands/login';
 import { createPost } from './commands/create-post';
 import { uploadMedia } from './commands/upload-media';
 import { checkSitemap } from './commands/check-sitemap-exists';
+import { getBlockEditor } from './commands/get-block-editor';
 
 declare global {
   namespace Cypress {
@@ -48,6 +49,18 @@ declare global {
       logout: typeof logout;
       login: typeof login;
       checkSitemap: typeof checkSitemap;
+      getBlockEditor: typeof getBlockEditor;
+      frameLoaded: IframeHandler<JQuery<HTMLElement>>;
+      iframe: IframeHandler<JQuery<HTMLBodyElement>>;
+    }
+
+    interface IframeHandler<T> {
+      (options?: Partial<IframeOptions>): Chainable<T>;
+      (selector: string, options?: Partial<IframeOptions>): Chainable<T>;
+    }
+
+    interface IframeOptions extends Loggable, Timeoutable {
+      url?: RegExp | string;
     }
   }
 }
@@ -77,3 +90,4 @@ Cypress.Commands.add('uploadMedia', uploadMedia);
 Cypress.Commands.add('logout', logout);
 Cypress.Commands.add('login', login);
 Cypress.Commands.add('checkSitemap', checkSitemap);
+Cypress.Commands.add('getBlockEditor', getBlockEditor);

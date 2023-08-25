@@ -1,4 +1,5 @@
 const { randomName } = require('../support/functions');
+import { getIframe } from '../../../lib/functions/get-iframe';
 
 describe('Commands: openDocumentSettings*', () => {
   before(() => {
@@ -129,13 +130,32 @@ describe('Commands: openDocumentSettings*', () => {
       cy.closeWelcomeGuide();
 
       cy.get('body').then($body => {
-        if ($body.find('.wp-block-post-content > .wp-block').length > 0) {
-          cy.get('.wp-block-post-content > .wp-block').first().click();
+        if ($body.find('iframe[name="editor-canvas"]').length) {
+          if (
+            getIframe('iframe[name="editor-canvas"]').find(
+              '.wp-block-post-content > .wp-block'
+            ).length > 0
+          ) {
+            getIframe('iframe[name="editor-canvas"]')
+              .find('.wp-block-post-content > .wp-block')
+              .first()
+              .click();
+          } else {
+            // Fallback for WordPress 5.7
+            getIframe('iframe[name="editor-canvas"]')
+              .find('.block-editor-block-list__layout > .wp-block')
+              .first()
+              .click();
+          }
         } else {
-          // Fallback for WordPress 5.7
-          cy.get('.block-editor-block-list__layout > .wp-block')
-            .first()
-            .click();
+          if ($body.find('.wp-block-post-content > .wp-block').length > 0) {
+            cy.get('.wp-block-post-content > .wp-block').first().click();
+          } else {
+            // Fallback for WordPress 5.7
+            cy.get('.block-editor-block-list__layout > .wp-block')
+              .first()
+              .click();
+          }
         }
       });
 

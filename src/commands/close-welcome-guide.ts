@@ -12,7 +12,7 @@ export const closeWelcomeGuide = (): void => {
     '.edit-post-welcome-guide .components-modal__header button';
 
   // Wait for edit page to load
-  cy.get(titleInput).should('exist');
+  cy.getBlockEditor().find(titleInput).should('exist');
 
   cy.get('body').then($body => {
     if ($body.find(closeButtonSelector).length > 0) {

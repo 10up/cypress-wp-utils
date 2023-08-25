@@ -22,12 +22,14 @@ describe('Command: insertBlock', () => {
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('core/paragraph').then(id => {
-          cy.get(`#${id}`).click().type(paragraph);
+          cy.getBlockEditor().find(`#${id}`).click().type(paragraph);
         });
       },
     });
 
-    cy.get('.block-editor-writing-flow').should('contain.text', paragraph);
+    cy.getBlockEditor()
+      .find('.wp-block-post-content, .block-editor-writing-flow')
+      .should('contain.text', paragraph);
   });
 
   it('Should be able to Insert Heading', () => {
@@ -35,12 +37,14 @@ describe('Command: insertBlock', () => {
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('core/heading').then(id => {
-          cy.get(`#${id}`).click().type(heading);
+          cy.getBlockEditor().find(`#${id}`).click().type(heading);
         });
       },
     });
 
-    cy.get('.block-editor-writing-flow h2').should('contain.text', heading);
+    cy.getBlockEditor()
+      .find('.wp-block-post-content h2, .block-editor-writing-flow h2')
+      .should('contain.text', heading);
   });
 
   it('Should be able to insert Pullquote', () => {
@@ -49,21 +53,24 @@ describe('Command: insertBlock', () => {
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('core/pullquote').then(id => {
-          cy.get(
-            `#${id} [aria-label="Pullquote text"], #${id} [aria-label="Write quote…"]`
-          )
+          cy.getBlockEditor()
+            .find(
+              `#${id} [aria-label="Pullquote text"], #${id} [aria-label="Write quote…"]`
+            )
             .click()
             .type(quote);
-          cy.get(
-            `#${id} [aria-label="Pullquote citation text"], #${id} [aria-label="Write citation…"]`
-          )
+          cy.getBlockEditor()
+            .find(
+              `#${id} [aria-label="Pullquote citation text"], #${id} [aria-label="Write citation…"]`
+            )
             .click()
             .type(cite);
         });
       },
     });
 
-    cy.get('.wp-block-pullquote')
+    cy.getBlockEditor()
+      .find('.wp-block-pullquote')
       .should('contain.text', quote)
       .should('contain.text', cite);
   });
@@ -75,7 +82,9 @@ describe('Command: insertBlock', () => {
       },
     });
 
-    cy.get('.wp-block-embed').should('contain.text', 'Twitter');
+    cy.getBlockEditor()
+      .find('.wp-block-embed')
+      .should('contain.text', 'Twitter');
   });
 
   it('Should be able to insert custom block', () => {
@@ -85,15 +94,20 @@ describe('Command: insertBlock', () => {
       return;
     }
 
+    cy.activatePlugin('retro-winamp-block');
+
     cy.createPost({
       beforeSave: () => {
         cy.insertBlock('tenup/winamp-block', 'WinAmp');
       },
     });
 
-    cy.get('.wp-block-tenup-winamp-block')
+    cy.getBlockEditor()
+      .find('.wp-block-tenup-winamp-block')
       .should('contain.text', 'Add Audio')
       .should('have.attr', 'data-type')
       .and('eq', 'tenup/winamp-block');
+
+    cy.deactivatePlugin('retro-winamp-block');
   });
 });

@@ -67,20 +67,20 @@ export const createPost = ({
   const titleInput = 'h1.editor-post-title__input, #post-title-0';
   const contentInput = '.block-editor-default-block-appender__content';
 
-  // Make sure editor loaded properly.
-  cy.get(contentInput).should('exist');
-
   // Close Welcome Guide.
   cy.closeWelcomeGuide();
 
   // Fill out data.
   if (title.length > 0) {
-    cy.get(titleInput).clear().type(title);
+    cy.getBlockEditor().find(titleInput).clear().type(title);
   }
 
   if (content.length > 0) {
-    cy.get(contentInput).click();
-    cy.get('.block-editor-rich-text__editable').first().type(content);
+    cy.getBlockEditor().find(contentInput).click();
+    cy.getBlockEditor()
+      .find('.block-editor-rich-text__editable')
+      .first()
+      .type(content);
   }
 
   if ('undefined' !== typeof beforeSave) {
