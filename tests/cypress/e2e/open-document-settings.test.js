@@ -31,6 +31,10 @@ describe('Commands: openDocumentSettings*', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.login();
+  });
+
   it("Should be able to open (don't close) Status Panel on a new post", () => {
     cy.visit(`/wp-admin/post-new.php`);
     cy.closeWelcomeGuide();

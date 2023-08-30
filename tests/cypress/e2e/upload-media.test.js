@@ -1,5 +1,5 @@
 describe('Command: uploadMedia', () => {
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 
