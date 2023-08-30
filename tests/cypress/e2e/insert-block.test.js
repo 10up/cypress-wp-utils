@@ -17,6 +17,10 @@ describe('Command: insertBlock', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.login();
+  });
+
   it('Should be able to Insert first paragraph on page', () => {
     const paragraph = 'Paragraph ' + randomName();
     cy.createPost({
