@@ -6,7 +6,12 @@ describe('Command: checkBlockPatternExists', () => {
     before(() => {
       cy.login();
       cy.deactivatePlugin('classic-editor');
+    });
+
+    beforeEach(() => {
+      cy.login();
       cy.visit('/wp-admin/post-new.php');
+      cy.get('.edit-post-header').should('exist');
       cy.closeWelcomeGuide();
     });
 
