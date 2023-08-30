@@ -1,5 +1,5 @@
 describe('Plugins commands', () => {
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 

@@ -32,19 +32,26 @@ export const checkPostExists = ({
 }): void => {
   cy.visit(`/wp-admin/edit.php?post_type=${postType}`);
 
-  const searchInput = '#post-search-input';
-  const searchSubmit = '#search-submit';
-  const postLabel = '[aria-label="Move “' + title + '” to the Trash"]';
-
-  // Search for the post title.
-  cy.get(searchInput).clear().type(title).get(searchSubmit).click();
-
-  // See if the post is listed in the search result.
-  cy.get('body').then($body => {
-    if ($body.find(postLabel).length > 0) {
-      cy.wrap(true);
-    } else {
+  cy.get('#posts-filter').then($postsFilter => {
+    // If there are no posts, bail early.
+    if ($postsFilter.find('.no-items').length > 0) {
       cy.wrap(false);
+    } else {
+      const searchInput = '#post-search-input';
+      const searchSubmit = '#search-submit';
+      const postLabel = '[aria-label="Move “' + title + '” to the Trash"]';
+
+      // Search for the post title.
+      cy.get(searchInput).clear().type(title).get(searchSubmit).click();
+
+      // See if the post is listed in the search result.
+      cy.get('body').then($body => {
+        if ($body.find(postLabel).length > 0) {
+          cy.wrap(true);
+        } else {
+          cy.wrap(false);
+        }
+      });
     }
   });
 };

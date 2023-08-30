@@ -2,10 +2,10 @@ name: E2E test
 
 on:
   push:
-    branches: [trunk]
+    branches: [trunk, develop]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [trunk]
+    branches: [develop]
   schedule:
     - cron: '36 7 * * 6'
 
@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: changed-files
-        uses: tj-actions/changed-files@v18.7
+        uses: tj-actions/changed-files@v37
         with:
           files: |
             .github/workflows/cypress.yml
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Cache Node
         uses: actions/cache@v3
         with:
@@ -65,12 +65,12 @@ jobs:
       fail-fast: false
       matrix:
         core:
-          - { name: 'WP latest', version: 'latest', number: '6.1' }
-          - { name: 'WP trunk', version: 'WordPress/WordPress#master', number: '6.2' }
+          - { name: 'WP latest', version: 'latest', number: '6.3' }
+          - { name: 'WP trunk', version: 'WordPress/WordPress#master', number: '6.3' }
           - { name: 'WP minimum', version: 'WordPress/WordPress#5.7', number: '5.7' }
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Cache Node
         uses: actions/cache@v3
         with:
@@ -100,7 +100,7 @@ jobs:
           npx mochawesome-report-generator tests/cypress/reports/mochawesome.json -o tests/cypress/reports/
           cat ./tests/cypress/reports/mochawesome.md >> $GITHUB_STEP_SUMMARY
       - name: Make artifacts available
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-artifact

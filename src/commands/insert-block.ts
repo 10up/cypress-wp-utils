@@ -1,4 +1,4 @@
-import { fail } from 'assert';
+import { getIframe } from '../functions/get-iframe';
 
 /**
  * Inserts Block
@@ -38,6 +38,21 @@ export const insertBlock = (type: string, name?: string): void => {
     }
   }
 
+  // Remove block patterns
+  /* eslint-disable */
+  let patterns: any[] = [];
+  let settings: any = {};
+  cy.window().then(win => {
+    settings = win.wp.data.select('core/block-editor').getSettings();
+    patterns = settings?.__experimentalBlockPatterns || [];
+    if (patterns.length > 0) {
+      settings.__experimentalBlockPatterns = [];
+    }
+  });
+
+  cy.wait(500);
+  /* eslint-enable */
+
   // Open blocks panel
   cy.get(
     '.edit-post-header-toolbar__inserter-toggle, .edit-post-header-toolbar .block-editor-inserter__toggle'
@@ -63,27 +78,58 @@ export const insertBlock = (type: string, name?: string): void => {
     }
   });
 
+  // Add patterns back
+  if (patterns.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    settings.__experimentalBlockPatterns = patterns;
+  }
+
   // Remove tailing suffix of sub-blocks
   const blockType = type.replace(/^(.*?)\/(.*?)\/[^/]+$/, '$1/$2');
 
   const blockTypeAlt = type.replace('/', '-');
 
   // Get last block of the current type
+  // Pull from the iframe editor first, if it exists
   cy.get('body').then($body => {
-    if ($body.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
-      cy.get(`.wp-block[data-type="${blockType}"]`)
-        .last()
-        .then(block => {
-          const id = block.prop('id');
-          cy.wrap(id);
-        });
-    } else if ($body.find(`.wp-block[data-type="${blockTypeAlt}"]`)) {
-      cy.get(`.wp-block[data-type="${blockTypeAlt}"]`)
-        .last()
-        .then(block => {
-          const id = block.prop('id');
-          cy.wrap(id);
-        });
+    if ($body.find('iframe[name="editor-canvas"]').length) {
+      getIframe('iframe[name="editor-canvas"]').then($iframe => {
+        if ($iframe.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
+          getIframe('iframe[name="editor-canvas"]')
+            .find(`.wp-block[data-type="${blockType}"]`)
+            .last()
+            .then(block => {
+              const id = block.prop('id');
+              cy.wrap(id);
+            });
+        } else if (
+          $iframe.find(`.wp-block[data-type="${blockTypeAlt}"]`).length
+        ) {
+          getIframe('iframe[name="editor-canvas"]')
+            .find(`.wp-block[data-type="${blockTypeAlt}"]`)
+            .last()
+            .then(block => {
+              const id = block.prop('id');
+              cy.wrap(id);
+            });
+        }
+      });
+    } else {
+      if ($body.find(`.wp-block[data-type="${blockType}"]`).length > 0) {
+        cy.get(`.wp-block[data-type="${blockType}"]`)
+          .last()
+          .then(block => {
+            const id = block.prop('id');
+            cy.wrap(id);
+          });
+      } else if ($body.find(`.wp-block[data-type="${blockTypeAlt}"]`)) {
+        cy.get(`.wp-block[data-type="${blockTypeAlt}"]`)
+          .last()
+          .then(block => {
+            const id = block.prop('id');
+            cy.wrap(id);
+          });
+      }
     }
   });
 };

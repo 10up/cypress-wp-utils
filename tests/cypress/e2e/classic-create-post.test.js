@@ -6,6 +6,10 @@ describe('Command: classicCreatePost', () => {
     cy.activatePlugin('classic-editor');
   });
 
+  beforeEach(() => {
+    cy.login();
+  });
+
   it('Should be able to Classic Create Post', () => {
     const title = 'Title ' + randomName();
     const content = 'Content ' + randomName();

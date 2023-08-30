@@ -1,0 +1,10 @@
+- [x] Branch: Starting from `develop`, cut a release branch named `release/X.Y.Z` for your changes.
+- [ ] Version bump: Bump the version number in `package.json` and `package-lock.json` if it does not already reflect the version being released.
+- [ ] Changelog: Add/update the changelog in `CHANGELOG.md`.
+- [ ] Props: Update `CREDITS.md` file with any new contributors, confirm maintainers are accurate.
+- [ ] Readme updates: Make any other readme changes as necessary in `README.md`.
+- [ ] Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the Pull Request), then merge `develop` into `trunk` (`git checkout develop && git pull origin develop && git checkout trunk && git pull origin trunk && git merge --no-ff develop`). `trunk` contains the stable development version.
+- [ ] Push: Push your `trunk` branch to GitHub (e.g. `git push origin trunk`).
+- [ ] Release: Create a [new release](https://github.com/10up/cypress-wp-utils/releases/new), naming the tag and the release with the new version number, and targeting the `trunk` branch. Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the closed issues on the [milestone](https://github.com/10up/cypress-wp-utils/milestones/#?closed=1).  The release should now appear under [releases](https://github.com/10up/cypress-wp-utils/releases).
+- [ ] Close milestone: Edit the [milestone](https://github.com/10up/cypress-wp-utils/milestones/) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description field`), then close the milestone.
+- [ ] Punt incomplete items: If any open issues or PRs which were milestoned for `X.Y.Z` do not make it into the release, update their milestone to `X.Y.Z+1`, `X.Y+- [ ]0`, `X+- [ ]0.0` or `Future Release`.

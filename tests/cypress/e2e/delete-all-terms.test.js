@@ -1,9 +1,10 @@
 describe('Command: deleteAllTerms', () => {
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 
   after(() => {
+    cy.login();
     // Restore default 20 items per page
     cy.visit(`/wp-admin/edit-tags.php?taxonomy=category`);
     cy.get('#show-settings-link').click();
