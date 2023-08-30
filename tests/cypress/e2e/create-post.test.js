@@ -18,6 +18,10 @@ describe('Command: createPost', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.login();
+  });
+
   it('Should be able to create Post', () => {
     const title = 'Test Post';
     cy.createPost({

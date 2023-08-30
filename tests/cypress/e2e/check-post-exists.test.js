@@ -67,6 +67,10 @@ describe('Command: checkPostExists', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.login();
+  });
+
   // Run the tests again after seeding posts to ensure we get the correct response.
   tests.forEach(test => {
     const shouldIt = test.expected ? 'should' : 'should not';

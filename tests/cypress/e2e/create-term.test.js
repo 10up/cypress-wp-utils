@@ -1,11 +1,8 @@
 const { randomName } = require('../support/functions');
 
 describe('Command: createTerm', () => {
-  before(() => {
-    cy.login();
-  });
-
   beforeEach(() => {
+    cy.login();
     cy.deleteAllTerms();
     cy.deleteAllTerms('post_tag');
   });
