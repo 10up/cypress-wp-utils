@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 - Update target branch from `develop` to `trunk` for a few workflows (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh) via [#90](https://github.com/10up/cypress-wp-utils/pull/90)).
 - Update the versions of WordPress we test on to include 6.3 (props [@dkotter](https://github.com/dkotter), [@iamdharmesh](https://github.com/iamdharmesh) via [#105](https://github.com/10up/cypress-wp-utils/pull/105)).
+- Bump Cypress version from `10.11.0` to `13.0.0` (props [@iamdharmesh](https://github.com/iamdharmesh), [@dkotter](https://github.com/dkotter) via [#110](https://github.com/10up/cypress-wp-utils/pull/110)).
 
 ### Fixed
 
