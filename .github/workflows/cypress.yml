@@ -23,8 +23,8 @@ jobs:
         with:
           files: |
             .github/workflows/cypress.yml
-            src/*
-            tests/*
+            src/**
+            tests/**
             cypress-wp-utils.php
             .wp-env.json
             package.json
