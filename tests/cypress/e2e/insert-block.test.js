@@ -21,19 +21,19 @@ describe('Command: insertBlock', () => {
     cy.login();
   });
 
-  it('Should be able to Insert first paragraph on page', () => {
-    const paragraph = 'Paragraph ' + randomName();
+  it('Should be able to Insert code block on page', () => {
+    const code = 'code ' + randomName();
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/paragraph').then(id => {
-          cy.getBlockEditor().find(`#${id}`).click().type(paragraph);
+        cy.insertBlock('core/code').then(id => {
+          cy.getBlockEditor().find(`#${id}`).click().type(code);
         });
       },
     });
 
     cy.getBlockEditor()
       .find('.wp-block-post-content, .block-editor-writing-flow')
-      .should('contain.text', paragraph);
+      .should('contain.text', code);
   });
 
   it('Should be able to Insert Heading', () => {
