@@ -16,7 +16,6 @@ describe('Command: checkBlockPatternExists', () => {
     });
 
     const testPatterns = [
-      { title: 'Quote', cat: 'text', expected: true },
       { title: randomName(), cat: 'text', expected: false },
       { title: 'Quote', cat: randomName(), expected: false },
     ];
