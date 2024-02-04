@@ -8,6 +8,10 @@ describe('Command: checkBlockPatternExists', () => {
       cy.deactivatePlugin('classic-editor');
     });
 
+    after(() => {
+      cy.activatePlugin('classic-editor');
+    });
+
     beforeEach(() => {
       cy.login();
       cy.visit('/wp-admin/post-new.php');
