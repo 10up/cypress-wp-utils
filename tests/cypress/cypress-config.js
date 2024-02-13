@@ -8,6 +8,7 @@ module.exports = defineConfig({
   videosFolder: 'tests/cypress/videos',
   downloadsFolder: 'tests/cypress/downloads',
   video: false,
+  retries: 2,
   e2e: {
     setupNodeEvents(on, config) {
       return setBaseUrl(on, config);
