@@ -122,12 +122,14 @@ jobs:
         with:
           path: lib
           key: ${{ runner.os }}-build-${{ hashFiles('src/**') }}
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
       - name: Set the core version
         run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
       - name: Set up WP environment
         run: npm run env:start
       - name: Test
-        run: npm run cypress:run
+        run: npm run cypress:run -- --browser chrome
         env:
           CYPRESS_WORDPRESS_CORE: ${{ matrix.core.number }}
       - name: Update summary
