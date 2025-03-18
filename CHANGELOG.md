@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 ## [Unreleased] - TBD
 
-## [0.5.0] - 2025-03-11
+## [0.5.0] - 2025-03-18
 
 ### Fixed
 - Ensure the `insertBlock` command works properly in WordPress 6.8 (props [@dkotter](https://github.com/dkotter), [@iamdharmesh](https://github.com/iamdharmesh) via [#131](https://github.com/10up/cypress-wp-utils/pull/131)).
