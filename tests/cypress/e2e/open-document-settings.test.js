@@ -86,13 +86,16 @@ describe('Commands: openDocumentSettings*', () => {
         .contains(name)
         .then($button => {
           const $panel = $button.parents('.components-panel__body');
-          cy.wrap($panel).should('contain', 'Add New Tag');
+          cy.wrap($panel).should('contain', 'Add');
         });
     });
   });
 
   it('Should be able to open Discussion panel on the existing page', () => {
-    if (compare(Cypress.env('WORDPRESS_CORE').toString(), '6.6', '>=')) {
+    if (
+      'trunk' === Cypress.env('WORDPRESS_CORE').toString() ||
+      compare(Cypress.env('WORDPRESS_CORE').toString(), '6.6', '>=')
+    ) {
       assert(true, 'Skipping test');
       return;
     }

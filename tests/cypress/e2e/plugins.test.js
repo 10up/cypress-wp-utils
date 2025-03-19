@@ -12,6 +12,7 @@ describe('Plugins commands', () => {
       const winAmpMinimumVersion = '6.1';
 
       if (
+        'trunk' !== Cypress.env('WORDPRESS_CORE').toString() &&
         compare(
           Cypress.env('WORDPRESS_CORE').toString(),
           winAmpMinimumVersion,
