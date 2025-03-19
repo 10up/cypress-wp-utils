@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MAJOR_VERSIONS="5.7 5.8 5.9 6.0 6.1 6.2 6.3 6.4 6.5"
-TRUNK="master:6.6"
+MAJOR_VERSIONS="5.7 5.8 5.9 6.0 6.1 6.2 6.3 6.4 6.5 6.6 6.7"
+TRUNK="master:trunk"
 
 VERSIONS=""
 for MAJOR_VERSION in $MAJOR_VERSIONS; do
