@@ -65,23 +65,58 @@ export const createPost = ({
   cy.visit(`/wp-admin/post-new.php?post_type=${postType}`);
 
   const titleInput = 'h1.editor-post-title__input, #post-title-0';
-  const contentInput = '.block-editor-default-block-appender__content';
-
-  // Close Welcome Guide.
-  cy.closeWelcomeGuide();
+  const contentInput =
+    '.block-editor-default-block-appender__content, .block-editor-inserter__toggle';
 
   // Close Start Page Options.
   if (postType === 'page') {
     // eslint-disable-next-line cypress/no-unnecessary-waiting -- Wait for the modal to appear. Didn't find a better way to handle this.
     cy.wait(500);
-    const modelSelector =
-      '.edit-post-start-page-options__modal button[aria-label="Close"]';
     cy.get('body').then($body => {
       if ($body.find('.edit-post-start-page-options__modal').length > 0) {
-        cy.get(modelSelector).click();
+        cy.get(
+          '.edit-post-start-page-options__modal button[aria-label="Close"]'
+        ).click();
+      } else if ($body.find('.editor-start-page-options__modal').length > 0) {
+        // WP 6.8+.
+        cy.get(
+          '.editor-start-page-options__modal button[aria-label="Close"]'
+        ).click();
+
+        cy.openDocumentSettingsSidebar('Post');
+
+        // Switch out of template mode.
+        cy.get('body').then($body => {
+          if (
+            $body.find(
+              '.editor-post-summary button[aria-label="Template options"]'
+            ).length > 0
+          ) {
+            cy.get(
+              '.editor-post-summary button[aria-label="Template options"]'
+            ).click();
+
+            if (
+              $body.find(
+                '.editor-post-template__dropdown button[aria-checked="true"]'
+              ).length > 0
+            ) {
+              cy.get('.editor-post-template__dropdown button')
+                .contains('Show template')
+                .click();
+            }
+
+            cy.get(
+              '.editor-post-summary button[aria-label="Template options"]'
+            ).click();
+          }
+        });
       }
     });
   }
+
+  // Close Welcome Guide.
+  cy.closeWelcomeGuide();
 
   // Fill out data.
   if (title.length > 0) {
@@ -90,7 +125,7 @@ export const createPost = ({
   }
 
   if (content.length > 0) {
-    cy.getBlockEditor().find(contentInput).click();
+    cy.getBlockEditor().find(contentInput).first().click();
     cy.getBlockEditor()
       .find('.block-editor-rich-text__editable')
       .first()
