@@ -61,8 +61,12 @@ describe('Commands: openDocumentSettings*', () => {
             const $panel = $button.parents('.components-panel__body');
             cy.wrap($panel).should('contain', 'Stick to the top of the blog');
           });
-      } else {
+      } else if ($body.find('.editor-post-sticky__toggle-control').length) {
         cy.get('.editor-post-sticky__toggle-control').should('be.visible');
+      } else if ($body.find('.editor-post-status__toggle').length) {
+        // WP 6.7+ handling.
+        cy.get('.editor-post-status__toggle').click();
+        cy.get('.editor-post-sticky__checkbox-control').should('be.visible');
       }
     });
   });
