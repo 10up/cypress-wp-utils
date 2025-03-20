@@ -36,7 +36,10 @@ describe('Command: checkBlockPatternExists', () => {
           title: testCase.title,
         };
 
-        if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.7', '>=')) {
+        if (
+          'trunk' === Cypress.env('WORDPRESS_CORE').toString() ||
+          compare(Cypress.env('WORDPRESS_CORE').toString(), '5.7', '>=')
+        ) {
           args.categoryValue = testCase.cat;
         }
 
