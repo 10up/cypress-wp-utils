@@ -19,7 +19,7 @@ export const insertBlock = (type: string, name?: string): void => {
   const [namespace = '', ...blockNameRest] = type.split('/');
   let blockNames = [
     blockNameRest.join('/').replace(/\//g, '-'),
-    blockNameRest.join('/').replace(/\//g, '\\/'),
+    blockNameRest.join('/').replace(/\//g, String.raw`\/`),
   ];
 
   blockNames = blockNames.filter((x, i, a) => a.indexOf(x) == i);
