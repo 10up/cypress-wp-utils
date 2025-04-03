@@ -18,8 +18,8 @@ import { getIframe } from '../functions/get-iframe';
 export const insertBlock = (type: string, name?: string): void => {
   const [namespace = '', ...blockNameRest] = type.split('/');
   let blockNames = [
-    blockNameRest.join('/').replace('/', '-'),
-    blockNameRest.join('/').replace('/', '\\/'),
+    blockNameRest.join('/').replace(/\//g, '-'),
+    blockNameRest.join('/').replace(/\//g, '\\/'),
   ];
 
   blockNames = blockNames.filter((x, i, a) => a.indexOf(x) == i);
