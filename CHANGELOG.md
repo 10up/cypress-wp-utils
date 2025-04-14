@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 ## [Unreleased] - TBD
 
+## [0.6.0] - 2025-04-15
+
+### Fixed
+- Ensure the `createPost` command works properly when used to create pages on WordPress 6.8 (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@iamdharmesh](https://github.com/iamdharmesh) via [#136](https://github.com/10up/cypress-wp-utils/pull/136)).
+- Ensure the `insertBlock` command works properly for blocks with multiple slashes, like block variations (props [@dkotter](https://github.com/dkotter), [@iamdharmesh](https://github.com/iamdharmesh) via [#137](https://github.com/10up/cypress-wp-utils/pull/137)).
+
+### Developer
+- Update all third-party actions our workflows rely on to use versions based on specific commit hashes (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#135](https://github.com/10up/cypress-wp-utils/pull/135)).
+- Update the matrix of WordPress versions we run our E2E tests on (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@iamdharmesh](https://github.com/iamdharmesh) via [#136](https://github.com/10up/cypress-wp-utils/pull/136)).
+- Ensure all E2E tests pass on WordPress 6.7 (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@iamdharmesh](https://github.com/iamdharmesh) via [#136](https://github.com/10up/cypress-wp-utils/pull/136)).
+
 ## [0.5.0] - 2025-03-18
 
 ### Fixed
@@ -65,6 +76,7 @@ All notable changes to this project will be documented in this file, per the [Ke
 - Initial release.
 
 [Unreleased]: https://github.com/10up/cypress-wp-utils/compare/trunk...develop
+[0.6.0]: https://github.com/10up/cypress-wp-util/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/10up/cypress-wp-util/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/10up/cypress-wp-util/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/10up/cypress-wp-util/compare/0.2.0...0.3.0
