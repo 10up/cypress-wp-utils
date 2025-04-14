@@ -109,13 +109,19 @@ describe('Command: createPost', () => {
               .parent()
               .find('input[type="checkbox"]')
               .should('be.checked');
-          } else {
+          } else if ($body.find('.editor-post-sticky__toggle-control').length) {
             cy.get(
               '.editor-post-sticky__toggle-control input[type="checkbox"]'
             ).check();
             cy.get(
               '.editor-post-sticky__toggle-control input[type="checkbox"]'
             ).should('be.checked');
+          } else if ($body.find('.editor-post-status__toggle').length) {
+            // WP 6.7+ handling.
+            cy.get('.editor-post-status__toggle').click();
+            cy.get(
+              '.editor-post-sticky__checkbox-control input[type="checkbox"]'
+            ).check();
           }
         });
       },

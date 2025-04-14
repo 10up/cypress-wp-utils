@@ -6,7 +6,10 @@ const { randomName } = require('../support/functions');
 import { compare } from 'compare-versions';
 
 describe('Command: checkBlockPatternExists', () => {
-  if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.5', '>=')) {
+  if (
+    'trunk' === Cypress.env('WORDPRESS_CORE').toString() ||
+    compare(Cypress.env('WORDPRESS_CORE').toString(), '5.5', '>=')
+  ) {
     before(() => {
       cy.login();
       cy.deactivatePlugin('classic-editor');
@@ -33,7 +36,10 @@ describe('Command: checkBlockPatternExists', () => {
           title: testCase.title,
         };
 
-        if (compare(Cypress.env('WORDPRESS_CORE').toString(), '5.7', '>=')) {
+        if (
+          'trunk' === Cypress.env('WORDPRESS_CORE').toString() ||
+          compare(Cypress.env('WORDPRESS_CORE').toString(), '5.7', '>=')
+        ) {
           args.categoryValue = testCase.cat;
         }
 

@@ -68,9 +68,23 @@ jobs:
           - {
               name: 'WP trunk',
               version: 'WordPress/WordPress#master',
+              number: 'trunk',
+            }
+          - {
+              name: 'WP 6.7',
+              version: 'WordPress/WordPress#6.7-branch',
+              number: '6.7'
+            }
+          - {
+              name: 'WP 6.6',
+              version: 'WordPress/WordPress#6.6-branch',
               number: '6.6',
             }
-          - { name: 'WP Latest', version: 'latest', number: '6.5' }
+          - {
+              name: 'WP 6.5',
+              version: 'WordPress/WordPress#6.5-branch',
+              number: '6.5',
+            }
           - {
               name: 'WP 6.4',
               version: 'WordPress/WordPress#6.4-branch',
