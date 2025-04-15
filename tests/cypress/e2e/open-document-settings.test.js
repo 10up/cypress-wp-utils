@@ -61,8 +61,12 @@ describe('Commands: openDocumentSettings*', () => {
             const $panel = $button.parents('.components-panel__body');
             cy.wrap($panel).should('contain', 'Stick to the top of the blog');
           });
-      } else {
+      } else if ($body.find('.editor-post-sticky__toggle-control').length) {
         cy.get('.editor-post-sticky__toggle-control').should('be.visible');
+      } else if ($body.find('.editor-post-status__toggle').length) {
+        // WP 6.7+ handling.
+        cy.get('.editor-post-status__toggle').click();
+        cy.get('.editor-post-sticky__checkbox-control').should('be.visible');
       }
     });
   });
@@ -82,13 +86,16 @@ describe('Commands: openDocumentSettings*', () => {
         .contains(name)
         .then($button => {
           const $panel = $button.parents('.components-panel__body');
-          cy.wrap($panel).should('contain', 'Add New Tag');
+          cy.wrap($panel).should('contain', 'Add');
         });
     });
   });
 
   it('Should be able to open Discussion panel on the existing page', () => {
-    if (compare(Cypress.env('WORDPRESS_CORE').toString(), '6.6', '>=')) {
+    if (
+      'trunk' === Cypress.env('WORDPRESS_CORE').toString() ||
+      compare(Cypress.env('WORDPRESS_CORE').toString(), '6.6', '>=')
+    ) {
       assert(true, 'Skipping test');
       return;
     }
