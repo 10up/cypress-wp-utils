@@ -82,13 +82,13 @@ describe('Command: insertBlock', () => {
   it('Should be able to insert an Embed sub-block', () => {
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/embed/twitter', 'Twitter');
+        cy.insertBlock('core/embed/youtube', 'YouTube');
       },
     });
 
     cy.getBlockEditor()
       .find('.wp-block-embed')
-      .should('contain.text', 'Twitter');
+      .should('contain.text', 'YouTube');
   });
 
   it('Should be able to insert custom block', () => {
