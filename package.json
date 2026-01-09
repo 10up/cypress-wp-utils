@@ -60,7 +60,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-tsdoc": "^0.2.14",
     "husky": "^6.0.0",
-    "lint-staged": "^13.2.1",
+    "lint-staged": "^16.2.7",
     "mochawesome-json-to-md": "^0.7.2",
     "prettier": "^2.2.1",
     "ts-node": "^10.2.1",
