@@ -58,7 +58,9 @@ describe('Command: insertBlock', () => {
       beforeSave: () => {
         cy.insertBlock('core/list').then(id => {
           cy.getBlockEditor()
-            .find(`#${id} [aria-label="Block: List Item"]`)
+            .find(
+              `#${id} [aria-label="List text"], #${id}[aria-label="Block: List"]`
+            )
             .click()
             .type(`${itemOne}{enter}${itemTwo}`);
         });
