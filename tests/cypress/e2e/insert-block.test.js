@@ -51,44 +51,40 @@ describe('Command: insertBlock', () => {
       .should('contain.text', heading);
   });
 
-  it('Should be able to insert Pullquote', () => {
-    const quote = 'Quote ' + randomName();
-    const cite = 'Cite ' + randomName();
+  it('Should be able to insert List', () => {
+    const itemOne = 'Item One ' + randomName();
+    const itemTwo = 'Item Two ' + randomName();
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/pullquote').then(id => {
+        cy.insertBlock('core/list').then(id => {
           cy.getBlockEditor()
             .find(
-              `#${id} [aria-label="Pullquote text"], #${id} [aria-label="Write quote…"]`
+              `#${id} [aria-label="List text"], #${id}[aria-label="Block: List"]`
             )
+            .first()
             .click()
-            .type(quote);
-          cy.getBlockEditor()
-            .find(
-              `#${id} [aria-label="Pullquote citation text"], #${id} [aria-label="Write citation…"]`
-            )
-            .click()
-            .type(cite);
+            .type(`${itemOne}{enter}${itemTwo}`);
         });
       },
     });
 
     cy.getBlockEditor()
-      .find('.wp-block-pullquote')
-      .should('contain.text', quote)
-      .should('contain.text', cite);
+      .find('.wp-block-list, [data-type="core/list"]') // [data-type="core/list"] can be removed once the minimum is above WP 5.7.
+      .first()
+      .should('contain.text', itemOne)
+      .should('contain.text', itemTwo);
   });
 
   it('Should be able to insert an Embed sub-block', () => {
     cy.createPost({
       beforeSave: () => {
-        cy.insertBlock('core/embed/twitter', 'Twitter');
+        cy.insertBlock('core/embed/youtube', 'YouTube');
       },
     });
 
     cy.getBlockEditor()
       .find('.wp-block-embed')
-      .should('contain.text', 'Twitter');
+      .should('contain.text', 'YouTube');
   });
 
   it('Should be able to insert custom block', () => {
