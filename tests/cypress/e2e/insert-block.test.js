@@ -69,7 +69,8 @@ describe('Command: insertBlock', () => {
     });
 
     cy.getBlockEditor()
-      .find('.wp-block-list')
+      .find('.wp-block-list, [data-type="core/list"]') // [data-type="core/list"] can be removed once the minimum is above WP 5.7.
+      .first()
       .should('contain.text', itemOne)
       .should('contain.text', itemTwo);
   });
