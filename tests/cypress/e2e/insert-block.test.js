@@ -61,6 +61,7 @@ describe('Command: insertBlock', () => {
             .find(
               `#${id} [aria-label="List text"], #${id}[aria-label="Block: List"]`
             )
+            .first()
             .click()
             .type(`${itemOne}{enter}${itemTwo}`);
         });
