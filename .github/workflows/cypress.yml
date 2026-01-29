@@ -71,6 +71,16 @@ jobs:
               number: 'trunk',
             }
           - {
+              name: 'WP 6.9',
+              version: 'WordPress/WordPress#6.9-branch',
+              number: '6.9'
+            }
+          - {
+              name: 'WP 6.8',
+              version: 'WordPress/WordPress#6.8-branch',
+              number: '6.8'
+            }
+          - {
               name: 'WP 6.7',
               version: 'WordPress/WordPress#6.7-branch',
               number: '6.7'
