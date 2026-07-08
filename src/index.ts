@@ -65,6 +65,17 @@ declare global {
   }
 }
 
+// Ignore promises rejected due to missed transitions.
+// These are common on CI environments due to the speed of the tests and the environment.
+Cypress.on('uncaught:exception', err => {
+  if (
+    err?.name === 'AbortError' &&
+    err?.message?.includes('Transition was skipped')
+  ) {
+    return false;
+  }
+});
+
 // Register commands
 Cypress.Commands.add('checkPostExists', checkPostExists);
 Cypress.Commands.add('classicCreatePost', classicCreatePost);
