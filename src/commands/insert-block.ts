@@ -83,7 +83,8 @@ export const insertBlock = (type: string, name?: string): void => {
         // Start of Block insertion by click logic.
         cy.get(blockSelector).then($block => {
           if ($block.length) {
-            cy.wrap($block).click();
+            cy.wrap($block).as('block');
+            cy.get('@block').click();
             inserterBtn.click();
 
             const [ns, rest] = type.split('/'); // namespace = ns, second namespace or block name = rest
