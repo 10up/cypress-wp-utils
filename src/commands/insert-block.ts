@@ -20,10 +20,15 @@ export const insertBlock = (
   name?: string
 ): Cypress.Chainable<string> => {
   const [namespace = '', ...blockNameRest] = type.split('/');
-  const blockNames = [
+  let blockNames = [
     blockNameRest.join('/').replace(/\//g, '-'),
     blockNameRest.join('/').replace(/\//g, String.raw`\/`),
-  ].filter((x, i, a) => a.indexOf(x) === i);
+  ];
+
+  blockNames = blockNames.filter((x, i, a) => a.indexOf(x) === i);
+
+  let inserterBtnSelector = '';
+  let insertedBlockId = '';
 
   const search =
     typeof name === 'string' && name.length
@@ -32,8 +37,6 @@ export const insertBlock = (
       ? type
       : '';
 
-  const insertedType = `${namespace}/${blockNameRest[0] || ''}`;
-  const insertedTypeSelector = `.wp-block[data-type="${insertedType}"], .wp-block[data-type="${type}"]`;
   const inserterSelectors = [
     'button[aria-label="Add block"]', // 5.7
     'button[aria-label="Toggle block inserter"]', // 6.4
@@ -42,96 +45,108 @@ export const insertBlock = (
   const searchInputSelector =
     'input[placeholder="Search"], input[aria-label="Search"], input[aria-label="Search for blocks and patterns"]';
 
-  const resolveBlockId = ($block: JQuery<HTMLElement>): string => {
+  const resolveBlockId = (
+    $block: JQuery<HTMLElement>,
+    blockType: string
+  ): string => {
     const existingId = String($block.prop('id') || $block.attr('id') || '');
     if (existingId.length) {
       return existingId;
     }
 
     const dataBlock = String($block.attr('data-block') || '');
-    if (!dataBlock.length) {
-      throw new Error(`Unable to resolve block id for ${type}.`);
-    }
-
-    const generatedId = `block-${dataBlock}`;
+    const generatedId = dataBlock.length
+      ? `block-${dataBlock}`
+      : `cypress-${blockType.replace(/\//g, '-')}-${Date.now()}-${Math.floor(
+          Math.random() * 10000
+        )}`;
     $block.attr('id', generatedId);
 
     return generatedId;
   };
 
-  return cy.get('body').then($body => {
-    const inserterSelector = inserterSelectors.find(
-      selector => $body.find(selector).length > 0
-    );
-
-    if (!inserterSelector) {
-      throw new Error('Block inserter toggle button not found.');
-    }
-
-    cy.get(inserterSelector).first().as('inserterBtn').click({ force: true });
-
-    cy.get('body').then($openBody => {
-      const blocksTab = $openBody
-        .find('button[role="tab"]')
-        .filter((_, el) => (el.textContent || '').trim() === 'Blocks');
-
-      if (blocksTab.length) {
-        cy.wrap(blocksTab.first()).click({ force: true });
+  cy.get('body').then($body => {
+    inserterSelectors.forEach(selector => {
+      if ($body.find(selector).length) {
+        cy.get(selector).then($button => {
+          if ($button.length) {
+            inserterBtnSelector = selector;
+            cy.get(selector).first().click();
+          }
+        });
       }
-    });
-
-    cy.get('body').then($openBody => {
-      if ($openBody.find(searchInputSelector).length) {
-        cy.get(searchInputSelector).first().clear();
-        cy.get(searchInputSelector).first().type(search);
-      }
-    });
-
-    return cy.get('body').then($openBody => {
-      const blockSelectors = [
-        `[data-type="${type}"]`,
-        ...blockNames.map(
-          blockName =>
-            `.editor-block-list-item-${
-              'core' === namespace ? '' : `${namespace}-`
-            }${blockName}`
-        ),
-      ];
-      const blockSelector = blockSelectors.find(
-        selector => $openBody.find(selector).length > 0
-      );
-
-      if (!blockSelector) {
-        throw new Error(`Block ${type} not found in inserter.`);
-      }
-
-      cy.get(blockSelector).first().click({ force: true });
-      cy.get('@inserterBtn').click({ force: true });
-
-      return cy.get('body').then($editorBody => {
-        if ($editorBody.find('iframe[name="editor-canvas"]').length) {
-          // WP >= 6.4 can render blocks in the editor-canvas iframe.
-          return getIframe('iframe[name="editor-canvas"]').then($iframe => {
-            const blockInIframe = $iframe.find(insertedTypeSelector).last();
-            if (!blockInIframe.length) {
-              throw new Error(`${insertedType} not found in iframe.`);
-            }
-
-            return cy.wrap(resolveBlockId(blockInIframe));
-          });
-        }
-
-        return cy
-          .get(insertedTypeSelector)
-          .last()
-          .then($blockInEditor => {
-            if (!$blockInEditor.length) {
-              throw new Error(`${insertedType} not found.`);
-            }
-
-            return cy.wrap(resolveBlockId($blockInEditor));
-          });
-      });
     });
   });
+
+  cy.get('button[role="tab"]')
+    .contains('Blocks')
+    .then($tab => {
+      if ($tab.length) {
+        cy.wrap($tab).click();
+      }
+    });
+
+  cy.get('body').then($body => {
+    if ($body.find(searchInputSelector).length) {
+      cy.get(searchInputSelector).first().clear();
+      cy.get(searchInputSelector).first().type(search);
+    }
+  });
+
+  blockNames.forEach(blockName => {
+    const blockSelector = `.editor-block-list-item-${
+      'core' === namespace ? '' : namespace + '-'
+    }${blockName}`;
+
+    cy.get('body').then($body => {
+      const modernInserterSelector = `.block-editor-inserter__menu [data-type="${type}"], .block-editor-inserter__results [data-type="${type}"]`;
+      const selectorToUse = $body.find(blockSelector).length
+        ? blockSelector
+        : $body.find(modernInserterSelector).length
+        ? modernInserterSelector
+        : '';
+
+      if (selectorToUse.length) {
+        cy.get(selectorToUse).then($block => {
+          if ($block.length) {
+            cy.wrap($block).first().click();
+            if (inserterBtnSelector.length) {
+              cy.get(inserterBtnSelector).first().click();
+            }
+
+            const [ns, rest] = type.split('/');
+            const blockType = `${ns}/${rest}`;
+            const blockSelectorByType = `.wp-block[data-type="${blockType}"]`;
+
+            cy.get('body').then($editorBody => {
+              if ($editorBody.find('iframe[name="editor-canvas"]').length) {
+                getIframe('iframe[name="editor-canvas"]').then($iframe => {
+                  const blockInIframe = $iframe.find(blockSelectorByType);
+                  if (blockInIframe.length > 0) {
+                    insertedBlockId = resolveBlockId(
+                      blockInIframe.last(),
+                      blockType
+                    );
+                    cy.wrap(insertedBlockId);
+                  }
+                });
+              } else if ($editorBody.find(blockSelectorByType).length) {
+                cy.get(blockSelectorByType).then($blockInEditor => {
+                  insertedBlockId = resolveBlockId(
+                    $blockInEditor.last(),
+                    blockType
+                  );
+                  cy.wrap(insertedBlockId);
+                });
+              } else {
+                throw new Error(`${blockType} not found.`);
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+
+  return cy.wrap(null).then(() => insertedBlockId);
 };
