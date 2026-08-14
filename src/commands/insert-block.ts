@@ -74,47 +74,58 @@ export const insertBlock = (type: string, name?: string): void => {
   // End of Block search logic.
 
   blockNames.forEach(blockName => {
-    const blockSelector = `.editor-block-list-item-${
-      'core' === namespace ? '' : namespace + '-'
-    }${blockName}`;
+    const blockSelectors = [
+      `.editor-block-list-item-${
+        'core' === namespace ? '' : namespace + '-'
+      }${blockName}`,
+      `.editor-block-list-item-${
+        'core' === namespace ? '' : namespace + '-'
+      }${blockName}\\/${blockName}`, // Briefly in 6.9 for default variants.
+    ];
+
+    const blockSelector = blockSelectors.join(',');
+
+    console.log(blockName, blockSelector);
 
     cy.get('body').then($body => {
       if ($body.find(blockSelector).length) {
         // Start of Block insertion by click logic.
-        cy.get(blockSelector).then($block => {
-          if ($block.length) {
-            cy.wrap($block).click();
-            inserterBtn.click();
+        cy.get(blockSelector)
+          .first()
+          .then($block => {
+            if ($block.length) {
+              cy.wrap($block).click();
+              inserterBtn.click();
 
-            const [ns, rest] = type.split('/'); // namespace = ns, second namespace or block name = rest
+              const [ns, rest] = type.split('/'); // namespace = ns, second namespace or block name = rest
 
-            cy.get('body').then($body => {
-              if ($body.find('iframe[name="editor-canvas"]').length) {
-                // Works with WP 6.4
-                getIframe('iframe[name="editor-canvas"]').then($iframe => {
-                  const blockInIframe = $iframe.find(
-                    `.wp-block[data-type="${ns}/${rest}"]`
+              cy.get('body').then($body => {
+                if ($body.find('iframe[name="editor-canvas"]').length) {
+                  // Works with WP 6.4
+                  getIframe('iframe[name="editor-canvas"]').then($iframe => {
+                    const blockInIframe = $iframe.find(
+                      `.wp-block[data-type="${ns}/${rest}"]`
+                    );
+                    if (blockInIframe.length > 0) {
+                      cy.wrap(blockInIframe.last().prop('id'));
+                    }
+                  });
+                } else if (
+                  $body.find(`.wp-block[data-type="${ns}/${rest}"]`).length
+                ) {
+                  // Works with WP 5.7
+                  cy.get(`.wp-block[data-type="${ns}/${rest}"]`).then(
+                    $blockInEditor => {
+                      expect($blockInEditor.length).to.equal(1);
+                      cy.wrap($blockInEditor.prop('id'));
+                    }
                   );
-                  if (blockInIframe.length > 0) {
-                    cy.wrap(blockInIframe.last().prop('id'));
-                  }
-                });
-              } else if (
-                $body.find(`.wp-block[data-type="${ns}/${rest}"]`).length
-              ) {
-                // Works with WP 5.7
-                cy.get(`.wp-block[data-type="${ns}/${rest}"]`).then(
-                  $blockInEditor => {
-                    expect($blockInEditor.length).to.equal(1);
-                    cy.wrap($blockInEditor.prop('id'));
-                  }
-                );
-              } else {
-                throw new Error(`${ns}/${rest} not found.`);
-              }
-            });
-          }
-        });
+                } else {
+                  throw new Error(`${ns}/${rest} not found.`);
+                }
+              });
+            }
+          });
         // End of Block insertion by click logic.
       }
     });
