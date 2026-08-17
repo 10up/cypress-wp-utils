@@ -25,7 +25,7 @@ export const insertBlock = (type: string, name?: string): void => {
   blockNames = blockNames.filter((x, i, a) => a.indexOf(x) == i);
   // let blockName = blockNameRest.join('/').replace( '/', '\\/' );
 
-  let inserterBtn: Cypress.Chainable<JQuery<HTMLElement>>;
+  let $inserterBtn: JQuery<HTMLElement> | null = null;
   let search = '';
 
   if (typeof name === 'string' && name.length) {
@@ -44,12 +44,14 @@ export const insertBlock = (type: string, name?: string): void => {
 
     selectors.forEach(selector => {
       if ($body.find(selector).length) {
-        cy.get(selector).then($button => {
-          if ($button.length) {
-            inserterBtn = cy.wrap($button);
-            inserterBtn.first().click();
-          }
-        });
+        // Keep the element around rather than the chainable, so the inserter can
+        // be closed again further down without replaying this command.
+        cy.get(selector)
+          .first()
+          .then($button => {
+            $inserterBtn = $button;
+            cy.wrap($button).click();
+          });
       }
     });
   });
@@ -73,61 +75,62 @@ export const insertBlock = (type: string, name?: string): void => {
   });
   // End of Block search logic.
 
+  const selectorsFor = (blockName: string) => [
+    `.editor-block-list-item-${
+      'core' === namespace ? '' : namespace + '-'
+    }${blockName}`,
+    `.editor-block-list-item-${
+      'core' === namespace ? '' : namespace + '-'
+    }${blockName}\\/${blockName}`, // Briefly in 6.9 for default variants.
+  ];
+
+  /*
+   * The inserter renders its search results asynchronously, and searching also
+   * kicks off a block directory request that re-renders the panel afterwards.
+   * Reading the list synchronously therefore either finds nothing - silently
+   * skipping the insertion - or hands back an element that is detached by the
+   * time it gets clicked. Both have to be left to Cypress to retry.
+   */
+  const blockSelectors: string[] = [];
   blockNames.forEach(blockName => {
-    const blockSelectors = [
-      `.editor-block-list-item-${
-        'core' === namespace ? '' : namespace + '-'
-      }${blockName}`,
-      `.editor-block-list-item-${
-        'core' === namespace ? '' : namespace + '-'
-      }${blockName}\\/${blockName}`, // Briefly in 6.9 for default variants.
-    ];
+    blockSelectors.push(...selectorsFor(blockName));
+  });
 
-    const blockSelector = blockSelectors.join(',');
+  // Start of Block insertion by click logic.
+  // All of the candidate spellings are queried at once so that Cypress keeps
+  // retrying - and re-queries the element if the panel re-renders and detaches
+  // it - instead of reading the list once and moving on.
+  cy.get(blockSelectors.join(',')).first().click();
 
-    console.log(blockName, blockSelector);
+  // Close the inserter again.
+  cy.then(() => {
+    if ($inserterBtn) {
+      cy.wrap($inserterBtn).click();
+    }
+  });
+  // End of Block insertion by click logic.
 
-    cy.get('body').then($body => {
-      if ($body.find(blockSelector).length) {
-        // Start of Block insertion by click logic.
-        cy.get(blockSelector)
-          .first()
-          .then($block => {
-            if ($block.length) {
-              cy.wrap($block).click();
-              inserterBtn.click();
+  const [ns, rest] = type.split('/'); // namespace = ns, second namespace or block name = rest
 
-              const [ns, rest] = type.split('/'); // namespace = ns, second namespace or block name = rest
-
-              cy.get('body').then($body => {
-                if ($body.find('iframe[name="editor-canvas"]').length) {
-                  // Works with WP 6.4
-                  getIframe('iframe[name="editor-canvas"]').then($iframe => {
-                    const blockInIframe = $iframe.find(
-                      `.wp-block[data-type="${ns}/${rest}"]`
-                    );
-                    if (blockInIframe.length > 0) {
-                      cy.wrap(blockInIframe.last().prop('id'));
-                    }
-                  });
-                } else if (
-                  $body.find(`.wp-block[data-type="${ns}/${rest}"]`).length
-                ) {
-                  // Works with WP 5.7
-                  cy.get(`.wp-block[data-type="${ns}/${rest}"]`).then(
-                    $blockInEditor => {
-                      expect($blockInEditor.length).to.equal(1);
-                      cy.wrap($blockInEditor.prop('id'));
-                    }
-                  );
-                } else {
-                  throw new Error(`${ns}/${rest} not found.`);
-                }
-              });
-            }
-          });
-        // End of Block insertion by click logic.
-      }
-    });
+  cy.get('body').then($body => {
+    if ($body.find('iframe[name="editor-canvas"]').length) {
+      // Works with WP 6.4
+      getIframe('iframe[name="editor-canvas"]').then($iframe => {
+        const blockInIframe = $iframe.find(
+          `.wp-block[data-type="${ns}/${rest}"]`
+        );
+        if (blockInIframe.length > 0) {
+          cy.wrap(blockInIframe.last().prop('id'));
+        }
+      });
+    } else if ($body.find(`.wp-block[data-type="${ns}/${rest}"]`).length) {
+      // Works with WP 5.7
+      cy.get(`.wp-block[data-type="${ns}/${rest}"]`).then($blockInEditor => {
+        expect($blockInEditor.length).to.equal(1);
+        cy.wrap($blockInEditor.prop('id'));
+      });
+    } else {
+      throw new Error(`${ns}/${rest} not found.`);
+    }
   });
 };
