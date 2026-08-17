@@ -30,7 +30,9 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?orderby=date&order=desc');
-    cy.get('#the-list td.title a.row-title').first().should('have.text', title);
+    cy.get('#the-list .column-title a.row-title')
+      .first()
+      .should('have.text', title);
   });
 
   it('Should be able to create Draft Post', () => {
@@ -42,7 +44,7 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?orderby=date&order=desc');
-    cy.get('#the-list td.title')
+    cy.get('#the-list .column-title')
       .first()
       .then($row => {
         cy.wrap($row).find('a.row-title').should('have.text', title);
@@ -59,7 +61,9 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?post_type=page&orderby=date&order=desc');
-    cy.get('#the-list td.title a.row-title').first().should('have.text', title);
+    cy.get('#the-list .column-title a.row-title')
+      .first()
+      .should('have.text', title);
   });
 
   it('Should be able to create Draft Page', () => {
@@ -72,7 +76,7 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?post_type=page&orderby=date&order=desc');
-    cy.get('#the-list td.title')
+    cy.get('#the-list .column-title')
       .first()
       .then($row => {
         cy.wrap($row).find('a.row-title').should('have.text', title);
@@ -128,7 +132,7 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?post_type=post');
-    cy.get('td.title')
+    cy.get('.column-title')
       .contains(postTitle)
       .parent()
       .find('.post-state')
@@ -157,11 +161,15 @@ describe('Command: createPost', () => {
     });
 
     cy.visit('/wp-admin/edit.php?orderby=date&order=desc');
-    cy.get('#the-list td.title a.row-title')
+    cy.get('#the-list .column-title a.row-title')
       .first()
       .should(element => {
+        // WP 7.1 appends a trimmed excerpt to the placeholder title.
+        const $title = element.clone();
+        $title.find('.trimmed-post-excerpt').remove();
+
         // WordPress changed the default title for posts without a title at some point.
-        expect(element.text()).to.be.oneOf(['(no title)', 'Untitled']);
+        expect($title.text().trim()).to.be.oneOf(['(no title)', 'Untitled']);
       });
   });
 

@@ -112,7 +112,7 @@ describe('Command: createTerm', () => {
       },
     });
 
-    cy.get('td.name')
+    cy.get('.column-name')
       .contains(termName)
       .parents('tr')
       .find('.slug')
