@@ -111,9 +111,36 @@ export const getIframe: Cypress.Chainable['iframe'] = (
       }).snapshot()
     : null;
 
-  return frameLoaded(selector, { ...fullOpts, log: false }).then($frame => {
-    log?.set('$el', $frame).end();
-    const contentWindow: Window = $frame.prop('contentWindow');
-    return Cypress.$(contentWindow.document.body as HTMLBodyElement);
-  });
+  return frameLoaded(selector, { ...fullOpts, log: false }).then(
+    { timeout: fullOpts.timeout },
+    async $frame => {
+      log?.set('$el', $frame).end();
+
+      const frameSelector = selector as string;
+      const getBody = ($el: JQuery<HTMLElement>) => {
+        const contentWindow: Window | null = $el.prop('contentWindow');
+        return contentWindow?.document?.body ?? null;
+      };
+
+      /*
+       * Wait for the body to be parsed before handing it back.
+       *
+       * The Block Editor canvas is loaded from a `blob:` URL, so the document
+       * can already report itself as loaded while `document.body` is still
+       * null. Returning that would yield an empty jQuery collection and fail
+       * any following assertion.
+       *
+       * The frame is re-queried on every pass because the editor may swap it
+       * out while it renders, which detaches the element we started with.
+       */
+      let body = getBody($frame);
+
+      while (!body) {
+        await sleep(100);
+        body = getBody(Cypress.$(frameSelector));
+      }
+
+      return Cypress.$(body as HTMLBodyElement);
+    }
+  );
 };
