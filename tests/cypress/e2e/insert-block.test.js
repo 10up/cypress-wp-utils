@@ -89,8 +89,9 @@ describe('Command: insertBlock', () => {
 
   it('Should be able to insert custom block', () => {
     if (
-      'trunk' !== Cypress.env('WORDPRESS_CORE').toString() &&
-      compare(Cypress.env('WORDPRESS_CORE').toString(), '6.1', '<')
+      !Cypress.env('WORDPRESS_CORE') ||
+      ('trunk' !== Cypress.env('WORDPRESS_CORE').toString() &&
+        compare(Cypress.env('WORDPRESS_CORE').toString(), '6.1', '<'))
     ) {
       // WinAmp block does not support this version of WordPress.
       assert(true, 'Skipping test, WinAmp block does not exist');
