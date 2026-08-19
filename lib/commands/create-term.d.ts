@@ -47,8 +47,8 @@
  * ```
  */
 export declare const createTerm: (name?: string, taxonomy?: string, { slug, parent, description, beforeSave, }?: {
-    slug?: string | undefined;
-    parent?: string | number | undefined;
-    description?: string | undefined;
-    beforeSave?: CallableFunction | undefined;
+    slug?: string;
+    parent?: number | string;
+    description?: string;
+    beforeSave?: CallableFunction;
 }) => void;

@@ -1,6 +1,3 @@
-/// <reference types="cypress" />
-/// <reference types="cypress" />
-/// <reference types="cypress" />
 import { checkPostExists } from './commands/check-post-exists';
 import { classicCreatePost } from './commands/classic-create-post';
 import { insertBlock } from './commands/insert-block';

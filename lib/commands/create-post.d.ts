@@ -51,8 +51,8 @@
  */
 export declare const createPost: ({ postType, title, content, status, beforeSave, }: {
     title: string;
-    postType?: string | undefined;
-    content?: string | undefined;
-    status?: string | undefined;
-    beforeSave?: CallableFunction | undefined;
+    postType?: string;
+    content?: string;
+    status?: string;
+    beforeSave?: CallableFunction;
 }) => void;

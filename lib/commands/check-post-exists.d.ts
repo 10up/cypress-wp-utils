@@ -25,5 +25,5 @@
  */
 export declare const checkPostExists: ({ title, postType, }: {
     title: string;
-    postType?: string | undefined;
+    postType?: string;
 }) => void;

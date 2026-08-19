@@ -30,5 +30,5 @@ declare global {
 }
 export declare const checkBlockPatternExists: ({ title, categoryValue, }: {
     title: string;
-    categoryValue?: string | undefined;
+    categoryValue?: string;
 }) => void;
