@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const path = require('path');
 
 // Resolve the package directory
 const wpEnvPackagePath = require.resolve('@wordpress/env/package.json');
