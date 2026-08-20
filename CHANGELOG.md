@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 ## [Unreleased] - TBD
 
+## [0.7.0] - 2026-08-20
+
+### Changed
+- `deleteAllTerms` updated to account for empty term lists and changes in WP 7.1. (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions) via [#154](https://github.com/10up/cypress-wp-utils/pull/154))
+- `insertBlock` updated to support WordPress 6.9. (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions) via [#154](https://github.com/10up/cypress-wp-utils/pull/154))
+- `openDocumentSettingsSidebar` updated to account for changes in WP 7.1. (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions) via [#154](https://github.com/10up/cypress-wp-utils/pull/154))
+
+### Fixed
+- `closeWelcomeGuide` updated to allow for delayed render of guide. (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions) via [#154](https://github.com/10up/cypress-wp-utils/pull/154))
+
+### Other
+- Developer - Update block tests to account for block changes in WP 7.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@github-actions[bot]](https://github.com/apps/github-actions) via [#145](https://github.com/10up/cypress-wp-utils/pull/145))
+- Developer - Update various developer dependencies. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@github-actions[bot]](https://github.com/apps/github-actions) via [#143](https://github.com/10up/cypress-wp-utils/pull/143))
+
+### Security
+- Bump the npm_and_yarn group across 1 directory with 2 updates (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dependabot](https://github.com/dependabot), [@github-project-automation[bot]](https://github.com/apps/github-project-automation), [@github-actions[bot]](https://github.com/apps/github-actions) via [#140](https://github.com/10up/cypress-wp-utils/pull/140))
+- Bump the npm_and_yarn group across 1 directory with 7 updates (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dependabot](https://github.com/dependabot), [@dkotter](https://github.com/dkotter), [@github-actions[bot]](https://github.com/apps/github-actions) via [#152](https://github.com/10up/cypress-wp-utils/pull/152))
+
 ## [0.6.0] - 2025-04-15
 
 ### Fixed
