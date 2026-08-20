@@ -8,7 +8,7 @@ describe('Command: wpCli', () => {
   it('Should not fail with ignoreFailures=true', () => {
     const randomCommand =
       'command' + (Math.random() + 1).toString(16).substring(3);
-    cy.wpCli(randomCommand, true).its('code').should('equal', 1);
+    cy.wpCli(randomCommand, true).its('exitCode').should('equal', 1);
   });
 
   it('Should run cli in eval mode', () => {

@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 ## [Unreleased] - TBD
 
+## [0.7.0] - 2026-08-20
+
+### Changed
+- `deleteAllTerms` updated to account for empty term lists and changes in WP 7.1 (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
+- `insertBlock` updated to support WordPress 6.9 (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
+- `openDocumentSettingsSidebar` updated to account for changes in WP 7.1 (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
+
+### Fixed
+- `closeWelcomeGuide` updated to allow for delayed render of guide (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
+
+### Security
+- Bump `@cypress/request` from 3.0.1 to 3.0.8 (props [@peterwilsoncc](https://github.com/peterwilsoncc) via [#139](https://github.com/10up/cypress-wp-utils/pull/139)).
+- Bump `flatted` from 3.2.9 to 3.4.4 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `form-data` from 4.0.4 to 4.0.6 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `lodash` from 4.17.21 to 4.18.1 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter)  via [#146](https://github.com/10up/cypress-wp-utils/pull/146), [#152](https://github.com/10up/cypress-wp-utils/pull/152).
+- Bump `picomatch` from 2.3.1 to 4.0.5 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `qs` from 6.14.1 to 6.15.3 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter)  via [#150](https://github.com/10up/cypress-wp-utils/pull/150), [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `simple-git` from 3.22.0 to 3.36.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `tmp` from 0.2.1 to 0.2.7 (props [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#140](https://github.com/10up/cypress-wp-utils/pull/140), [#152](https://github.com/10up/cypress-wp-utils/pull/152)).
+- Bump `@wordpress/env` from 10.2.0 to 10.27.0 (props [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#140](https://github.com/10up/cypress-wp-utils/pull/140)).
+
+### Developer
+- Update block tests to account for block changes in WP 7.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#145](https://github.com/10up/cypress-wp-utils/pull/145)).
+- Update various developer dependencies (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#143](https://github.com/10up/cypress-wp-utils/pull/143)).
+
 ## [0.6.0] - 2025-04-15
 
 ### Fixed
