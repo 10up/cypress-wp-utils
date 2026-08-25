@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,5 +27,6 @@ jobs:
 
       - name: Publish
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Commented out below to try trusted publishers via https://docs.npmjs.com/trusted-publishers
+        # env:
+        #  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
