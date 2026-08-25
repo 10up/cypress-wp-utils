@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file, per the [Ke
 - Set up npm trusted publishing for releases (props [@jeffpaul](https://github.com/jeffpaul), [@fabiankaegy](https://github.com/fabiankaegy), [@dkotter](https://github.com/dkotter) via [#157](https://github.com/10up/cypress-wp-utils/pull/157)).
 
 ## [0.7.0] - 2026-08-20
+_Note: This version is unavailable on NPM._
 
 ### Changed
 - `deleteAllTerms` updated to account for empty term lists and changes in WP 7.1 (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
