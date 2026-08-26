@@ -1,10 +1,17 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file, per the [Keep a Changelog standard](http://keepachangelog.com/), and will adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] - TBD
 
+## [0.7.1] - 2026-08-25
+
+### Developer
+- Set up npm trusted publishing for releases (props [@jeffpaul](https://github.com/jeffpaul), [@fabiankaegy](https://github.com/fabiankaegy), [@dkotter](https://github.com/dkotter) via [#157](https://github.com/10up/cypress-wp-utils/pull/157)).
+
 ## [0.7.0] - 2026-08-20
+_Note: This version is unavailable on NPM._
 
 ### Changed
 - `deleteAllTerms` updated to account for empty term lists and changes in WP 7.1 (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#154](https://github.com/10up/cypress-wp-utils/pull/154)).
@@ -101,6 +108,8 @@ All notable changes to this project will be documented in this file, per the [Ke
 - Initial release.
 
 [Unreleased]: https://github.com/10up/cypress-wp-utils/compare/trunk...develop
+[0.7.1]: https://github.com/10up/cypress-wp-util/compare/0.7.0...0.7.1
+[0.7.0]: https://github.com/10up/cypress-wp-util/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/10up/cypress-wp-util/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/10up/cypress-wp-util/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/10up/cypress-wp-util/compare/0.3.0...0.4.0
