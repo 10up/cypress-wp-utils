@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file, per the [Ke
 
 ## [Unreleased] - TBD
 
+## [0.7.2] - 2026-09-02
+
+### Developer
+- Upgrade node/npm versions (nvmrc config file) (props [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#160](https://github.com/10up/cypress-wp-utils/pull/160)).
+
 ## [0.7.1] - 2026-08-25
+_Note: This version is unavailable on NPM._
 
 ### Developer
 - Set up npm trusted publishing for releases (props [@jeffpaul](https://github.com/jeffpaul), [@fabiankaegy](https://github.com/fabiankaegy), [@dkotter](https://github.com/dkotter) via [#157](https://github.com/10up/cypress-wp-utils/pull/157)).
@@ -108,6 +114,7 @@ _Note: This version is unavailable on NPM._
 - Initial release.
 
 [Unreleased]: https://github.com/10up/cypress-wp-utils/compare/trunk...develop
+[0.7.2]: https://github.com/10up/cypress-wp-util/compare/0.7.1...0.7.2
 [0.7.1]: https://github.com/10up/cypress-wp-util/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/10up/cypress-wp-util/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/10up/cypress-wp-util/compare/0.5.0...0.6.0
